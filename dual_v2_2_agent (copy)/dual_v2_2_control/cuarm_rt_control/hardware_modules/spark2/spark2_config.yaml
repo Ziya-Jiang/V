@@ -1,0 +1,25 @@
+version: "2.0"
+num_joints: 6
+
+hardware:
+  can:
+    channel: 0
+    baudrate: 1000000
+  canfd:
+    channel: 0
+    baudrate: 1000000
+  motor:
+    ids: [1, 2, 3, 4, 5, 6]
+    enabled: [1, 1, 1, 1, 1, 1]
+    gear_ratios: [100, 100, 100, 28, 28, 10]
+    resolution: [100, 100, 100, 65536, 65536, 65536]
+    sign: [1, 1, -1, -1, 1, 1]
+    motor_offset: [-1.047198, -1.2043, -0.209440, 1.4834926, -1.047197, 0.0]
+    motor_type: ["TL", "TL", "TL", "RMD", "RMD", "RMD"]
+    has_brake: [1, 1, 1, 0, 0, 0]  # 前3个TL有抱闸, 后3个RMD无抱闸
+  torque_sensor:
+    ids: [1, 2, 3]
+    enabled: [0, 0, 0]
+    sign: [1, -1, 1]
+
+

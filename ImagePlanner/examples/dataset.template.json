@@ -1,0 +1,17 @@
+{
+  "camera_id": "wrist_fixed_mount_v1",
+  "target_id": "object_01",
+  "episodes": [
+    {
+      "id": "episode_001",
+      "split": "train",
+      "frames": [
+        {"image": "data/episode_001/000.png", "bbox": [200, 140, 40, 40]},
+        {"image": "data/episode_001/001.png", "bbox": [300, 220, 40, 40]},
+        {"image": "data/episode_001/002.png", "bbox": [280, 200, 80, 80]},
+        {"image": "data/episode_001/003.png", "bbox": [260, 180, 120, 120]}
+      ],
+      "keyframes": {"align": 1, "pregrasp": 2, "grasp": 3}
+    }
+  ]
+}

@@ -1,0 +1,480 @@
+[
+  {
+    "subtask_id": 9,
+    "action": "first_reset",
+    "target_position": null,
+    "target_rotation": null,
+    "description": "开场准备位；实际位姿由RobotArm.control_joint_position()中的intermediate_reset_pos决定",
+    "object": null,
+    "arm": "right"
+  },
+  {
+    "subtask_id": 1,
+    "action": "move_above_grasp",
+    "target_position": [
+      387.0122994185732,
+      -403.8349271695079,
+      120.0
+    ],
+    "target_rotation": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "description": "使用right臂移动到object_0上方10cm并调整抓取位姿",
+    "object": "object_0",
+    "arm": "right"
+  },
+  {
+    "subtask_id": 2,
+    "action": "move_down_to_grasp",
+    "target_position": [
+      387.0122994185732,
+      -403.8349271695079,
+      30.0
+    ],
+    "target_rotation": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "description": "使用right臂下降10cm到object_0抓取点",
+    "object": "object_0",
+    "arm": "right"
+  },
+  {
+    "subtask_id": 3,
+    "action": "close_gripper",
+    "target_position": [
+      387.0122994185732,
+      -403.8349271695079,
+      30.0
+    ],
+    "target_rotation": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "description": "使用right臂关闭夹爪抓取object_0",
+    "object": "object_0",
+    "arm": "right"
+  },
+  {
+    "subtask_id": 4,
+    "action": "lift_object",
+    "target_position": [
+      387.0122994185732,
+      -393.8349271695079,
+      120.0
+    ],
+    "target_rotation": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "description": "使用right臂抬升object_0 10cm",
+    "object": "object_0",
+    "arm": "right"
+  },
+  {
+    "subtask_id": 5,
+    "action": "move_to_target",
+    "target_position": [
+      379.6162790271951,
+      -102.98634885265155,
+      120.0
+    ],
+    "target_rotation": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "description": "使用right臂将object_0移动到目标位置上方",
+    "object": "object_0",
+    "arm": "right"
+  },
+  {
+    "subtask_id": 6,
+    "action": "move_down_to_place",
+    "target_position": [
+      379.6162790271951,
+      -102.98634885265155,
+      70.0
+    ],
+    "target_rotation": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "description": "使用right臂下降到object_0放置点",
+    "object": "object_0",
+    "arm": "right"
+  },
+  {
+    "subtask_id": 7,
+    "action": "open_gripper",
+    "target_position": [
+      379.6162790271951,
+      -102.98634885265155,
+      70.0
+    ],
+    "target_rotation": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "description": "使用right臂释放object_0",
+    "object": "object_0",
+    "arm": "right"
+  },
+  {
+    "subtask_id": 8,
+    "action": "move_up_after_release",
+    "target_position": [
+      379.6162790271951,
+      -102.98634885265155,
+      120.0
+    ],
+    "target_rotation": [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    "description": "使用right臂释放后抬升10cm",
+    "object": "object_0",
+    "arm": "right"
+  },
+  {
+    "subtask_id": 9,
+    "action": "reset_all",
+    "target_position": null,
+    "target_rotation": null,
+    "description": "完成当前物体后，左右臂回到安全起始位置",
+    "object": "null",
+    "arm": "right"
+  },
+  {
+    "subtask_id": 10,
+    "action": "move_above_grasp",
+    "target_position": [
+      465.56256795490606,
+      134.0292009444476,
+      200.0
+    ],
+    "target_rotation": [
+      140.0,
+      -8.062666750685855e-15,
+      45.00000000000001
+    ],
+    "description": "使用left臂移动到object_3上方10cm并调整抓取位姿",
+    "object": "object_3",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 11,
+    "action": "move_down_to_grasp",
+    "target_position": [
+      465.56256795490606,
+      134.0292009444476,
+      35.0
+    ],
+    "target_rotation": [
+      140.0,
+      -8.062666750685855e-15,
+      45.00000000000001
+    ],
+    "description": "使用left臂下降10cm到object_3抓取点",
+    "object": "object_3",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 12,
+    "action": "close_gripper",
+    "target_position": [
+      465.56256795490606,
+      134.0292009444476,
+      35.0
+    ],
+    "target_rotation": [
+      140.0,
+      -8.062666750685855e-15,
+      45.00000000000001
+    ],
+    "description": "使用left臂关闭夹爪抓取object_3",
+    "object": "object_3",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 13,
+    "action": "lift_object",
+    "target_position": [
+      465.56256795490606,
+      124.02920094444762,
+      200.0
+    ],
+    "target_rotation": [
+      140.0,
+      -8.062666750685855e-15,
+      45.00000000000001
+    ],
+    "description": "使用left臂抬升object_3 10cm",
+    "object": "object_3",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 14,
+    "action": "move_to_target",
+    "target_position": [
+      421.50905862696095,
+      -139.80833943609906,
+      200.0
+    ],
+    "target_rotation": [
+      140.0,
+      -8.062666750685855e-15,
+      -19.999999999999993
+    ],
+    "description": "使用left臂将object_3移动到目标位置上方",
+    "object": "object_3",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 15,
+    "action": "move_down_to_place",
+    "target_position": [
+      421.50905862696095,
+      -139.80833943609906,
+      120.0
+    ],
+    "target_rotation": [
+      140.0,
+      -8.062666750685855e-15,
+      -19.999999999999993
+    ],
+    "description": "使用left臂下降到object_3放置点",
+    "object": "object_3",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 16,
+    "action": "open_gripper",
+    "target_position": [
+      421.50905862696095,
+      -139.80833943609906,
+      120.0
+    ],
+    "target_rotation": [
+      140.0,
+      -8.062666750685855e-15,
+      -19.999999999999993
+    ],
+    "description": "使用left臂释放object_3",
+    "object": "object_3",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 17,
+    "action": "move_up_after_release",
+    "target_position": [
+      421.50905862696095,
+      -139.80833943609906,
+      265.0
+    ],
+    "target_rotation": [
+      140.0,
+      -8.062666750685855e-15,
+      -19.999999999999993
+    ],
+    "description": "使用left臂释放后抬升10cm",
+    "object": "object_3",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 18,
+    "action": "reset_all",
+    "target_position": null,
+    "target_rotation": null,
+    "description": "完成当前物体后，左右臂回到安全起始位置",
+    "object": "null",
+    "arm": "right"
+  },
+  {
+    "subtask_id": 19,
+    "action": "move_above_grasp",
+    "target_position": [
+      395.9380287721524,
+      448.7404033473697,
+      170.0
+    ],
+    "target_rotation": [
+      29.999999999999996,
+      89.99999999999999,
+      0.0
+    ],
+    "description": "使用left臂移动到object_2上方10cm并调整抓取位姿",
+    "object": "object_2",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 20,
+    "action": "move_down_to_grasp",
+    "target_position": [
+      395.9380287721524,
+      448.7404033473697,
+      70.0
+    ],
+    "target_rotation": [
+      29.999999999999996,
+      89.99999999999999,
+      0.0
+    ],
+    "description": "使用left臂下降10cm到object_2抓取点",
+    "object": "object_2",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 21,
+    "action": "close_to_object_center",
+    "target_position": [
+      425.9380287721524,
+      348.7404033473697,
+      70.0
+    ],
+    "target_rotation": [
+      29.999999999999996,
+      89.99999999999999,
+      0.0
+    ],
+    "description": "低位水平靠近杯子后再抓取",
+    "object": "object_2",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 21,
+    "action": "close_gripper",
+    "target_position": [
+      425.9380287721524,
+      348.7404033473697,
+      70.0
+    ],
+    "target_rotation": [
+      29.999999999999996,
+      89.99999999999999,
+      0.0
+    ],
+    "description": "使用left臂关闭夹爪抓取object_2",
+    "object": "object_2",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 22,
+    "action": "lift_object",
+    "target_position": [
+      425.9380287721524,
+      348.7404033473697,
+      130.0
+    ],
+    "target_rotation": [
+      29.999999999999996,
+      89.99999999999999,
+      0.0
+    ],
+    "description": "使用left臂抬升object_2 10cm",
+    "object": "object_2",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 23,
+    "action": "move_to_target",
+    "target_position": [
+      505.6112506527278,
+      -1.6842260905120412,
+      180.0
+    ],
+    "target_rotation": [
+      29.999999999999996,
+      89.99999999999999,
+      0.0
+    ],
+    "description": "使用left臂将object_2移动到目标位置上方",
+    "object": "object_2",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 24,
+    "action": "adjust_orientation_for_place",
+    "target_position": [
+      505.6112506527278,
+      -1.6842260905120412,
+      180.0
+    ],
+    "target_rotation": [
+      29.999999999999996,
+      89.99999999999999,
+      0.0
+    ],
+    "description": "到达杯子放置点上方后单独调整腕部方向",
+    "object": "object_2",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 24,
+    "action": "move_down_to_place",
+    "target_position": [
+      505.6112506527278,
+      -1.6842260905120412,
+      70.0
+    ],
+    "target_rotation": [
+      29.999999999999996,
+      89.99999999999999,
+      0.0
+    ],
+    "description": "使用left臂下降到object_2放置点",
+    "object": "object_2",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 25,
+    "action": "open_gripper",
+    "target_position": [
+      505.6112506527278,
+      -1.6842260905120412,
+      70.0
+    ],
+    "target_rotation": [
+      29.999999999999996,
+      89.99999999999999,
+      0.0
+    ],
+    "description": "使用left臂释放object_2",
+    "object": "object_2",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 26,
+    "action": "move_up_after_release",
+    "target_position": [
+      505.6112506527278,
+      -1.6842260905120412,
+      220.0
+    ],
+    "target_rotation": [
+      29.999999999999996,
+      89.99999999999999,
+      0.0
+    ],
+    "description": "使用left臂释放后抬升10cm",
+    "object": "object_2",
+    "arm": "left"
+  },
+  {
+    "subtask_id": 27,
+    "action": "reset_all",
+    "target_position": null,
+    "target_rotation": null,
+    "description": "完成当前物体后，左右臂回到安全起始位置",
+    "object": "null",
+    "arm": "right"
+  }
+]

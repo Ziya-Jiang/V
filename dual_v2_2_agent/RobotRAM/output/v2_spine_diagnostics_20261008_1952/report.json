@@ -1,0 +1,236 @@
+{
+  "status": "ok",
+  "rgb": "RobotRAM/output/scene_57_pcl/rgb_ext.png",
+  "calibration": "/mnt/ssd/user/wx/vlm_demo/calibration/session_seed/base_to_camera/results/machine-readable results.json",
+  "raw_calls": [
+    {
+      "prompt": "book",
+      "shape": [
+        530,
+        848
+      ],
+      "count": 27
+    },
+    {
+      "prompt": "book",
+      "shape": [
+        252,
+        309
+      ],
+      "count": 13
+    }
+  ],
+  "candidates": [
+    {
+      "box": [
+        347,
+        360,
+        373,
+        530
+      ],
+      "uv": [
+        361.0,
+        441.0
+      ],
+      "score": 0.8325657844543457,
+      "base_y_mm": 26.471136955420146,
+      "base_xyz_mm": [
+        522.5753311333624,
+        26.471136955420146,
+        -62.38669526635016
+      ],
+      "depth_median_mm": 710.9000244140625,
+      "recognition": "book_proposal",
+      "proposal_method": "sam3_instances",
+      "geometry_status": "not_checked",
+      "error": "",
+      "color": "unclassified",
+      "id": "book_1"
+    },
+    {
+      "box": [
+        412,
+        358,
+        440,
+        524
+      ],
+      "uv": [
+        426.0,
+        434.0
+      ],
+      "score": 0.8383949398994446,
+      "base_y_mm": -83.34919620010326,
+      "base_xyz_mm": [
+        515.717059383269,
+        -83.34919620010326,
+        -53.096100595744986
+      ],
+      "depth_median_mm": 707.7000122070312,
+      "recognition": "book_proposal",
+      "proposal_method": "sam3_instances",
+      "geometry_status": "not_checked",
+      "error": "",
+      "color": "unclassified",
+      "id": "book_2"
+    },
+    {
+      "box": [
+        439,
+        360,
+        496,
+        513
+      ],
+      "uv": [
+        460.0,
+        427.0
+      ],
+      "score": 0.8443277478218079,
+      "base_y_mm": -156.33577486050712,
+      "base_xyz_mm": [
+        546.282172285719,
+        -156.33577486050712,
+        -93.1241431816371
+      ],
+      "depth_median_mm": 765.5000000000001,
+      "recognition": "book_proposal",
+      "proposal_method": "sam3_instances",
+      "geometry_status": "not_checked",
+      "error": "",
+      "color": "unclassified",
+      "id": "book_3"
+    }
+  ],
+  "diagnostics": {
+    "stage": "candidates_ready",
+    "filter_method": "sam3_mask_camera_depth",
+    "accepted_depth_mm": [
+      400.0,
+      1200.0
+    ],
+    "boxes": [
+      {
+        "box": [
+          439,
+          360,
+          496,
+          513
+        ],
+        "score": 0.8443277478218079,
+        "status": "accepted",
+        "area_px": 5134,
+        "depth_median_mm": 765.5000000000001,
+        "depth_p10_p90_mm": [
+          705.6000366210938,
+          802.7000122070312
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          546.282172285719,
+          -156.33577486050712,
+          -93.1241431816371
+        ]
+      },
+      {
+        "box": [
+          412,
+          358,
+          440,
+          524
+        ],
+        "score": 0.8383949398994446,
+        "status": "accepted",
+        "area_px": 3339,
+        "depth_median_mm": 707.7000122070312,
+        "depth_p10_p90_mm": [
+          654.5,
+          785.6000366210938
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          515.717059383269,
+          -83.34919620010326,
+          -53.096100595744986
+        ]
+      },
+      {
+        "box": [
+          347,
+          360,
+          373,
+          530
+        ],
+        "score": 0.8325657844543457,
+        "status": "accepted",
+        "area_px": 3123,
+        "depth_median_mm": 710.9000244140625,
+        "depth_p10_p90_mm": [
+          650.0,
+          788.2000122070312
+        ],
+        "valid_fraction": 0.993421052631579,
+        "base_xyz_mm": [
+          522.5753311333624,
+          26.471136955420146,
+          -62.38669526635016
+        ]
+      },
+      {
+        "box": [
+          524,
+          282,
+          540,
+          301
+        ],
+        "score": 0.4827297031879425,
+        "status": "outside_depth_range",
+        "area_px": 188,
+        "depth_median_mm": 3168.300048828125,
+        "depth_p10_p90_mm": [
+          3047.199951171875,
+          3608.100048828125
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          2524.1538585452226,
+          -1252.2490270604367,
+          -1274.536083733704
+        ]
+      },
+      {
+        "box": [
+          384,
+          306,
+          422,
+          323
+        ],
+        "score": 0.2592170834541321,
+        "status": "outside_depth_range",
+        "area_px": 512,
+        "depth_median_mm": 3106.60009765625,
+        "depth_p10_p90_mm": [
+          3008.900146484375,
+          3466.800048828125
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          2487.1368729984847,
+          -247.90307098865932,
+          -1433.5765197006735
+        ]
+      }
+    ],
+    "prompt": "book",
+    "full_frame_raw_count": 27,
+    "full_frame_instance_count": 3,
+    "depth_recall_roi": [
+      267,
+      278,
+      576,
+      530
+    ],
+    "crop_raw_count": 13,
+    "candidate_count": 3
+  },
+  "gpt_called": false,
+  "robot_executed": false
+}

@@ -1,0 +1,12 @@
+{
+    "name": "toycar",
+    "primitives": {
+        "plane_0": {
+            "type": "plane",
+            "description": "The plane is the front plane of the toycar. Its centroid is located at the geometric center of the surface",
+            "position": [474.0,0.0,0.0],
+            "orientation": [1.0, 0.0, 0.0],
+            "align_with_axis": "x"
+        }
+    }
+}

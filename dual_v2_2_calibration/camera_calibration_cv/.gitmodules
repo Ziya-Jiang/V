@@ -1,0 +1,12 @@
+[submodule "depth_sensor"]
+	path = modules/depth_sensor
+	url = git@github.com:CURI-Simulation-and-Software-Group/depth_sensor.git
+[submodule "cuarm_configuration"]
+	path = modules/cuarm_configuration
+	url = git@github.com:CURI-Simulation-and-Software-Group/cuarm_configuration.git
+[submodule "robot_utilities"]
+	path = modules/robot_utilities
+	url = git@github.com:CURI-Simulation-and-Software-Group/robot_utilities.git
+[submodule "modules/curi_udp"]
+	path = modules/curi_udp
+	url = git@github.com:CURI-Simulation-and-Software-Group/curi_udp.git

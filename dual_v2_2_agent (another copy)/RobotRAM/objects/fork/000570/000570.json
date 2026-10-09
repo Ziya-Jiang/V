@@ -1,0 +1,29 @@
+{
+    "name": "fork",
+    "primitives": {
+        "grasp_0": {
+            "type": "grasp",
+            "description": "this grasp point is located on the middle of the fork",
+            "position": [44.33147  , -1.7101917, -1.078549 ],
+            "orientation": [
+                179.72264019931532,
+                0.3005680059850168,
+                -90.68353483402117
+            ]
+        },
+        "plane_0": {
+            "type": "plane",
+            "description": "The first plane is also a horizontal plane defined by the base of the fork.",
+            "position": [
+                345.9556840564181,
+                3.9877164456059795,
+                11.476289178486555
+            ],
+            "orientation": [
+                0.16733174976367104,
+                0.016742368803958425,
+                -0.985758478841476
+            ]
+        }
+    }
+}

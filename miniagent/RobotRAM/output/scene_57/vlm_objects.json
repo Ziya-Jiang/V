@@ -1,0 +1,28 @@
+[
+    {
+        "name": "green bowl",
+        "color": "green",
+        "category": "bowl"
+    },
+    {
+        "name": "yellow plate",
+        "color": "yellow",
+        "category": "plate"
+    },
+    {
+        "name": "blue cup",
+        "color": "blue",
+        "category": "cup"
+    },
+    {
+        "name": "bread",
+        "color": "",
+        "category": "bread"
+    },
+    {
+        "name": "wooden fork",
+        "color": "brown",
+        "category": "fork"
+
+    }
+]

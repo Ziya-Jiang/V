@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /mnt/ssd/user/V/dual_v2_2_agent
+export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONUNBUFFERED=1
+exec nice -n 10 /mnt/ssd/robotarm/env/robotram_wx/bin/python dual_v2_2_agent_pcl.py \
+  --no-rerun --no-rerun-viewer --assume-head-camera-calibrated \
+  --remote-rgbd \
+  --remote-rgbd-package /mnt/ssd/user/V/dual_v2_2_agent/cart_grasp \
+  --remote-rgbd-dir /mnt/ssd/user/V/dual_v2_2_agent/cart_grasp/runtime/erazer_rgbd \
+  --remote-camera-ssh-control /tmp/cart-erazer-control

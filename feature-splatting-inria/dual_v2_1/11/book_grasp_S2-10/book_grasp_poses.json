@@ -1,0 +1,91 @@
+{
+  "reference_frame": 0,
+  "requested_book_id": "S2-10",
+  "position_unit": "metres",
+  "opening_unit": "millimetres",
+  "pose_frame": "reference camera",
+  "world_frame_available": false,
+  "axis_definition": "rotation columns are x=gripper closing axis across the book thickness, y=spine axis towards the top of the book, z=approach axis into the shelf",
+  "position_definition": "spine_contact_center_m lies on the fitted spine plane midway between the two measured thickness boundaries; grasp_position_m is that point moved grasp_insertion_mm along +z and pregrasp_position_m is it moved grasp_approach_mm along -z",
+  "grasp_insertion_mm": 20.0,
+  "grasp_approach_mm": 70.0,
+  "grasp_spine_offset_mm": 0.0,
+  "finger_length_mm": 45.0,
+  "grasp_count": 1,
+  "grasps": [
+    {
+      "book_id": "S2-10",
+      "shelf": 2,
+      "quality": "low",
+      "gripper_opening_mm": 49.28455497101559,
+      "thickness_mm": 43.15736880861345,
+      "reference_thickness_mm": 43.15736880861345,
+      "spine_span_mm": 169.67910995566538,
+      "camera": {
+        "grasp_position_m": [
+          -0.09312335488114708,
+          -0.034747083419244686,
+          0.7793520152969222
+        ],
+        "spine_contact_center_m": [
+          -0.09546502217112034,
+          -0.031132234359865736,
+          0.7598212841129399
+        ],
+        "pregrasp_position_m": [
+          -0.10366085768602673,
+          -0.01848026265203942,
+          0.6914637249690021
+        ],
+        "rotation_matrix": [
+          [
+            -0.9903800963355734,
+            0.07374788498671095,
+            0.11708336449866272
+          ],
+          [
+            -0.09426814073306167,
+            -0.979002391895699,
+            -0.1807424529689474
+          ],
+          [
+            0.10129552026161921,
+            -0.19004095906537424,
+            0.9765365591991122
+          ]
+        ],
+        "quaternion_xyzw": [
+          0.05496757307952874,
+          -0.09332891465237685,
+          0.9932168755400786,
+          -0.04229087066921084
+        ],
+        "close_axis": [
+          -0.9903800963355734,
+          -0.09426814073306167,
+          0.10129552026161921
+        ],
+        "spine_axis": [
+          0.07374788498671095,
+          -0.979002391895699,
+          -0.19004095906537424
+        ],
+        "approach_axis": [
+          0.11708336449866272,
+          -0.1807424529689474,
+          0.9765365591991122
+        ],
+        "left_contact_m": [
+          -0.11683612171025257,
+          -0.033166416818125245,
+          0.7620071081762354
+        ],
+        "right_contact_m": [
+          -0.07409392263198811,
+          -0.029098051901606227,
+          0.7576354600496443
+        ]
+      }
+    }
+  ]
+}

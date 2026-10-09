@@ -1,0 +1,7 @@
+{
+  "spine_min_score": 0.20,
+  "book_min_score": 0.15,
+  "competitor_min_score": 0.15,
+  "book_coverage_min": 0.70,
+  "competitor_overlap_max": 0.60
+}

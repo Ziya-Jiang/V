@@ -1,0 +1,80 @@
+robot_cfg:
+    kinematics:
+        usd_path: "../share/robot.usd"
+        usd_robot_root: "/robot"
+        isaac_usd_path: ""
+        usd_flip_joints: {}
+        usd_flip_joint_limits: []
+
+        urdf_path: "../share/robot.urdf"
+        asset_root_path: ""
+
+        base_link: "base_link"
+        ee_link: "Empty_Link6"
+        link_names: ["base_link", "Empty_Link1", "Empty_Link2", "Empty_Link3", "Empty_Link4", "Empty_Link5", "Empty_Link6"]
+        lock_joints: null
+        extra_links: null
+
+        collision_link_names: ["base_link", "Empty_Link1", "Empty_Link2", "Empty_Link3", "Empty_Link4", "Empty_Link5", "Empty_Link6"] # List[str]
+        collision_spheres:
+          base_link:
+            - "center": [0.0, 0.0, 0.007]
+              "radius": 0.068
+          Empty_Link1:
+            - "center": [0.0, 0.0, -0.003]
+              "radius": 0.063
+          Empty_Link2:
+            - "center": [0.0, 0.0, -0.042]
+              "radius": 0.063
+            - "center": [0.0, -0.201, -0.047]
+              "radius": 0.058
+            - "center": [0.0, -0.075, -0.043]
+              "radius": 0.045
+            - "center": [0.0, -0.135, -0.043]
+              "radius": 0.045
+          Empty_Link3:
+            - "center": [0.0, -0.011, 0.03]
+              "radius": 0.055
+            - "center": [-0.0, -0.172, 0.051]
+              "radius": 0.055
+            - "center": [-0.0, -0.059, 0.044]
+              "radius": 0.035
+            - "center": [-0.0, -0.104, 0.045]
+              "radius": 0.034
+          Empty_Link4:
+            - "center": [-0.0, 0.003, 0.004]
+              "radius": 0.051
+          Empty_Link5:
+            - "center": [-0.0, -0.002, -0.006]
+              "radius": 0.051
+          Empty_Link6:
+            - "center": [0.0, 0.0, -0.018]
+              "radius": 0.035
+        collision_sphere_buffer: 0.008
+        extra_collision_spheres: {}
+        self_collision_ignore: # Dict[str, List[str]]
+          "base_link": ["Empty_Link1", "Empty_Link2"]
+          "Empty_Link1": ["Empty_Link2"]
+          "Empty_Link2": ["Empty_Link3"]
+          "Empty_Link3": ["Empty_Link4", "Empty_Link5"]
+          "Empty_Link4": ["Empty_Link5", "Empty_Link6"]
+          "Empty_Link5": ["Empty_Link6"]
+        self_collision_buffer: # Dict[str, float]
+          "base_link": 0
+          "Empty_Link1": 0
+          "Empty_Link2": 0
+          "Empty_Link3": 0
+          "Empty_Link4" : 0
+          "Empty_Link5" : 0
+          "Empty_Link6" : 0
+
+        use_global_cumul: True
+        mesh_link_names: null # List[str]
+
+        cspace:
+          joint_names: ["j1", "j2", "j3", "j4", "j5", "j6"] # List[str]
+          retract_config: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # List[float]
+          null_space_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0] # List[str]
+          cspace_distance_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0] # List[str]
+          max_jerk: 500.0
+          max_acceleration: 15.0

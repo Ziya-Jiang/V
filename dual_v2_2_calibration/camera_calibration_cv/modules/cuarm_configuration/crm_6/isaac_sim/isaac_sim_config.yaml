@@ -1,0 +1,15 @@
+usd_path: "../share/robot.usd"
+arm:
+  - name: "arm"
+    joint_names: ["shoulder_joint", "upper_arm_joint", "forearm_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint", "psm_insertion_joint", "psm_roll_joint"]
+gripper:
+  - name: "gripper"
+    joint_names: ["psm_pitch_joint", "psm_gripper1_joint", "psm_gripper2_joint"]
+target_link_names: ["psm_roll_joint"]
+targets:
+  - name: "target"
+    position: [0.5, 0.0, 0.05]
+    orientation: [0, -1, 0, 0]
+    color: [0.0, 0.0, 1.0]
+    size: 0.01
+    offset: [0.0, 0.0, 0.0]

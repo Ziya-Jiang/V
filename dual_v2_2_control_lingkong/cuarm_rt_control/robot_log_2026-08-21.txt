@@ -1,0 +1,1 @@
+2026-08-21 16:15:42.479 [ERROR] Arm 0 Failed to read status 100 times, motor ID: 3

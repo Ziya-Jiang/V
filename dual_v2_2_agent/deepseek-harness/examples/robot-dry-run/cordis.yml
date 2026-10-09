@@ -1,0 +1,20 @@
+# Opt-in plan-only robot overlay over the shipped Web composition.
+# Source-relative rows keep this fork runnable before the new packages publish.
+
+- insert:
+    - id: robot-python-agent
+      name: '../../packages/robot/robot-python-agent/src/index.ts'
+      config:
+        host: !!js process.env.ROBOT_AGENT_HOST ?? '127.0.0.1'
+        port: !!js Number.parseInt(process.env.ROBOT_AGENT_PORT ?? '15555', 10)
+        token: !!js process.env.ROBOT_AGENT_TOKEN
+        timeoutMs: !!js Number.parseInt(process.env.ROBOT_AGENT_TIMEOUT_MS ?? '30000', 10)
+        maxResponseBytes: 1048576
+        maxInstructionBytes: 16384
+        outputDir: !!js process.env.ROBOT_AGENT_OUTPUT_DIR ?? process.cwd()
+
+    - id: tool-robot
+      name: '../../packages/robot/tool-robot/src/index.ts'
+      config:
+        readTimeoutMs: 30000
+        planTimeoutMs: 60000

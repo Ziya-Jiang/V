@@ -1,0 +1,196 @@
+[
+  {
+    "subtask_id": 9,
+    "action": "first_reset",
+    "target_position": null,
+    "target_rotation": null,
+    "description": "开场准备位；实际位姿由RobotArm.control_joint_position()中的intermediate_reset_pos决定",
+    "object": null,
+    "arm": "right"
+  },
+  {
+    "subtask_id": 1,
+    "action": "move_above_grasp",
+    "target_position": [
+      411.50201623702037,
+      -255.48537562888635,
+      -56.182567013744574
+    ],
+    "target_rotation": [
+      -90.0,
+      -0.0,
+      90.0
+    ],
+    "description": "右臂保持当前高度和夹爪姿态，X 不动只沿 Y 对准书，再沿 +X 前进 20 cm 抓住书脊",
+    "object": "object_0",
+    "arm": "right",
+    "book_grasp_mode": "cart+",
+    "book_center_xy": [
+      580.3306241359036,
+      -255.48537562888635
+    ]
+  },
+  {
+    "subtask_id": 2,
+    "action": "move_down_to_grasp",
+    "target_position": [
+      580.3306241359036,
+      -255.48537562888635,
+      -56.182567013744574
+    ],
+    "target_rotation": [
+      -90.0,
+      -0.0,
+      90.0
+    ],
+    "description": "右臂保持当前高度和夹爪姿态，X 不动只沿 Y 对准书，再沿 +X 前进 20 cm 抓住书脊",
+    "object": "object_0",
+    "arm": "right",
+    "book_grasp_mode": "cart+",
+    "book_center_xy": [
+      580.3306241359036,
+      -255.48537562888635
+    ]
+  },
+  {
+    "subtask_id": 3,
+    "action": "close_gripper",
+    "target_position": [
+      580.3306241359036,
+      -255.48537562888635,
+      -56.182567013744574
+    ],
+    "target_rotation": [
+      -90.0,
+      -0.0,
+      90.0
+    ],
+    "description": "右臂保持当前高度和夹爪姿态，X 不动只沿 Y 对准书，再沿 +X 前进 20 cm 抓住书脊",
+    "object": "object_0",
+    "arm": "right",
+    "book_grasp_mode": "cart+",
+    "book_center_xy": [
+      580.3306241359036,
+      -255.48537562888635
+    ]
+  },
+  {
+    "subtask_id": 4,
+    "action": "lift_object",
+    "target_position": [
+      580.3306241359036,
+      -255.48537562888635,
+      -26.182567013744574
+    ],
+    "target_rotation": [
+      -90.0,
+      -0.0,
+      90.0
+    ],
+    "description": "提起后平移到左侧格子，放下后抬升，不复位",
+    "object": "object_0",
+    "arm": "right",
+    "book_grasp_mode": "cart+",
+    "book_center_xy": [
+      580.3306241359036,
+      -255.48537562888635
+    ]
+  },
+  {
+    "subtask_id": 5,
+    "action": "move_to_target",
+    "target_position": [
+      580.3306241359036,
+      -195.48537562888635,
+      -26.182567013744574
+    ],
+    "target_rotation": [
+      -90.0,
+      -0.0,
+      90.0
+    ],
+    "description": "提起后平移到左侧格子，放下后抬升，不复位",
+    "object": "object_0",
+    "arm": "right",
+    "book_grasp_mode": "cart+",
+    "book_center_xy": [
+      580.3306241359036,
+      -255.48537562888635
+    ]
+  },
+  {
+    "subtask_id": 6,
+    "action": "move_down_to_place",
+    "target_position": [
+      580.3306241359036,
+      -195.48537562888635,
+      -56.182567013744574
+    ],
+    "target_rotation": [
+      -90.0,
+      -0.0,
+      90.0
+    ],
+    "description": "提起后平移到左侧格子，放下后抬升，不复位",
+    "object": "object_0",
+    "arm": "right",
+    "book_grasp_mode": "cart+",
+    "book_center_xy": [
+      580.3306241359036,
+      -255.48537562888635
+    ]
+  },
+  {
+    "subtask_id": 7,
+    "action": "open_gripper",
+    "target_position": [
+      580.3306241359036,
+      -195.48537562888635,
+      -56.182567013744574
+    ],
+    "target_rotation": [
+      -90.0,
+      -0.0,
+      90.0
+    ],
+    "description": "提起后平移到左侧格子，放下后抬升，不复位",
+    "object": "object_0",
+    "arm": "right",
+    "book_grasp_mode": "cart+",
+    "book_center_xy": [
+      580.3306241359036,
+      -255.48537562888635
+    ]
+  },
+  {
+    "subtask_id": 8,
+    "action": "move_up_after_release",
+    "target_position": [
+      580.3306241359036,
+      -195.48537562888635,
+      23.817432986255426
+    ],
+    "target_rotation": [
+      -90.0,
+      -0.0,
+      90.0
+    ],
+    "description": "提起后平移到左侧格子，放下后抬升，不复位",
+    "object": "object_0",
+    "arm": "right",
+    "book_grasp_mode": "cart+",
+    "book_center_xy": [
+      580.3306241359036,
+      -255.48537562888635
+    ]
+  },
+  {
+    "subtask_id": 9,
+    "action": "reset_all",
+    "target_position": null,
+    "target_rotation": null,
+    "description": "完成当前物体后，左右臂回到安全起始位置",
+    "object": "null",
+    "arm": "right"
+  }
+]

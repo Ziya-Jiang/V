@@ -1,0 +1,20 @@
+{
+  "book_prompt": "book.",
+  "cart_prompt": "utility cart. trolley.",
+  "book_score": 0.25,
+  "cart_score": 0.25,
+  "text_score": 0.2,
+  "nms_iou": 0.55,
+  "cart_score_margin": 0.1,
+  "cart_top_extension": 0.35,
+  "min_box_cart_overlap": 0.65,
+  "cart_reference_patch": [0.15, 0.45, 0.85, 0.9],
+  "min_depth_pixels": 60,
+  "min_depth_fraction": 0.5,
+  "cart_max_depth_spread_mm": 450.0,
+  "book_max_depth_spread_mm": 150.0,
+  "depth_padding_mm": 200.0,
+  "base_xy_padding_mm": 150.0,
+  "base_z_offsets_mm": [-120.0, 550.0],
+  "selected_crop_padding": 0.15
+}

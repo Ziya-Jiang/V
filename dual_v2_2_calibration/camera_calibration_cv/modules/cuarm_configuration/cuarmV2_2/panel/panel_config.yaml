@@ -1,0 +1,96 @@
+mainwindow_size: [600,900]
+enable_ndi: false
+dt: 0.03
+general:
+  interpolation: Cos
+  target_type: Position
+  actuator_mode: Velocity
+  acc_time: 3.0
+  vel_time: 0
+qml: 
+  camera:
+    field_of_view: 2.8
+    position: [30.0, 30.0, 8.0]
+    view_center: [0, 0, 0.75]
+arm:
+  - name: "arm"
+    type: "CuarmV2_2"
+    joint_size: 7
+    # joint_lower_limit: [150, 111, 200, 114.5, 200, 122, 360]
+    # joint_upper_limit: [-150, -65.8, -200, -74,-200, -114.5, -360]
+    joint_lower_limit: [-150, -75, -200, -75, -200, -110, -360]
+    joint_upper_limit: [150, 110, 200, 110, 200, 110, 360]
+    motor:
+      pos_vel_kp: [5, 5, 5, 5, 5, 5, 5]
+      pos_tor_kp: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+      tor_vel_kp: [0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3]
+      pos_vel_kd: [0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3]
+      pos_tor_kd: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+      tor_vel_kd: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+    safety:
+      quick_stop:
+        position: 1000
+        velocity: 1000
+        torque: 5000
+      saturation:
+        position: 1000
+        velocity: 100
+        torque: 5000
+    force_control:
+      gravity:
+        ratio: 0.35
+        kd: 0
+      impedance:
+        tool_force_kp: [300, 300, 300, 5.0, 5.0, -5.0]
+        tool_force_kd: [0.2, 0.2, 0.2, 0.1 ,0.1 , 0.1]
+        tool_force_saturation: [10, 10, 10, 2, 2, 2]
+      joint_impedance:
+        joint_force_kp: [20,20,20,20,20,20,20]
+        joint_force_kd: [0.3,0.3,0.3,0.3,0.3,0.3,0.3]
+        joint_force_saturation: [5,5,5,5,5,5,5]
+      admittance:
+        upperBound: 10
+        threshold: 3
+        maxSpeed: 15
+    qml:
+      transformation:
+        rotation: [0, 0, 80]
+        translation: [0, 0, 0]
+      urdf: "../share/robot.urdf"
+      mesh_dir: "../share/meshes/visual/"
+      # mesh:  #x,y,z,roll,pitch,yaw (relative to previous joint)
+      # - source: "../share/meshes/visual/Base.obj"
+      #   origin: [0,0,0,0,0,0] 
+      #   type: fixed
+      # - source: "../share/meshes/visual/L1.obj"
+      #   origin: [0,0,0.537,0,0,0]
+      #   type: revolute
+      # - source: "../share/meshes/visual/L2.obj"
+      #   origin: [0,0,0,-90,0,0]
+      #   type: revolute
+      # - source: "../share/meshes/visual/L3.obj"
+      #   origin: [0,-0.322,0,+90,0,0]
+      #   type: revolute
+      # - source: "../share/meshes/visual/L4.obj"
+      #   origin: [0,0,0,-90,0,0]
+      #   type: revolute
+      # - source: "../share/meshes/visual/L5.obj"
+      #   origin: [0,-0.28,0,+90,0,0]
+      #   type: revolute
+      # - source: "../share/meshes/visual/L6.obj"
+      #   origin: [0,0,0,-90,0,0]
+      #   type: revolute
+      # - source: "../share/meshes/visual/L7_old.obj"
+      #   origin: [0,-0.0945,0,+90,0,0]
+      #   type: revolute
+gripper: 
+  - gripper_name: EZGripper_Gen2
+    joint_size: 1
+    qml: 
+      transformation:
+        rotation: [0, 0, 80]
+        translation: [0, 0, 0]
+      model: EZGripperGen2Entity.qml
+camera:
+  - camera_name: "Kinect"
+  - camera_name: "USB"

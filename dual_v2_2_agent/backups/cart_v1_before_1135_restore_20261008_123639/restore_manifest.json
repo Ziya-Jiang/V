@@ -1,0 +1,76 @@
+{
+  "target_local_time": "2026-10-08 11:35 Asia/Hong_Kong",
+  "source": "Rebuilt from this task's recorded file contents and patches before 03:35 UTC.",
+  "restored_files": [
+    {
+      "path": "test_cart_book_grasp_v1.py",
+      "sha256": "e1f5e6d1457bd6e504b3eac9a400e2df0eca331fa04f30dd2cc4f49af57277bb"
+    },
+    {
+      "path": "cart_book_grasp_v1_config.json",
+      "sha256": "0aa4ce01d5b2c4b96a4e6132dff744ce1fe6b6ff631dc40f72454717ea02f7af"
+    },
+    {
+      "path": "book_grasp_1_1_local.py",
+      "sha256": "61c9222d432116defa6f574ab3313769872fd51ee6f7b57b956618a65306e539"
+    },
+    {
+      "path": "book_spine_wrist.py",
+      "sha256": "9acb83da259bdd439ec421d9a1214bbc371cc6d1d06f05c409640ffa66ecad5a"
+    },
+    {
+      "path": "test_book_grasp_visualization.py",
+      "sha256": "c5ddec66cb9819bbbf28a1ffa8ab077fe88b80eb4531b02a7f9877ee496b225c"
+    },
+    {
+      "path": "test_book_forward_waypoints.py",
+      "sha256": "ac6d844e848cacaecfa2cd01f64551722fab20faba6c2ef1c556d1fa03242135"
+    },
+    {
+      "path": "book_grasp_1_2_local_config.json",
+      "sha256": "0aa4ce01d5b2c4b96a4e6132dff744ce1fe6b6ff631dc40f72454717ea02f7af"
+    },
+    {
+      "path": "test_book_release_reset.py",
+      "sha256": "280f0a691f3e2783c190f1edb957a7b6018c82c454f327f7e0c03ea340db21d5"
+    },
+    {
+      "path": "book_grasp_1_1_local_config.json",
+      "sha256": "0aa4ce01d5b2c4b96a4e6132dff744ce1fe6b6ff631dc40f72454717ea02f7af"
+    },
+    {
+      "path": "book_grasp_visualization.py",
+      "sha256": "f103c2d75e20521edad94fe1ededf65d5d435ac1d0adde4d8fb9ea17af47db9e"
+    },
+    {
+      "path": "test_book_grasp_1_2.py",
+      "sha256": "abea715d9d8761ac791fe75ff2b3e13d60a0521ef62db8beaf27919750413bfc"
+    },
+    {
+      "path": "cart_book_grasp_v1.py",
+      "sha256": "6c6511d0d85376caa0dde377a64e5f11ccb6d4aaf755b2656eb5c780b921879b"
+    },
+    {
+      "path": "dual_v2_2_agent_pcl.py",
+      "sha256": "2e6fa15a3e14581fb755dee549b21c909d5098a25cb1c3645ae1bf331db811c9"
+    },
+    {
+      "path": "book_grasp_1_2_local.py",
+      "sha256": "fc41ff5b60b073d409259f41deffa6adf2c7806ff09e9be0bef0f043724a4542"
+    },
+    {
+      "path": "RobotRAM/scripts/step4_manual_planning.py",
+      "sha256": "833a22bdec946cff7664fed080e21dc5494e4e108352fefb4a809c9b5474edac"
+    }
+  ],
+  "archived_post_target_files": [
+    "book_cartesian_grasp.py",
+    "book_grasp_1_2_geometry_config.json",
+    "test_book_lower_waypoints.py",
+    "cart_book_grasp_v1_tiral.py",
+    "cart_book_grasp_v1_tiral_config.json",
+    "cart_book_grasp_v1_tiral_wrist_config.json",
+    "cart_book_grasp_v1_tiral_semantic_config.json",
+    "test_cart_book_grasp_tiral.py"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "backend": "gpt",
+  "min_detection_score": 0.3,
+  "duplicate_iou": 0.65,
+  "min_book_spine_coverage": 0.7,
+  "max_other_spine_coverage": 0.25,
+  "min_llm_confidence": 0.85,
+  "model": "gpt-4.1",
+  "request_timeout_seconds": 30.0
+}

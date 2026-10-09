@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <title>Agent + Skill 架构梳理 / Agent + Skill Architecture Review</title>
+  <style>
+    @page { size: A4 landscape; margin: 0; }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      color: #202124;
+      background: #eef0f2;
+      font-family: "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei",
+                   "PingFang SC", Arial, sans-serif;
+    }
+    body { font-size: 11px; line-height: 1.48; }
+    .page {
+      position: relative;
+      width: 297mm;
+      min-height: 210mm;
+      margin: 0 auto 8mm;
+      padding: 14mm 16mm 13mm;
+      overflow: hidden;
+      background: #fff;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 22mm 25mm;
+      background: #1f2329;
+      color: #fff;
+    }
+    .cover .rule { width: 28mm; height: 2.5mm; margin: 9mm 0; background: #fc5a1b; }
+    .cover h1 { max-width: 235mm; margin: 0; font-size: 29px; line-height: 1.24; }
+    .cover h2 { max-width: 235mm; margin: 5mm 0 0; color: #d7dbe0; font-size: 18px; font-weight: 500; }
+    .cover .summary { max-width: 220mm; color: #bec5cd; font-size: 13px; }
+    .cover .meta { position: absolute; right: 25mm; bottom: 18mm; color: #9ea7b2; text-align: right; }
+    h1, h2, h3, p { margin-top: 0; }
+    h2 { margin-bottom: 5mm; font-size: 20px; line-height: 1.2; }
+    h3 { margin: 0 0 2.5mm; font-size: 13px; }
+    p { margin-bottom: 2.5mm; }
+    .eyebrow {
+      margin-bottom: 2mm;
+      color: #e94b0c;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .lede { max-width: 245mm; margin-bottom: 5mm; color: #5b6470; font-size: 12px; }
+    .bilingual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8mm;
+      align-items: start;
+    }
+    .lang {
+      min-width: 0;
+      padding-left: 4mm;
+      border-left: 1px solid #dadddf;
+    }
+    .lang:first-child { padding-left: 0; border-left: 0; }
+    .lang-label {
+      display: inline-block;
+      margin-bottom: 3mm;
+      padding: 1mm 2.2mm;
+      border-radius: 2mm;
+      color: #fff;
+      background: #30363d;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: .09em;
+    }
+    .callout {
+      margin: 4mm 0;
+      padding: 3.5mm 4mm;
+      border-left: 1.4mm solid #fc5a1b;
+      background: #f6f7f8;
+    }
+    .callout strong { display: block; margin-bottom: 1mm; }
+    .layer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3mm;
+      margin: 4mm 0;
+    }
+    .layer {
+      min-height: 27mm;
+      padding: 3mm;
+      border: 1px solid #d5d9dd;
+      border-radius: 2.5mm;
+      background: #fafafa;
+    }
+    .layer.hot { border-color: #fc5a1b; background: #fff6f2; }
+    .layer .number { color: #e94b0c; font-size: 8px; font-weight: 800; }
+    .layer b { display: block; margin: 1mm 0; font-size: 11px; }
+    .layer small { color: #626b76; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 2mm;
+      margin: 4mm 0;
+    }
+    .flow-step {
+      position: relative;
+      min-height: 25mm;
+      padding: 3mm 2.4mm;
+      border-top: 1.2mm solid #343a40;
+      background: #f4f5f6;
+    }
+    .flow-step:nth-child(2),
+    .flow-step:nth-child(3),
+    .flow-step:nth-child(5) { border-top-color: #fc5a1b; }
+    .flow-step b { display: block; margin-bottom: 1mm; }
+    .flow-step small { color: #67717c; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th, td {
+      padding: 2.2mm 2.5mm;
+      border: 1px solid #d9dde1;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+    th { color: #fff; background: #30363d; font-size: 9px; }
+    td { font-size: 9.3px; }
+    tbody tr:nth-child(even) { background: #f7f8f9; }
+    .compact th, .compact td { padding: 1.7mm 2mm; }
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
+      margin: 3mm 0;
+    }
+    .card {
+      padding: 3.5mm;
+      border: 1px solid #d7dade;
+      border-radius: 2.5mm;
+      break-inside: avoid;
+    }
+    .card.accent { border-top: 1.4mm solid #fc5a1b; }
+    .card p:last-child { margin-bottom: 0; }
+    ul, ol { margin: 0; padding-left: 5mm; }
+    li { margin-bottom: 1.7mm; }
+    code {
+      padding: .2mm 1mm;
+      border-radius: 1mm;
+      color: #9b3108;
+      background: #f3f4f5;
+      font-family: "DejaVu Sans Mono", monospace;
+      font-size: 8.5px;
+    }
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3mm;
+      margin: 4mm 0 5mm;
+    }
+    .metric { padding: 3mm; border-top: 1mm solid #fc5a1b; background: #f4f5f6; }
+    .metric strong { display: block; font-size: 18px; }
+    .metric span { color: #606a75; font-size: 9px; }
+    .footer {
+      position: absolute;
+      right: 16mm;
+      bottom: 6mm;
+      left: 16mm;
+      display: flex;
+      justify-content: space-between;
+      color: #9299a1;
+      font-size: 7.5px;
+    }
+    .footer b { color: #5f6770; }
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4mm;
+    }
+    .roadmap .card { min-height: 83mm; }
+    .roadmap .period { color: #e94b0c; font-size: 9px; font-weight: 800; }
+    .invariant {
+      display: grid;
+      grid-template-columns: 8mm 1fr;
+      gap: 2mm;
+      margin-bottom: 2.5mm;
+      align-items: start;
+    }
+    .invariant .mark {
+      width: 6mm;
+      height: 6mm;
+      border-radius: 50%;
+      color: #fff;
+      background: #30363d;
+      font-size: 8px;
+      font-weight: 800;
+      line-height: 6mm;
+      text-align: center;
+    }
+    @media print {
+      html, body { background: #fff; }
+      .page { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <p class="eyebrow">Dual V2.2 · Robot Soul · Architecture Review</p>
+    <h1>Agent + Skill 架构梳理</h1>
+    <h2>Agent + Skill Architecture Review</h2>
+    <div class="rule"></div>
+    <p class="summary">
+      从“VLM 直接调用函数”到“Plan → Approval → Task → Executor”的受监督机器人运行时。<br>
+      From direct VLM function calling to a supervised robot runtime built around
+      Plan → Approval → Task → Executor.
+    </p>
+    <div class="meta">
+      <div>Current implementation: <b>dual_v2_2_agent</b></div>
+      <div>Review date: 2026-08-27</div>
+    </div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Executive Summary</p>
+    <h2>核心判断 / Executive Assessment</h2>
+    <div class="metric-row">
+      <div class="metric"><strong>5</strong><span>内建高层 Skills / Built-in Skills</span></div>
+      <div class="metric"><strong>8</strong><span>感知与操作 Tools / Perception & motion Tools</span></div>
+      <div class="metric"><strong>1</strong><span>唯一硬件所有者 / Sole hardware owner</span></div>
+      <div class="metric"><strong>2</strong><span>启动模式 / start & console modes</span></div>
+    </div>
+    <div class="bilingual">
+      <div class="lang">
+        <span class="lang-label">中文</span>
+        <div class="callout">
+          <strong>新架构的本质不是“换了一个模型”。</strong>
+          它重新定义了模型、网页、Agent、Skill、Tool 与底层控制之间的权限边界。
+        </div>
+        <p>
+          传统 VLM + Functions 模式让模型选择并调用函数，规划和执行容易发生在同一链路中。
+          当前实现让模型或规则 Planner 只产生高层语义 Plan；Plan 本身不运动机器人，
+          必须经过白名单校验、现场检查和逐 Plan 批准，才会创建 Hardware Task。
+        </p>
+        <p>
+          Python Agent 是机械臂、相机与感知模型的唯一软件所有者。Skill 负责完整任务策略，
+          Tool 负责原子能力，RobotRAM 继续承担已验证的感知、规划与执行。
+        </p>
+        <p><b>最大收益：</b>安全权威分离、任务可观测、能力可复用、故障可恢复。</p>
+        <p><b>主要代价：</b>进程和状态更多、策略存在双份校验、Planner 泛化能力仍有限。</p>
+      </div>
+      <div class="lang">
+        <span class="lang-label">ENGLISH</span>
+        <div class="callout">
+          <strong>The new architecture is not merely a model replacement.</strong>
+          It reallocates authority across the model, UI, Agent, Skills, Tools, and control stack.
+        </div>
+        <p>
+          In a conventional VLM + Functions design, the model chooses functions and planning may
+          flow directly into dispatch. The current implementation allows a rule-based or LLM
+          Planner to propose only a high-level semantic Plan. A Plan is inert until allowlist
+          validation, on-site checks, and per-Plan approval create a Hardware Task.
+        </p>
+        <p>
+          The Python Agent is the sole software owner of arms, cameras, and perception models.
+          Skills own task strategy, Tools expose atomic capabilities, and RobotRAM continues to
+          provide the validated perception, planning, and execution stack.
+        </p>
+        <p><b>Primary gains:</b> separated safety authority, observability, reuse, and recovery.</p>
+        <p><b>Main costs:</b> more processes and state, duplicated policy checks, and limited planner generality.</p>
+      </div>
+    </div>
+    <div class="footer"><span>Agent + Skill Architecture Review</span><b>02</b></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Layered Architecture</p>
+    <h2>层次结构 / System Layers</h2>
+    <div class="layer-grid">
+      <div class="layer"><span class="number">01</span><b>操作入口 / Interfaces</b><small>Robot Soul GUI + Harness：目标输入、Plan 审查、现场审批、Task Timeline。</small></div>
+      <div class="layer hot"><span class="number">02</span><b>策略与审批 / Policy</b><small>Skill 白名单、参数边界、动作预算、Plan TTL、checklist 与确认口令。</small></div>
+      <div class="layer hot"><span class="number">03</span><b>Agent Server</b><small>Plan/Task、硬件锁、异步执行、事件、取消与审批请求。</small></div>
+      <div class="layer"><span class="number">04</span><b>Planner</b><small>规则优先、可选 LLM；自然语言 → SkillCall Plan。</small></div>
+      <div class="layer"><span class="number">05</span><b>Executor</b><small>依赖校验、执行时语义解析、逐 Skill 执行与事件发送。</small></div>
+      <div class="layer hot"><span class="number">06</span><b>Skill</b><small>完整任务策略：感知、抓放、整理、恢复、启动。</small></div>
+      <div class="layer"><span class="number">07</span><b>Tool</b><small>3 个感知 Tool + 5 个操作 Tool，统一返回 ToolResult。</small></div>
+      <div class="layer"><span class="number">08</span><b>RobotRAM + Control</b><small>Step1–5、CuRobo、Upper、RT Control 与物理硬件。</small></div>
+    </div>
+    <div class="bilingual">
+      <div class="lang">
+        <span class="lang-label">中文职责边界</span>
+        <ul>
+          <li><b>Plan：</b>纯数据，包含 instruction、SkillCall 与 constraints。</li>
+          <li><b>Skill：</b>任务级组合，封装顺序、前置条件、失败恢复与业务语义。</li>
+          <li><b>Tool：</b>确定性原子能力，是进入 RobotRAM 的受控适配层。</li>
+          <li><b>RobotContext：</b>持有相机、机械臂、模型、标定和当前场景状态。</li>
+          <li><b>RobotRAM：</b>底层能力被复用，而非被重新实现。</li>
+        </ul>
+      </div>
+      <div class="lang">
+        <span class="lang-label">ENGLISH RESPONSIBILITIES</span>
+        <ul>
+          <li><b>Plan:</b> inert data containing instruction, SkillCalls, and constraints.</li>
+          <li><b>Skill:</b> task-level composition owning order, preconditions, recovery, and semantics.</li>
+          <li><b>Tool:</b> deterministic atomic capability and controlled adapter into RobotRAM.</li>
+          <li><b>RobotContext:</b> owns arms, cameras, models, calibration, and current scene state.</li>
+          <li><b>RobotRAM:</b> existing low-level capabilities are reused rather than rewritten.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>关键不变量 / Key invariant</strong>
+      模型不能提交关节角、CAN、shell、任意坐标或任意原子调用；所有真机能力都通过
+      Plan → Approval → Task → Executor 漏斗收敛。The model cannot submit joint, CAN,
+      shell, arbitrary pose, or arbitrary atomic calls; hardware authority narrows through one execution funnel.
+    </div>
+    <div class="footer"><span>Current layered implementation</span><b>03</b></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Execution Flow</p>
+    <h2>真实执行链路 / End-to-End Execution</h2>
+    <div class="flow">
+      <div class="flow-step"><b>1 · Goal</b><small>“整理桌面”<br>“Clean the table”</small></div>
+      <div class="flow-step"><b>2 · Plan</b><small>Planner 生成 tidy_table SkillCall；不初始化硬件。</small></div>
+      <div class="flow-step"><b>3 · Approval</b><small>Plan 白名单、TTL、现场 checklist、确认口令。</small></div>
+      <div class="flow-step"><b>4 · Task</b><small>Server 创建唯一活动 Task，并获取 hardware lock。</small></div>
+      <div class="flow-step"><b>5 · Perception</b><small>Ground → Estimate → Localize；建立当前场景。</small></div>
+      <div class="flow-step"><b>6 · Skill</b><small>tidy_table 过滤目标，逐项调用 pick_and_place。</small></div>
+      <div class="flow-step"><b>7 · Tools</b><small>Approach、Grasp、Transport、Place、Reset。</small></div>
+      <div class="flow-step"><b>8 · Hardware</b><small>Step5 → RobotArm UDP → CuRobo / RT Control。</small></div>
+    </div>
+    <div class="bilingual">
+      <div class="lang">
+        <span class="lang-label">中文</span>
+        <h3>为什么执行时才解析物体？</h3>
+        <p>
+          Plan 使用 <code>{"category":"cup","color":"blue"}</code> 等语义引用。
+          感知完成后，Executor 才将其解析为 <code>object_2</code>。这样 Plan 不绑定某一次
+          检测的临时编号。
+        </p>
+        <h3>“整理桌面”怎样展开？</h3>
+        <p>
+          Planner 只提交一个 <code>tidy_table</code> Skill。Skill 内部感知场景、过滤缺失物体，
+          再对碗、面包和杯子逐项调用 <code>pick_and_place</code>。每项任务再由 Step4
+          生成详细动作序列。
+        </p>
+        <h3>错误怎样返回？</h3>
+        <p>
+          ToolResult → Skill → Executor → Server Task → 网页 Timeline。当前信息可以指出
+          “把什么放到哪里、在哪个动作、哪只手臂、目标位置及底层反馈”。
+        </p>
+      </div>
+      <div class="lang">
+        <span class="lang-label">ENGLISH</span>
+        <h3>Why resolve objects at execution time?</h3>
+        <p>
+          Plans carry semantic references such as
+          <code>{"category":"cup","color":"blue"}</code>. After perception, the Executor
+          resolves them to transient IDs such as <code>object_2</code>. The Plan therefore
+          remains independent of one detection frame.
+        </p>
+        <h3>How does “tidy the table” expand?</h3>
+        <p>
+          The Planner emits one <code>tidy_table</code> Skill. The Skill perceives the scene,
+          filters unavailable candidates, and invokes <code>pick_and_place</code> for the bowl,
+          bread, and cup. Step4 then expands each placement into detailed motion actions.
+        </p>
+        <h3>How do errors propagate?</h3>
+        <p>
+          ToolResult → Skill → Executor → Server Task → Web Timeline. Current messages identify
+          the object, target, failed phase, arm, target position, and low-level feedback.
+        </p>
+      </div>
+    </div>
+    <div class="footer"><span>Plan → Approval → Task → Executor</span><b>04</b></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Architecture Comparison</p>
+    <h2>VLM + Functions 与 Agent + Skill 对比 / Architecture Comparison</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:13%">维度 / Dimension</th>
+          <th style="width:27%">传统 VLM + Functions</th>
+          <th style="width:31%">当前 Agent + Skill</th>
+          <th style="width:29%">价值 / Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>模型输出<br>Model output</td><td>模型直接选择 approach / grasp / place 等函数。<br>The model selects atomic functions.</td><td>模型或规则只提交高层 Skill Plan。<br>The planner proposes a high-level Skill Plan.</td><td>模型表达意图，确定性代码掌握运动细节。<br>Intent is separated from deterministic motion.</td></tr>
+        <tr><td>执行触发<br>Execution</td><td>推理后可直接 dispatch。<br>Inference may immediately dispatch.</td><td>Plan → 审查 → 批准 → Task。<br>Plan → review → approval → Task.</td><td>Plan 可拒绝、过期和审计，且不等于运动。<br>A Plan is rejectable, expiring, auditable, and inert.</td></tr>
+        <tr><td>硬件所有权<br>Ownership</td><td>脚本、bridge 或模型函数可能都进入硬件。<br>Multiple entry points may touch hardware.</td><td>Python Agent 是唯一硬件所有者。<br>The Python Agent is the sole owner.</td><td>避免相机、机械臂、GPU 与控制状态冲突。<br>Prevents conflicting hardware and model ownership.</td></tr>
+        <tr><td>能力抽象<br>Capability</td><td>函数薄包装，流程常在 prompt 或脚本中。<br>Workflow often lives in prompts or scripts.</td><td>Skill 封装任务策略，Tool 封装原子动作。<br>Skills own strategy; Tools own atomic actions.</td><td>能力可测试、组合、版本化和授权。<br>Capabilities become testable, composable, versionable.</td></tr>
+        <tr><td>物体引用<br>Object binding</td><td>较早绑定 object_0 / object_1。<br>Early binding to transient IDs.</td><td>语义引用在感知后解析。<br>Semantic references resolve after perception.</td><td>Plan 与特定场景编号解耦。<br>Plans decouple from one scene numbering.</td></tr>
+        <tr><td>安全边界<br>Safety</td><td>主要依赖 prompt 和人工操作纪律。<br>Mostly prompt and operator discipline.</td><td>白名单、参数校验、锁、动作预算和现场批准。<br>Allowlist, validation, locks, budgets, approval.</td><td>安全规则由代码实施，而非依赖模型自觉。<br>Safety is enforced by code, not model compliance.</td></tr>
+        <tr><td>可观测性<br>Observability</td><td>以日志为主，上下文容易丢失。<br>Mostly logs; context is easily lost.</td><td>Plan、Task、step、placement、operation 事件链。<br>Structured lifecycle and stage events.</td><td>能定位具体物体与失败环节。<br>Failures are attributable to object and stage.</td></tr>
+        <tr><td>迁移成本<br>Migration</td><td>直接运行 RobotRAM。<br>RobotRAM is called directly.</td><td>RobotRAM 被 Tool / Skill 包装并继续复用。<br>RobotRAM remains under adapters.</td><td>保留已验证能力，避免推倒重写。<br>Validated capabilities survive the migration.</td></tr>
+      </tbody>
+    </table>
+    <div class="footer"><span>Old control model versus supervised runtime</span><b>05</b></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Lifecycle & Supervision</p>
+    <h2>launch_robot_soul.sh 改变了什么 / What the Launcher Adds</h2>
+    <div class="cards-3">
+      <div class="card accent">
+        <h3>统一装配 / Unified assembly</h3>
+        <p>预检、构建 Harness Web、准备配置、共享 token，并按顺序启动硬件面、Harness、GUI 与 Supervisor。</p>
+        <p>Preflight, web build, configuration, shared token, and ordered startup of hardware plane, Harness, GUI, and supervisor.</p>
+      </div>
+      <div class="card accent">
+        <h3>双模式 / Dual modes</h3>
+        <p><code>start</code> 直接启动真机栈；<code>console</code> 仅启动本地网页与 Harness，硬件保持 offline。</p>
+        <p><code>start</code> boots hardware immediately; <code>console</code> keeps hardware offline until on-site startup.</p>
+      </div>
+      <div class="card accent">
+        <h3>显式状态机 / Lifecycle state</h3>
+        <p><b>offline → starting → healthy / faulted → recovering</b></p>
+        <p>“网页在线”与“机器人可执行”成为两个独立状态。UI availability no longer implies hardware readiness.</p>
+      </div>
+      <div class="card">
+        <h3>故障域分离 / Fault isolation</h3>
+        <p>Harness/GUI 连续失败触发完整安全停机；硬件面失败则锁定并停止硬件，但保留网页用于诊断和恢复。</p>
+        <p>Cognitive/UI failure stops the full stack; hardware failure locks the hardware plane while keeping diagnostics online.</p>
+      </div>
+      <div class="card">
+        <h3>现场恢复 / On-site recovery</h3>
+        <p>网页启动和恢复都要求确认口令、生命周期互斥锁与 sudo 授权检查。</p>
+        <p>Web startup and recovery require confirmation, lifecycle locking, and valid sudo authorization.</p>
+      </div>
+      <div class="card">
+        <h3>统一退出 / Coordinated shutdown</h3>
+        <p>Supervisor 与启动脚本统一清理 Agent、Planner、Upper 与 RT Control，减少残留进程和硬件所有权冲突。</p>
+        <p>Coordinated cleanup reduces stale processes and conflicting hardware ownership.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>架构意义 / Architectural significance</strong>
+      <code>launch_robot_soul.sh</code> 不只是 shell launcher，而是把认知面、操作面与硬件面装配为
+      一个具有健康检查、故障锁定和人工恢复能力的产品运行时。
+      It is a lifecycle supervisor and product assembly boundary, not merely a startup script.
+    </div>
+    <div class="footer"><span>Runtime assembly and fault domains</span><b>06</b></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Strengths & Constraints</p>
+    <h2>优势与当前限制 / Strengths and Current Limits</h2>
+    <div class="bilingual">
+      <div class="lang">
+        <span class="lang-label">优势 / STRENGTHS</span>
+        <table class="compact">
+          <tbody>
+            <tr><td><b>安全权威分离</b></td><td>模型提议、操作员批准、Agent 执行、控制栈驱动。</td></tr>
+            <tr><td><b>可观测</b></td><td>Plan ID、Task、事件时间线和详细失败上下文。</td></tr>
+            <tr><td><b>可测试</b></td><td>Planner、Skill、策略、审批、Origin 与状态机可以独立验证。</td></tr>
+            <tr><td><b>可复用</b></td><td>pick_and_place 可被单任务与 tidy_table 共同组合。</td></tr>
+            <tr><td><b>渐进迁移</b></td><td>保留 RobotRAM Step1–5 与控制栈，降低重构风险。</td></tr>
+            <tr><td><b>故障可恢复</b></td><td>硬件故障不必杀死网页和 Harness。</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:3mm"><b>English summary:</b> authority separation, observability,
+          independent testing, reusable Skills, incremental migration, and isolated recovery.</p>
+      </div>
+      <div class="lang">
+        <span class="lang-label">限制 / LIMITS</span>
+        <table class="compact">
+          <tbody>
+            <tr><td><b>Planner 较窄</b></td><td>主要覆盖整理桌面和单次抓放；开放任务泛化有限。</td></tr>
+            <tr><td><b>整理仍有配方</b></td><td>按场景过滤候选，但尚未自动推导所有空间关系。</td></tr>
+            <tr><td><b>感知误检</b></td><td>有效 mask/位姿仍可能对应错误语义，需要置信度与任务 allowlist。</td></tr>
+            <tr><td><b>场景可能过期</b></td><td>移动物体后需要更新 world state 或重新感知。</td></tr>
+            <tr><td><b>状态主要在内存</b></td><td>Agent 重启会丢失短期 Plan、审批与历史。</td></tr>
+            <tr><td><b>策略双份维护</b></td><td>TS 与 Python 的白名单和动作预算可能漂移。</td></tr>
+            <tr><td><b>单 Task 串行</b></td><td>安全但无队列、优先级和调度策略。</td></tr>
+            <tr><td><b>取消不是急停</b></td><td>cancel_event 是协作式软件边界，不能替代实体急停。</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:3mm"><b>English summary:</b> narrow planning, recipe-driven tidying,
+          semantic false positives, stale world state, in-memory lifecycle, policy drift, and no task queue.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>需要直接指出的事实 / Important reality</strong>
+      当前架构已建立强执行边界，但还不是“通用自主机器人 Agent”。它更准确地说是一个
+      安全、可审查、可扩展的任务运行时，其 Planner 和世界模型仍处于早期阶段。
+      The execution boundary is strong, but the system is not yet a general autonomous robot;
+      it is a safe and extensible task runtime with an early-stage planner and world model.
+    </div>
+    <div class="footer"><span>Evidence-based strengths and limitations</span><b>07</b></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Roadmap</p>
+    <h2>演进潜力 / Development Potential</h2>
+    <div class="roadmap">
+      <div class="card accent">
+        <span class="period">短期 / SHORT TERM</span>
+        <h3>先把运行时做稳 / Stabilize the runtime</h3>
+        <ol>
+          <li>使用单一 Skill Schema 生成 TS/Python 校验与动作预算。</li>
+          <li>每次放置后更新世界模型；被移动目标强制重新感知。</li>
+          <li>完整保留 operation、arm、action、pose 等结构化事件字段。</li>
+          <li>持久化 Plan、Task、审批、事件和执行结果。</li>
+        </ol>
+        <hr>
+        <ol>
+          <li>Generate TS/Python policy and budgets from one Skill Schema.</li>
+          <li>Refresh or update world state after every placement.</li>
+          <li>Preserve structured operation metadata end to end.</li>
+          <li>Persist Plans, Tasks, approvals, events, and results.</li>
+        </ol>
+      </div>
+      <div class="card accent">
+        <span class="period">中期 / MID TERM</span>
+        <h3>让 Skill 真正可扩展 / Scale the Skill system</h3>
+        <ol>
+          <li>为 Skill 增加前置条件、后置条件、风险等级、版本与重试策略。</li>
+          <li>将整理任务升级为基于场景关系的动态 Skill DAG。</li>
+          <li>加入仿真回放、碰撞预检和 Plan Diff。</li>
+          <li>建立有限 Task 队列，同时保持硬件 Executor 串行。</li>
+        </ol>
+        <hr>
+        <ol>
+          <li>Add preconditions, postconditions, risk, versioning, and retries.</li>
+          <li>Generate scene-driven Skill DAGs instead of fixed recipes.</li>
+          <li>Add simulation replay, collision preflight, and Plan Diff.</li>
+          <li>Queue Tasks while preserving one serial hardware Executor.</li>
+        </ol>
+      </div>
+      <div class="card accent">
+        <span class="period">长期 / LONG TERM</span>
+        <h3>释放 Agent 平台能力 / Unlock the platform</h3>
+        <ol>
+          <li>使用受 Skill Manifest 约束的 LLM Planner 支持开放目标。</li>
+          <li>多个只规划 Agent 并行提出方案，由单一执行 Agent 仲裁。</li>
+          <li>建立跨机器人 Capability Profile 与 Skill 版本兼容层。</li>
+          <li>利用执行结果与视觉复核形成闭环学习和主动恢复。</li>
+        </ol>
+        <hr>
+        <ol>
+          <li>Use manifest-constrained LLM planning for open-ended goals.</li>
+          <li>Allow multiple planning agents but one execution authority.</li>
+          <li>Build cross-robot capability profiles and version compatibility.</li>
+          <li>Learn from execution outcomes and visual verification.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="footer"><span>Short-, mid-, and long-term roadmap</span><b>08</b></div>
+  </section>
+
+  <section class="page">
+    <p class="eyebrow">Conclusion & Source Map</p>
+    <h2>结论与关键入口 / Conclusion and Source Map</h2>
+    <div class="bilingual">
+      <div class="lang">
+        <span class="lang-label">必须保持的架构不变量</span>
+        <div class="invariant"><span class="mark">1</span><p>Python Agent 始终是唯一硬件所有者。</p></div>
+        <div class="invariant"><span class="mark">2</span><p>模型只能提交语义 Plan，不能直接提交关节、CAN、shell 或任意原子调用。</p></div>
+        <div class="invariant"><span class="mark">3</span><p>Plan 与 Task 始终分离；真机运动始终经过独立现场批准。</p></div>
+        <div class="invariant"><span class="mark">4</span><p>软件取消与 Supervisor 不能替代独立实体急停。</p></div>
+        <div class="callout">
+          <strong>战略建议</strong>
+          下一阶段不应继续增加更多“模型可直接调用的函数”，而应增加带契约、版本、风险、
+          前后置条件和恢复策略的 Skill。
+        </div>
+      </div>
+      <div class="lang">
+        <span class="lang-label">ARCHITECTURAL INVARIANTS</span>
+        <div class="invariant"><span class="mark">1</span><p>The Python Agent remains the sole hardware owner.</p></div>
+        <div class="invariant"><span class="mark">2</span><p>The model submits semantic Plans, never joints, CAN, shell, or arbitrary atomic calls.</p></div>
+        <div class="invariant"><span class="mark">3</span><p>Plan and Task remain separate; hardware motion always requires independent on-site approval.</p></div>
+        <div class="invariant"><span class="mark">4</span><p>Software cancellation and supervisors never replace the physical emergency stop.</p></div>
+        <div class="callout">
+          <strong>Strategic recommendation</strong>
+          The next phase should add contract-driven, versioned, risk-rated, recoverable Skills—not
+          more functions directly exposed to the model.
+        </div>
+      </div>
+    </div>
+    <h3 style="margin-top:5mm">关键实现入口 / Key Implementation Entry Points</h3>
+    <table class="compact">
+      <thead><tr><th style="width:34%">路径 / Path</th><th style="width:66%">职责 / Responsibility</th></tr></thead>
+      <tbody>
+        <tr><td><code>launch_robot_soul.sh</code></td><td>统一装配、start/console、Supervisor、硬件启动与恢复。Runtime assembly, lifecycle, supervision, startup, and recovery.</td></tr>
+        <tr><td><code>robot_agent/server.py</code></td><td>Plan、Task、审批、硬件锁、事件与唯一硬件所有权。Plan/Task state, approvals, locks, events, and ownership.</td></tr>
+        <tr><td><code>robot_agent/planner.py</code></td><td>规则优先、可选 LLM 的自然语言到 Skill Plan。Rule-first, optional-LLM semantic planner.</td></tr>
+        <tr><td><code>robot_agent/executor.py</code></td><td>依赖校验、语义解析与逐 Skill 执行。Dependency validation, semantic resolution, and Skill execution.</td></tr>
+        <tr><td><code>robot_agent/skills/</code></td><td>感知、抓放、整理、复位与启动等任务级能力。Task-level perception, manipulation, tidying, reset, and startup.</td></tr>
+        <tr><td><code>robot_agent/tools/</code></td><td>感知与操作原子能力，适配 RobotRAM。Atomic perception and manipulation adapters.</td></tr>
+        <tr><td><code>RobotRAM/scripts/step1…step5</code></td><td>现有感知、位姿估计、抓取规划和执行。Existing perception, pose estimation, planning, and execution.</td></tr>
+      </tbody>
+    </table>
+    <div class="footer"><span>Prepared from the current dual_v2_2_agent implementation</span><b>09</b></div>
+  </section>
+</body>
+</html>

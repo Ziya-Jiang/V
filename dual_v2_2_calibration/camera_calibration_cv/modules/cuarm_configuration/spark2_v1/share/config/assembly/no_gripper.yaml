@@ -1,0 +1,3 @@
+name: arm_v1_no_gripper
+urdf: share/no_gripper/arm_v1.urdf
+import_yaml: share/config/components/arm_v1.yaml

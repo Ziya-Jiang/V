@@ -1,0 +1,10 @@
+{
+  "cart_plus": {
+    "initial_j6_deg": -20.3164,
+    "forward_mm": 250.0,
+    "forward_step_mm": 125.0,
+    "lift_mm": 200.0,
+    "hold_seconds": 3.0,
+    "lower_mm": 200.0
+  }
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="297mm"
+     height="210mm"
+     viewBox="0 0 2970 2100"
+     role="img"
+     aria-labelledby="title description">
+  <title id="title">-</title>
+  <desc id="description">A4 kHW
+</desc>
+
+  <rect width="2970" height="2100" fill="#ffffff"/>
+
+  <g fill="#000000"
+     text-anchor="middle"
+     font-family="'Noto Sans CJK TC', 'Noto Sans CJK SC', 'Microsoft JhengHei', 'PingFang TC', sans-serif">
+    <text x="1485" y="890" font-size="220" font-weight="700">
+      r-
+    </text>
+    <text x="1485" y="1320" font-size="135" font-weight="700"
+          font-family="Arial, Helvetica, sans-serif">
+      Please do not touch or move the head.
+    </text>
+  </g>
+</svg>

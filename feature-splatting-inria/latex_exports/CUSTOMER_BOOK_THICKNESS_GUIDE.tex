@@ -1,0 +1,1358 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\PassOptionsToPackage{space}{xeCJK}
+\documentclass[
+  chinese,
+  11pt,
+  a4paper,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{Noto Serif CJK SC}
+  \setsansfont[]{Noto Sans CJK SC}
+  \setmonofont[]{Noto Sans Mono CJK SC}
+  \ifXeTeX
+    \usepackage{xeCJK}
+    \setCJKmainfont[]{Noto Serif CJK SC}
+  \fi
+  \ifLuaTeX
+    \usepackage[]{luatexja-fontspec}
+    \setmainjfont[]{Noto Serif CJK SC}
+  \fi
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off,provide=*]{babel}
+\else
+\usepackage[bidi=default,shorthands=off,provide=*]{babel}
+\fi
+\ifPDFTeX
+\else
+\babelfont{rm}[]{Noto Serif CJK SC}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={RGB-D 书本厚度与夹爪开口计算------客户操作手册},
+  pdflang={zh-CN},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{RGB-D 书本厚度与夹爪开口计算------客户操作手册}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{目录}
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+需要了解算法公式、平面分解、侧面剔除和安全拒绝条件时，请查看
+\href{BOOK_THICKNESS_ALGORITHM.md}{\texttt{BOOK\_THICKNESS\_ALGORITHM.md}}。
+
+本手册用于从通用 RGB-D 文件或 Record3D
+扫描数据中自动识别每一本书，计算书脊厚度，
+并生成双指夹爪的建议预张开宽度。
+
+系统输出使用以下公式：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{建议夹爪开口 = 书本厚度 + 95\% 测量不确定度 + 安全间隙}
+\end{Highlighting}
+\end{Shaded}
+
+默认安全间隙为 3 mm。夹爪接触书本后，仍应使用力控或电流阈值完成闭合。
+
+\subsection{1. 设置路径}\label{1-ux8bbeux7f6eux8defux5f84}
+
+打开终端，依次执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{export} \VariableTok{PROJECT}\OperatorTok{=}\NormalTok{/mnt/ssd/user/V/feature{-}splatting{-}inria}
+\BuiltInTok{export} \VariableTok{CAPTURE}\OperatorTok{=}\VariableTok{$PROJECT}\NormalTok{/2026{-}09{-}01{-}{-}23{-}22{-}25}
+\BuiltInTok{export} \VariableTok{PYTHON}\OperatorTok{=}\NormalTok{/mnt/ssd/robotarm/env/sam3\_full/bin/python}
+\end{Highlighting}
+\end{Shaded}
+
+命令说明：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{PROJECT}：厚度计算程序所在目录。
+\item
+  \texttt{CAPTURE}：本次 Record3D 扫描数据目录。
+\item
+  \texttt{PYTHON}：已经安装 SAM3 和 PyTorch 的 Python 解释器。
+\end{itemize}
+
+如需分析其他扫描，只需修改 \texttt{CAPTURE}：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{export} \VariableTok{CAPTURE}\OperatorTok{=}\NormalTok{/path/to/another{-}record3d{-}capture}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{2.
+检查扫描数据}\label{2-ux68c0ux67e5ux626bux63cfux6570ux636e}
+
+执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{test} \AttributeTok{{-}f} \StringTok{"}\VariableTok{$CAPTURE}\StringTok{/metadata"} \KeywordTok{\&\&} \BuiltInTok{echo} \StringTok{"metadata: OK"}
+\BuiltInTok{test} \AttributeTok{{-}f} \StringTok{"}\VariableTok{$CAPTURE}\StringTok{/rgbd/0.jpg"} \KeywordTok{\&\&} \BuiltInTok{echo} \StringTok{"RGB: OK"}
+\BuiltInTok{test} \AttributeTok{{-}f} \StringTok{"}\VariableTok{$CAPTURE}\StringTok{/rgbd/0.depth"} \KeywordTok{\&\&} \BuiltInTok{echo} \StringTok{"depth: OK"}
+\BuiltInTok{test} \AttributeTok{{-}f} \StringTok{"}\VariableTok{$CAPTURE}\StringTok{/rgbd/0.conf"} \KeywordTok{\&\&} \BuiltInTok{echo} \StringTok{"confidence: OK"}
+\end{Highlighting}
+\end{Shaded}
+
+本节检查的是 Record3D 输入，多视角模式四项均应显示 \texttt{OK}。如果使用
+\texttt{CAPTURE\ -\/-single-frame-rgbd} 兼容模式，只要求
+\texttt{metadata}、\texttt{.jpg} 和 \texttt{.depth}。 如果直接使用
+\texttt{-\/-rgb}、\texttt{-\/-depth}、\texttt{-\/-intrinsics}
+三个通用路径，则不需要 Record3D 目录和 \texttt{metadata}，请直接查看 6.1
+节。Record3D 数据目录的基本结构为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CAPTURE/}
+\NormalTok{├── metadata}
+\NormalTok{└── rgbd/}
+\NormalTok{    ├── 0.jpg}
+\NormalTok{    ├── 0.depth}
+\NormalTok{    ├── 0.conf}
+\NormalTok{    ├── 1.jpg}
+\NormalTok{    └── ...}
+\end{Highlighting}
+\end{Shaded}
+
+其中：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{.jpg} 是高分辨率 RGB 图像。
+\item
+  \texttt{.depth} 是 Record3D LiDAR 深度。
+\item
+  \texttt{.conf} 是深度置信度；单帧 RGB-D 模式可省略。
+\item
+  \texttt{metadata}
+  必须包含相机内参和图像尺寸；只有多视角模式要求其中包含位姿。
+\end{itemize}
+
+\subsection{3. 检查 Python 和
+GPU}\label{3-ux68c0ux67e5-python-ux548c-gpu}
+
+检查 Python：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}{-}version}
+\end{Highlighting}
+\end{Shaded}
+
+检查 PyTorch 与 GPU：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}c} \StringTok{"import torch; print(\textquotesingle{}PyTorch:\textquotesingle{}, torch.\_\_version\_\_); print(\textquotesingle{}CUDA:\textquotesingle{}, torch.cuda.is\_available()); print(\textquotesingle{}GPU:\textquotesingle{}, torch.cuda.get\_device\_name(0) if torch.cuda.is\_available() else \textquotesingle{}不可用\textquotesingle{})"}
+\end{Highlighting}
+\end{Shaded}
+
+正常情况下应看到：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CUDA: True}
+\NormalTok{GPU: NVIDIA ...}
+\end{Highlighting}
+\end{Shaded}
+
+如果显示 \texttt{CUDA:\ False}，请先检查 NVIDIA 驱动：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{nvidia{-}smi}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{4. 一次性安装 Record3D
+解码依赖}\label{4-ux4e00ux6b21ux6027ux5b89ux88c5-record3d-ux89e3ux7801ux4f9dux8d56}
+
+首次部署时执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}m}\NormalTok{ pip install pyliblzfse}
+\end{Highlighting}
+\end{Shaded}
+
+验证安装：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}c} \StringTok{"import liblzfse; print(\textquotesingle{}Record3D decoder: OK\textquotesingle{})"}
+\end{Highlighting}
+\end{Shaded}
+
+看到 \texttt{Record3D\ decoder:\ OK}
+即表示安装成功。此步骤只需执行一次。
+
+\subsection{5. 检查 SAM3 模型}\label{5-ux68c0ux67e5-sam3-ux6a21ux578b}
+
+当前部署使用以下模型：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{export} \VariableTok{SAM3\_CHECKPOINT}\OperatorTok{=}\NormalTok{/home/vlmdemo/.cache/huggingface/hub/models{-}{-}facebook{-}{-}sam3/snapshots/3c879f39826c281e95690f02c7821c4de09afae7/sam3.pt}
+\BuiltInTok{test} \AttributeTok{{-}f} \StringTok{"}\VariableTok{$SAM3\_CHECKPOINT}\StringTok{"} \KeywordTok{\&\&} \BuiltInTok{echo} \StringTok{"SAM3 checkpoint: OK"}
+\end{Highlighting}
+\end{Shaded}
+
+如果没有显示 \texttt{OK}，需要将 SAM3 权重放到该位置，或在运行时通过
+\texttt{-\/-checkpoint} 指定实际路径。
+
+\subsection{6.
+使用默认参数运行}\label{6-ux4f7fux7528ux9ed8ux8ba4ux53c2ux6570ux8fd0ux884c}
+
+进入项目目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{cd} \StringTok{"}\VariableTok{$PROJECT}\StringTok{"}
+\end{Highlighting}
+\end{Shaded}
+
+执行完整分析：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{0 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\StringTok{"}\VariableTok{$CAPTURE}\StringTok{"}
+\end{Highlighting}
+\end{Shaded}
+
+逐行说明：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{CUDA\_VISIBLE\_DEVICES=0}：使用第 1 块 GPU。
+\item
+  \texttt{"\$PYTHON"}：使用 SAM3 专用 Python 环境。
+\item
+  \texttt{book\_thickness\_pipeline.py}：运行厚度计算程序。
+\item
+  \texttt{"\$CAPTURE"}：指定要分析的 RGB-D 扫描。
+\end{itemize}
+
+默认行为：
+
+\begin{itemize}
+\tightlist
+\item
+  使用帧 \texttt{0,12,24,36,48,60,71}。
+\item
+  使用第 24 帧作为边界和编号参考图。
+\item
+  按每层书架从左到右编号。
+\item
+  过滤低置信度和重复分割。
+\item
+  融合多个视角的厚度测量。
+\item
+  在 95\% 不确定度之外再增加 3 mm 夹爪间隙。
+\end{itemize}
+
+正常结束时会显示类似：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Measured 96 books}
+\NormalTok{Per shelf: S1=29, S2=33, S3=34}
+\NormalTok{Quality: \{\textquotesingle{}high\textquotesingle{}: 91, \textquotesingle{}medium\textquotesingle{}: 5, \textquotesingle{}low\textquotesingle{}: 0\}}
+\NormalTok{Results: .../book\_thickness\_analysis}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{6.1 只用单帧 RGB-D
+运行}\label{61-ux53eaux7528ux5355ux5e27-rgb-d-ux8fd0ux884c}
+
+\paragraph{6.1.1
+什么时候使用}\label{611-ux4ec0ux4e48ux65f6ux5019ux4f7fux7528}
+
+如果只有一张 RGB
+图、一张已配准深度图和一个相机内参文件，可以直接输入这三个
+文件的路径。数据不必来自 Record3D，也不要求固定的目录结构。
+
+同时提供 \texttt{-\/-rgb}、\texttt{-\/-depth} 和 \texttt{-\/-intrinsics}
+后，程序会自动进入通用单帧模式， 不需要提供
+\texttt{CAPTURE}、\texttt{metadata}、\texttt{.conf}、位姿或帧编号。
+
+该模式的行为是：
+
+\begin{itemize}
+\tightlist
+\item
+  直接读取命令行指定的 RGB、depth 和内参文件。
+\item
+  不依赖 Record3D 的 \texttt{metadata} 和 \texttt{rgbd/} 目录。
+\item
+  不读取深度 confidence，不使用相机位姿。
+\item
+  不进行多视角匹配和厚度融合。
+\item
+  仍使用相机内参将图像像素宽度换算为毫米。
+\end{itemize}
+
+原来的 Record3D 单帧命令仍然兼容，详见 6.1.5。
+
+\paragraph{6.1.2
+三个输入文件}\label{612-ux4e09ux4e2aux8f93ux5165ux6587ux4ef6}
+
+三个文件可以放在任意目录，例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{/data/books/rgb.png}
+\NormalTok{/data/books/depth.png}
+\NormalTok{/data/books/intrinsics.json}
+\end{Highlighting}
+\end{Shaded}
+
+RGB 支持常用的 JPEG、PNG 和 TIFF。
+
+depth 支持：
+
+\begin{itemize}
+\tightlist
+\item
+  单通道 PNG 或 TIFF。
+\item
+  \texttt{.npy} 二维 NumPy 数组。
+\item
+  \texttt{.npz} 文件；数组键建议命名为
+  \texttt{depth}。如果只有一个数组也会自动读取。
+\end{itemize}
+
+深度单位规则：
+
+\begin{itemize}
+\tightlist
+\item
+  浮点深度默认按米读取。
+\item
+  16 位及以上整数深度默认按毫米读取。
+\item
+  如果传感器使用其他单位，必须通过 \texttt{-\/-depth-scale}
+  指定每个数值对应多少米。
+\end{itemize}
+
+例如，深度图每个单位代表 0.1 mm：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{{-}{-}depth{-}scale}\NormalTok{ 0.0001}
+\end{Highlighting}
+\end{Shaded}
+
+推荐将相机内参保存为 JSON：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\{}
+  \DataTypeTok{"fx"}\FunctionTok{:} \FloatTok{1348.5952}\FunctionTok{,}
+  \DataTypeTok{"fy"}\FunctionTok{:} \FloatTok{1348.5952}\FunctionTok{,}
+  \DataTypeTok{"cx"}\FunctionTok{:} \FloatTok{720.9918}\FunctionTok{,}
+  \DataTypeTok{"cy"}\FunctionTok{:} \FloatTok{962.8973}
+\FunctionTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+也可以使用标准的 3×3 相机矩阵：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\{}
+  \DataTypeTok{"K"}\FunctionTok{:} \OtherTok{[}
+    \OtherTok{[}\FloatTok{1348.5952}\OtherTok{,} \FloatTok{0.0}\OtherTok{,} \FloatTok{720.9918}\OtherTok{],}
+    \OtherTok{[}\FloatTok{0.0}\OtherTok{,} \FloatTok{1348.5952}\OtherTok{,} \FloatTok{962.8973}\OtherTok{],}
+    \OtherTok{[}\FloatTok{0.0}\OtherTok{,} \FloatTok{0.0}\OtherTok{,} \FloatTok{1.0}\OtherTok{]}
+  \OtherTok{]}
+\FunctionTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+内参文件还支持 TXT、NPY、NPZ 和 OpenCV YAML/XML。TXT 可以写
+\texttt{fx\ fy\ cx\ cy} 四个数，也可以写按行排列的 3×3 矩阵。
+
+内参必须对应 RGB 图像坐标系。不能直接使用未经配准的原始深度相机内参。
+
+RGB 和 depth
+必须来自同一次采集并完成空间配准。两者允许分辨率不同，但宽高比
+必须接近；程序会拒绝宽高比相差超过 2\% 的输入。
+
+\paragraph{6.1.3
+设置输入路径}\label{613-ux8bbeux7f6eux8f93ux5165ux8defux5f84}
+
+执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{export} \VariableTok{RGB}\OperatorTok{=}\NormalTok{/data/books/rgb.png}
+\BuiltInTok{export} \VariableTok{DEPTH}\OperatorTok{=}\NormalTok{/data/books/depth.png}
+\BuiltInTok{export} \VariableTok{INTRINSICS}\OperatorTok{=}\NormalTok{/data/books/intrinsics.json}
+\BuiltInTok{export} \VariableTok{RESULT}\OperatorTok{=}\NormalTok{/data/books/book\_thickness\_result}
+\end{Highlighting}
+\end{Shaded}
+
+检查文件：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{test} \AttributeTok{{-}f} \StringTok{"}\VariableTok{$RGB}\StringTok{"} \KeywordTok{\&\&} \BuiltInTok{echo} \StringTok{"RGB: OK"}
+\BuiltInTok{test} \AttributeTok{{-}f} \StringTok{"}\VariableTok{$DEPTH}\StringTok{"} \KeywordTok{\&\&} \BuiltInTok{echo} \StringTok{"depth: OK"}
+\BuiltInTok{test} \AttributeTok{{-}f} \StringTok{"}\VariableTok{$INTRINSICS}\StringTok{"} \KeywordTok{\&\&} \BuiltInTok{echo} \StringTok{"intrinsics: OK"}
+\end{Highlighting}
+\end{Shaded}
+
+三项都应显示 \texttt{OK}。
+
+检查 RGB、depth 的尺寸、数据类型和内参：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{RGB}\OperatorTok{=}\StringTok{"}\VariableTok{$RGB}\StringTok{"} \VariableTok{DEPTH}\OperatorTok{=}\StringTok{"}\VariableTok{$DEPTH}\StringTok{"} \VariableTok{INTRINSICS}\OperatorTok{=}\StringTok{"}\VariableTok{$INTRINSICS}\StringTok{"} \StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}} \OperatorTok{\textless{}\textless{}\textquotesingle{}PY\textquotesingle{}}
+\StringTok{import json}
+\StringTok{import os}
+\StringTok{from pathlib import Path}
+
+\StringTok{import cv2}
+\StringTok{from PIL import Image}
+
+\StringTok{rgb = Image.open(os.environ["RGB"])}
+\StringTok{depth = cv2.imread(os.environ["DEPTH"], cv2.IMREAD\_UNCHANGED)}
+\StringTok{intrinsics = json.loads(Path(os.environ["INTRINSICS"]).read\_text())}
+
+\StringTok{print("RGB 尺寸:", rgb.size)}
+\StringTok{print("depth 尺寸:", None if depth is None else depth.shape)}
+\StringTok{print("depth 类型:", None if depth is None else depth.dtype)}
+\StringTok{print("内参:", intrinsics)}
+\OperatorTok{PY}
+\end{Highlighting}
+\end{Shaded}
+
+如果 depth 是 \texttt{.npy} 或 \texttt{.npz}，上面的 OpenCV
+检查不适用，可以执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{DEPTH}\OperatorTok{=}\StringTok{"}\VariableTok{$DEPTH}\StringTok{"} \StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}} \OperatorTok{\textless{}\textless{}\textquotesingle{}PY\textquotesingle{}}
+\StringTok{import os}
+\StringTok{import numpy as np}
+
+\StringTok{data = np.load(os.environ["DEPTH"], allow\_pickle=False)}
+\StringTok{if isinstance(data, np.lib.npyio.NpzFile):}
+\StringTok{    print(\{name: data[name].shape for name in data.files\})}
+\StringTok{    data.close()}
+\StringTok{else:}
+\StringTok{    print("depth 尺寸:", data.shape, "类型:", data.dtype)}
+\OperatorTok{PY}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{6.1.4
+执行通用单帧分析}\label{614-ux6267ux884cux901aux7528ux5355ux5e27ux5206ux6790}
+
+进入项目目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{cd} \StringTok{"}\VariableTok{$PROJECT}\StringTok{"}
+\end{Highlighting}
+\end{Shaded}
+
+执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{0 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}rgb} \StringTok{"}\VariableTok{$RGB}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}depth} \StringTok{"}\VariableTok{$DEPTH}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}intrinsics} \StringTok{"}\VariableTok{$INTRINSICS}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}output} \StringTok{"}\VariableTok{$RESULT}\StringTok{"}
+\end{Highlighting}
+\end{Shaded}
+
+逐项说明：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{-\/-rgb}：RGB 图像路径。
+\item
+  \texttt{-\/-depth}：已配准的单通道深度路径。
+\item
+  \texttt{-\/-intrinsics}：RGB 相机内参路径。
+\item
+  \texttt{-\/-output}：结果目录；可以省略。
+\end{itemize}
+
+如果省略 \texttt{-\/-output}，程序默认在 RGB 所在目录创建
+\texttt{RGB文件名\_book\_thickness/}。
+
+如果整数深度不是毫米，增加正确的换算比例。例如每单位为 0.1 mm：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{0 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}rgb} \StringTok{"}\VariableTok{$RGB}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}depth} \StringTok{"}\VariableTok{$DEPTH}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}intrinsics} \StringTok{"}\VariableTok{$INTRINSICS}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}depth{-}scale}\NormalTok{ 0.0001 }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}output} \StringTok{"}\VariableTok{$RESULT}\StringTok{"}
+\end{Highlighting}
+\end{Shaded}
+
+正常结束时会显示类似：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Processing frame 0...}
+\NormalTok{  accepted 96 books [29, 33, 34]}
+\NormalTok{Measured 96 books}
+\NormalTok{Per shelf: S1=29, S2=33, S3=34}
+\NormalTok{Quality: \{\textquotesingle{}high\textquotesingle{}: 0, \textquotesingle{}medium\textquotesingle{}: 0, \textquotesingle{}low\textquotesingle{}: 96\}}
+\NormalTok{Results: /data/books/book\_thickness\_result}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{6.1.5 Record3D
+单帧兼容命令}\label{615-record3d-ux5355ux5e27ux517cux5bb9ux547dux4ee4}
+
+已有 Record3D 目录时，原来的命令仍然可用：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{0 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\StringTok{"}\VariableTok{$CAPTURE}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}single{-}frame{-}rgbd} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}reference{-}frame}\NormalTok{ 24 }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}output} \StringTok{"}\VariableTok{$CAPTURE}\StringTok{/book\_thickness\_single\_frame"}
+\end{Highlighting}
+\end{Shaded}
+
+此兼容模式从 \texttt{CAPTURE/rgbd/24.jpg} 和 \texttt{24.depth}
+读取数据，并从 \texttt{metadata} 读取尺寸和内参，但不读取
+\texttt{24.conf}，也不使用 \texttt{metadata.poses}。
+
+\paragraph{6.1.6
+程序如何计算厚度}\label{616-ux7a0bux5e8fux5982ux4f55ux8ba1ux7b97ux539aux5ea6}
+
+单帧模式按以下顺序处理：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  在高分辨率 RGB 图像中使用 SAM3 分割每个书脊。
+\item
+  去除重复分割，并按书架层和左右顺序分配书本 ID。
+\item
+  根据书脊轮廓拟合长轴和横向轴，得到左右边界；倾斜书本不会直接使用水平框宽。
+\item
+  将书脊区域映射到低分辨率深度图。
+\item
+  不使用
+  \texttt{.conf}，但会删除无效、过近、过远和明显偏离中位数的深度。
+\item
+  使用相机内参把深度像素反投影成相机坐标系中的 3D 点。
+\item
+  每本书使用 RANSAC 分解书脊平面和可能出现的侧面平面。
+\item
+  汇总画面内所有书本，估计共同的书脊朝向。
+\item
+  如果掩码边缘存在与书脊方向明显不同的侧面，使用书脊平面的深度支持区裁剪侧面。
+\item
+  将修正后的左右边界射线与书脊平面求交，计算两个 3D 交点间的毫米距离。
+\item
+  无法区分书脊与侧面时拒绝该候选，不生成夹爪命令。
+\item
+  根据通过检查的厚度、不确定度和安全间隙计算夹爪建议开口。
+\end{enumerate}
+
+夹爪开口公式为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{建议开口 = 书本厚度 + 95\% 工程不确定度 + 安全间隙}
+\end{Highlighting}
+\end{Shaded}
+
+默认安全间隙是 3 mm，可以通过 \texttt{-\/-gripper-clearance-mm} 调整。
+
+为避免书本排列松散、斜视时把侧面算进厚度，程序会拒绝以下候选：
+
+\begin{itemize}
+\tightlist
+\item
+  书脊平面深度内点不足。
+\item
+  书脊平面没有覆盖足够的书脊长度。
+\item
+  当前书本平面方向与整层书的共同书脊方向差别过大。
+\item
+  观察角度过于倾斜。
+\item
+  侧面占比过大。
+\item
+  已检测到侧面，但无法稳定确定书脊与侧面的交界。
+\end{itemize}
+
+被拒绝候选不会进入
+\texttt{gripper\_openings.json}，机器人不得为其执行自动抓取。
+
+\paragraph{6.1.7 确认输入来源以及没有使用 confidence 和
+pose}\label{617-ux786eux8ba4ux8f93ux5165ux6765ux6e90ux4ee5ux53caux6ca1ux6709ux4f7fux7528-confidence-ux548c-pose}
+
+查看结果前设置：
+
+通用模式已经在 6.1.3 中设置了 \texttt{RESULT}。执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{RESULT}\OperatorTok{=}\StringTok{"}\VariableTok{$RESULT}\StringTok{"} \StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}} \OperatorTok{\textless{}\textless{}\textquotesingle{}PY\textquotesingle{}}
+\StringTok{import json}
+\StringTok{import os}
+\StringTok{from pathlib import Path}
+
+\StringTok{result = Path(os.environ["RESULT"])}
+\StringTok{data = json.loads((result / "book\_thickness.json").read\_text())}
+
+\StringTok{print("运行模式:", data["mode"])}
+\StringTok{print("使用 confidence:", data["uses\_confidence"])}
+\StringTok{print("使用相机位姿:", data["uses\_camera\_poses"])}
+\StringTok{print("处理帧:", data["frames\_requested"])}
+\StringTok{print("输入文件:", data["input\_files"])}
+\StringTok{print("书本数量:", data["book\_count"])}
+\StringTok{print("拒绝数量:", data["reference\_rejection\_count"])}
+\OperatorTok{PY}
+\end{Highlighting}
+\end{Shaded}
+
+预期结果：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{运行模式: single\_frame\_rgbd}
+\NormalTok{使用 confidence: False}
+\NormalTok{使用相机位姿: False}
+\NormalTok{处理帧: [0]}
+\NormalTok{输入文件: \{\textquotesingle{}rgb\textquotesingle{}: \textquotesingle{}...\textquotesingle{}, \textquotesingle{}depth\textquotesingle{}: \textquotesingle{}...\textquotesingle{}, \textquotesingle{}intrinsics\textquotesingle{}: \textquotesingle{}...\textquotesingle{}, \textquotesingle{}depth\_scale\_m\_per\_unit\textquotesingle{}: 0.001\}}
+\NormalTok{书本数量: \textless{}通过几何检查的书本数\textgreater{}}
+\NormalTok{拒绝数量: \textless{}未通过侧面/视角检查的候选数\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+通用文件没有 Record3D 帧编号，因此程序将本次观测统一记为第 0 帧。
+\texttt{input\_files}
+会记录实际输入路径以及最终采用的深度比例，便于复查。
+
+\paragraph{6.1.8
+如何理解单帧质量}\label{618-ux5982ux4f55ux7406ux89e3ux5355ux5e27ux8d28ux91cf}
+
+单帧无法估计跨视角重复性，因此每本书都会输出：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{views\_observed = 1}
+\NormalTok{views\_used = 1}
+\NormalTok{repeatability\_mad\_mm = 0}
+\NormalTok{quality = low}
+\end{Highlighting}
+\end{Shaded}
+
+注意：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{repeatability\_mad\_mm\ =\ 0}
+  表示没有第二次观测，不代表测量误差为零。
+\item
+  \texttt{quality\ =\ low} 是单帧模式的预期行为，不代表程序执行失败。
+\item
+  \texttt{high\_confidence\_samples}
+  不代表真实的传感器高置信度点，因为没有读取 \texttt{.conf}。
+\item
+  判断是否使用 confidence，应查看顶层的 \texttt{uses\_confidence}。
+\item
+  单帧 \texttt{uncertainty\_95\_mm}
+  不包含真实的跨视角波动，可能低估异常书本的误差。
+\item
+  \texttt{reference\_side\_face\_detected\ =\ true}：检测到可见侧面。
+\item
+  \texttt{reference\_boundary\_corrected\ =\ true}：已裁剪侧面，图中书本
+  ID 后带 \texttt{*}。
+\item
+  \texttt{reference\_side\_trim\_mm}：从原轮廓宽度中去除的侧面毫米数。
+\item
+  \texttt{reference\_view\_angle\_deg}：书脊平面相对正视方向的夹角。
+\item
+  \texttt{frame\_statistics{[}{]}.rejected\_detections}：被拒绝候选及具体原因。
+\end{itemize}
+
+\paragraph{6.1.9
+当前数据的测试结果}\label{619-ux5f53ux524dux6570ux636eux7684ux6d4bux8bd5ux7ed3ux679c}
+
+已使用机器人真机采集的以下三个文件完成侧面剔除测试：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dual\_v2\_1/11/rgb/000001.png}
+\NormalTok{dual\_v2\_1/11/depth/000001.png}
+\NormalTok{dual\_v2\_1/11/cam\_K.txt}
+\end{Highlighting}
+\end{Shaded}
+
+测试结果：
+
+\begin{itemize}
+\tightlist
+\item
+  SAM3 得到 66 个书本候选。
+\item
+  57 个候选通过书脊平面几何检查。
+\item
+  9 个候选因平面方向不一致、书脊内点不足或侧面边界不明确而被拒绝。
+\item
+  6 本书检测到侧面并完成边界裁剪。
+\item
+  共从轮廓宽度中裁掉 14.58 mm，单本裁剪 1.86--3.60 mm。
+\item
+  被拒绝候选没有写入 \texttt{gripper\_openings.json}。
+\end{itemize}
+
+测试结果位于：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dual\_v2\_1/11/book\_thickness\_000001\_plane\_corrected/}
+\end{Highlighting}
+\end{Shaded}
+
+该测试证明侧面检测和安全拒绝分支已经运行，但没有每本书的卡尺真值，因此不能仅凭
+该结果宣称达到毫米级绝对精度。
+
+\paragraph{6.1.10
+客户使用要求}\label{6110-ux5ba2ux6237ux4f7fux7528ux8981ux6c42}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  相机尽量正对书架，确保书脊完整、清晰、不过曝。
+\item
+  不要修改 RGB 或 depth 的尺寸、方向和裁剪区域。
+\item
+  避免强反光、透明塑封和大面积无纹理表面。
+\item
+  上线前至少抽查 5 本不同厚度的书并使用卡尺对比。
+\item
+  单帧结果只能作为夹爪预张开初值。
+\item
+  实际夹紧必须使用力控、力矩限制或电机电流阈值。
+\item
+  未经卡尺标定和人工复核，不得使用单帧结果直接执行无人值守抓取。
+\end{enumerate}
+
+\subsection{7.
+查看边界与书本编号}\label{7-ux67e5ux770bux8fb9ux754cux4e0eux4e66ux672cux7f16ux53f7}
+
+输出目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{export} \VariableTok{RESULT}\OperatorTok{=}\VariableTok{$\{RESULT}\OperatorTok{:{-}}\VariableTok{$CAPTURE}\NormalTok{/book\_thickness\_analysis}\VariableTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+全部书本边界：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{xdg{-}open} \StringTok{"}\VariableTok{$RESULT}\StringTok{/books\_thickness\_overlay.png"}
+\end{Highlighting}
+\end{Shaded}
+
+分别查看三层书架：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{xdg{-}open} \StringTok{"}\VariableTok{$RESULT}\StringTok{/shelf\_1\_thickness.png"}
+\FunctionTok{xdg{-}open} \StringTok{"}\VariableTok{$RESULT}\StringTok{/shelf\_2\_thickness.png"}
+\FunctionTok{xdg{-}open} \StringTok{"}\VariableTok{$RESULT}\StringTok{/shelf\_3\_thickness.png"}
+\end{Highlighting}
+\end{Shaded}
+
+书本编号规则：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{S1-01}：第 1 层，从左向右第 1 本。
+\item
+  \texttt{S2-08}：第 2 层，从左向右第 8 本。
+\item
+  \texttt{S3-34}：第 3 层，从左向右第 34 本。
+\end{itemize}
+
+查看指定书本的独立核验图：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{xdg{-}open} \StringTok{"}\VariableTok{$RESULT}\StringTok{/book\_crops/S1{-}05.png"}
+\end{Highlighting}
+\end{Shaded}
+
+图中：
+
+\begin{itemize}
+\tightlist
+\item
+  青色、橙色或绿色轮廓表示书脊边界。
+\item
+  \texttt{T} 表示估计厚度。
+\item
+  \texttt{+/-} 表示 95\% 工程不确定度。
+\item
+  \texttt{OPEN} 表示建议夹爪预张开宽度。
+\end{itemize}
+
+\subsection{8.
+查询指定书本的夹爪开口}\label{8-ux67e5ux8be2ux6307ux5b9aux4e66ux672cux7684ux5939ux722aux5f00ux53e3}
+
+以下命令查询 \texttt{S1-05}：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{BOOK\_ID}\OperatorTok{=}\NormalTok{S1{-}05 }\StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}} \OperatorTok{\textless{}\textless{}\textquotesingle{}PY\textquotesingle{}}
+\StringTok{import json}
+\StringTok{import os}
+\StringTok{from pathlib import Path}
+
+\StringTok{result = Path(os.environ["RESULT"])}
+\StringTok{book\_id = os.environ["BOOK\_ID"]}
+\StringTok{data = json.loads((result / "gripper\_openings.json").read\_text())}
+\StringTok{item = data["commands"][book\_id]}
+
+\StringTok{print("书本 ID:", book\_id)}
+\StringTok{print("厚度:", round(item["measured\_thickness\_mm"], 2), "mm")}
+\StringTok{print("95\% 不确定度:", round(item["uncertainty\_95\_mm"], 2), "mm")}
+\StringTok{print("建议夹爪开口:", round(item["opening\_mm"], 2), "mm")}
+\StringTok{print("建议夹爪开口:", round(item["opening\_m"], 6), "m")}
+\StringTok{print("质量:", item["quality"])}
+\OperatorTok{PY}
+\end{Highlighting}
+\end{Shaded}
+
+注意：\texttt{RESULT} 必须先导出，而不是只定义为普通 shell 变量：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{export} \VariableTok{RESULT}\OperatorTok{=}\VariableTok{$CAPTURE}\NormalTok{/book\_thickness\_analysis}
+\end{Highlighting}
+\end{Shaded}
+
+查询其他书本时修改 \texttt{BOOK\_ID}：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{BOOK\_ID}\OperatorTok{=}\NormalTok{S3{-}12 }\StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}} \OperatorTok{\textless{}\textless{}\textquotesingle{}PY\textquotesingle{}}
+\StringTok{import json}
+\StringTok{import os}
+\StringTok{from pathlib import Path}
+
+\StringTok{data = json.loads(}
+\StringTok{    (Path(os.environ["RESULT"]) / "gripper\_openings.json").read\_text()}
+\StringTok{)}
+\StringTok{item = data["commands"][os.environ["BOOK\_ID"]]}
+\StringTok{print(item["opening\_mm"])}
+\OperatorTok{PY}
+\end{Highlighting}
+\end{Shaded}
+
+该命令只输出毫米开口值，方便传给机器人程序。
+
+\subsection{9.
+在机器人程序中读取}\label{9-ux5728ux673aux5668ux4ebaux7a0bux5e8fux4e2dux8bfbux53d6}
+
+Python 示例：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ json}
+\ImportTok{from}\NormalTok{ pathlib }\ImportTok{import}\NormalTok{ Path}
+
+\NormalTok{result }\OperatorTok{=}\NormalTok{ Path(}
+    \StringTok{"/mnt/ssd/user/V/feature{-}splatting{-}inria/"}
+    \StringTok{"2026{-}09{-}01{-}{-}23{-}22{-}25/book\_thickness\_analysis"}
+\NormalTok{)}
+\NormalTok{book\_id }\OperatorTok{=} \StringTok{"S1{-}05"}
+
+\NormalTok{data }\OperatorTok{=}\NormalTok{ json.loads((result }\OperatorTok{/} \StringTok{"gripper\_openings.json"}\NormalTok{).read\_text())}
+\NormalTok{measurement }\OperatorTok{=}\NormalTok{ data[}\StringTok{"commands"}\NormalTok{][book\_id]}
+
+\NormalTok{opening\_mm }\OperatorTok{=}\NormalTok{ measurement[}\StringTok{"opening\_mm"}\NormalTok{]}
+\NormalTok{opening\_m }\OperatorTok{=}\NormalTok{ measurement[}\StringTok{"opening\_m"}\NormalTok{]}
+\NormalTok{quality }\OperatorTok{=}\NormalTok{ measurement[}\StringTok{"quality"}\NormalTok{]}
+
+\ControlFlowTok{if}\NormalTok{ quality }\OperatorTok{!=} \StringTok{"high"}\NormalTok{:}
+    \ControlFlowTok{raise} \PreprocessorTok{RuntimeError}\NormalTok{(}\SpecialStringTok{f"}\SpecialCharTok{\{}\NormalTok{book\_id}\SpecialCharTok{\}}\SpecialStringTok{ 需要人工复核"}\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"夹爪目标：}\SpecialCharTok{\{}\NormalTok{opening\_mm}\SpecialCharTok{:.2f\}}\SpecialStringTok{ mm / }\SpecialCharTok{\{}\NormalTok{opening\_m}\SpecialCharTok{:.6f\}}\SpecialStringTok{ m"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+请根据夹爪控制接口选择 \texttt{opening\_mm} 或
+\texttt{opening\_m}，不要混用单位。
+
+\subsection{10.
+修改安全间隙}\label{10-ux4feeux6539ux5b89ux5168ux95f4ux9699}
+
+如果夹爪定位误差较大，可将安全间隙从 3 mm 增加到 5 mm：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{0 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\StringTok{"}\VariableTok{$CAPTURE}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}gripper{-}clearance{-}mm}\NormalTok{ 5}
+\end{Highlighting}
+\end{Shaded}
+
+该参数只影响建议开口，不改变测得的书本厚度。
+
+建议：
+
+\begin{itemize}
+\tightlist
+\item
+  高精度、小回差夹爪：2--3 mm。
+\item
+  一般机器人抓取：3--5 mm。
+\item
+  标定不足或运动误差较大：5 mm 以上，并配合低速接近。
+\end{itemize}
+
+\subsection{11.
+增加多视角帧数}\label{11-ux589eux52a0ux591aux89c6ux89d2ux5e27ux6570}
+
+需要更高的多视角稳定性时：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{0 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\StringTok{"}\VariableTok{$CAPTURE}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}frames}\NormalTok{ 0,8,16,24,32,40,48,56,64,71 }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}reference{-}frame}\NormalTok{ 24}
+\end{Highlighting}
+\end{Shaded}
+
+参数说明：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{-\/-frames}：参与厚度融合的帧编号。
+\item
+  \texttt{-\/-reference-frame}：用于书本编号、边界图和独立裁剪图的参考帧。
+\end{itemize}
+
+参考帧应满足：
+
+\begin{itemize}
+\tightlist
+\item
+  三层书架尽量完整可见。
+\item
+  图像清晰，没有运动模糊。
+\item
+  相机尽量正对书脊。
+\item
+  左右边缘的书本没有被裁掉。
+\end{itemize}
+
+增加帧数通常能改善随机误差，但不能修复错误分割或严重遮挡。
+
+\subsection{12. 指定其他 GPU}\label{12-ux6307ux5b9aux5176ux4ed6-gpu}
+
+使用第 2 块 GPU：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{1 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\StringTok{"}\VariableTok{$CAPTURE}\StringTok{"}
+\end{Highlighting}
+\end{Shaded}
+
+查看 GPU 编号：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{nvidia{-}smi}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{13.
+指定自定义输出目录}\label{13-ux6307ux5b9aux81eaux5b9aux4e49ux8f93ux51faux76eeux5f55}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{0 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\StringTok{"}\VariableTok{$CAPTURE}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}output} \StringTok{"}\VariableTok{$CAPTURE}\StringTok{/customer\_results"}
+\end{Highlighting}
+\end{Shaded}
+
+之后设置：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{export} \VariableTok{RESULT}\OperatorTok{=}\VariableTok{$CAPTURE}\NormalTok{/customer\_results}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{14.
+输出文件说明}\label{14-ux8f93ux51faux6587ux4ef6ux8bf4ux660e}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{book\_thickness\_analysis/}
+\NormalTok{├── book\_thickness.json}
+\NormalTok{├── book\_thickness.csv}
+\NormalTok{├── gripper\_openings.json}
+\NormalTok{├── books\_thickness\_overlay.png}
+\NormalTok{├── rejected\_books\_overlay.png}
+\NormalTok{├── shelf\_1\_thickness.png}
+\NormalTok{├── shelf\_2\_thickness.png}
+\NormalTok{├── shelf\_3\_thickness.png}
+\NormalTok{├── reference\_depth\_map.png}
+\NormalTok{├── reference\_book\_masks.npz}
+\NormalTok{└── book\_crops/}
+\NormalTok{    ├── S1{-}01.png}
+\NormalTok{    ├── S1{-}02.png}
+\NormalTok{    └── ...}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{gripper\_openings.json}：机器人最方便读取的夹爪开口文件。
+\item
+  \texttt{book\_thickness.csv}：逐书汇总，可使用 Excel 打开。
+\item
+  \texttt{book\_thickness.json}：包含完整边界、逐帧测量和诊断信息。
+\item
+  \texttt{books\_thickness\_overlay.png}：全部书本的边界和厚度。
+\item
+  \texttt{rejected\_books\_overlay.png}：因侧面、观察角或平面质量不足而拒绝的候选。
+\item
+  \texttt{book\_crops/}：每本书的独立检查图。
+\item
+  \texttt{reference\_book\_masks.npz}：每本书的高分辨率二值掩码。
+\end{itemize}
+
+\subsection{15.
+结果质量检查}\label{15-ux7ed3ux679cux8d28ux91cfux68c0ux67e5}
+
+执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{RESULT}\OperatorTok{=}\StringTok{"}\VariableTok{$RESULT}\StringTok{"} \StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}} \OperatorTok{\textless{}\textless{}\textquotesingle{}PY\textquotesingle{}}
+\StringTok{import json}
+\StringTok{import os}
+\StringTok{from collections import Counter}
+\StringTok{from pathlib import Path}
+
+\StringTok{result = Path(os.environ["RESULT"])}
+\StringTok{data = json.loads((result / "book\_thickness.json").read\_text())}
+\StringTok{quality = Counter(book["quality"] for book in data["books"])}
+
+\StringTok{print("书本总数:", data["book\_count"])}
+\StringTok{print("拒绝候选:", data["reference\_rejection\_count"])}
+\StringTok{print("质量统计:", dict(quality))}
+\StringTok{print("需要复核:")}
+\StringTok{for book in data["books"]:}
+\StringTok{    if book["quality"] != "high":}
+\StringTok{        print(}
+\StringTok{            book["book\_id"],}
+\StringTok{            "厚度",}
+\StringTok{            round(book["thickness\_mm"], 2),}
+\StringTok{            "mm，不确定度",}
+\StringTok{            round(book["uncertainty\_95\_mm"], 2),}
+\StringTok{            "mm",}
+\StringTok{        )}
+\OperatorTok{PY}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{quality} 含义：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{high}：多视角一致性和匹配质量良好。
+\item
+  \texttt{medium}：可以作为抓取初值，但建议查看独立裁剪图。
+\item
+  \texttt{low}：不应自动执行抓取，需要重新扫描或人工确认。
+\end{itemize}
+
+常见拒绝原因：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{inconsistent\_spine\_plane\_normal}：该书平面方向与画面中多数书脊不一致。
+\item
+  \texttt{low\_spine\_plane\_inlier\_ratio}：书脊平面有效深度点占比不足。
+\item
+  \texttt{low\_spine\_plane\_coverage}：有效平面没有覆盖足够的书脊长度。
+\item
+  \texttt{grazing\_view\_angle}：观察角度过于倾斜。
+\item
+  \texttt{side\_face\_dominates\_mask}：SAM 掩码中侧面占比过高。
+\item
+  \texttt{side\_face\_boundary\_ambiguous}：检测到侧面，但无法稳定确定交界位置。
+\item
+  \texttt{side\_face\_boundary\_unresolved}：深度不足以拟合侧面裁剪边界。
+\end{itemize}
+
+出现拒绝时，应调整相机位置或增加视角，不应手工把候选重新加入夹爪命令。
+
+\subsection{16. 常见问题}\label{16-ux5e38ux89c1ux95eeux9898}
+
+\subsubsection{\texorpdfstring{提示
+\texttt{No\ module\ named\ \textquotesingle{}liblzfse\textquotesingle{}}}{提示 No module named \textquotesingle liblzfse\textquotesingle{}}}\label{ux63d0ux793a-no-module-named-liblzfse}
+
+只有 Record3D \texttt{.depth} 输入需要该依赖。执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"} \AttributeTok{{-}m}\NormalTok{ pip install pyliblzfse}
+\end{Highlighting}
+\end{Shaded}
+
+通用 PNG/TIFF/NPY/NPZ 深度输入不需要 LZFSE 解码。
+
+\subsubsection{提示 RGB 与 depth
+宽高比不一致}\label{ux63d0ux793a-rgb-ux4e0e-depth-ux5bbdux9ad8ux6bd4ux4e0dux4e00ux81f4}
+
+该错误表示 depth 没有按 RGB
+图像坐标系完成配准，或者其中一个文件被单独裁剪、旋转 或缩放。应由相机
+SDK 先把 depth 对齐到 RGB，不能仅通过强制缩放绕过检查。
+
+\subsubsection{厚度整体大约相差 1000
+倍}\label{ux539aux5ea6ux6574ux4f53ux5927ux7ea6ux76f8ux5dee-1000-ux500d}
+
+这通常是深度单位错误：
+
+\begin{itemize}
+\tightlist
+\item
+  浮点深度默认按米读取。
+\item
+  16 位整数深度默认按毫米读取。
+\item
+  其他单位使用 \texttt{-\/-depth-scale} 指定``米/数值''。
+\end{itemize}
+
+例如深度数值 10000 表示 1 m 时，比例应为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{{-}{-}depth{-}scale}\NormalTok{ 0.0001}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{提示找不到 SAM3
+权重}\label{ux63d0ux793aux627eux4e0dux5230-sam3-ux6743ux91cd}
+
+运行时指定权重：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{0 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\StringTok{"}\VariableTok{$CAPTURE}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}checkpoint}\NormalTok{ /actual/path/to/sam3.pt}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{GPU 显存不足}\label{gpu-ux663eux5b58ux4e0dux8db3}
+
+先查看 GPU：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{nvidia{-}smi}
+\end{Highlighting}
+\end{Shaded}
+
+选择空闲 GPU，例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{1 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\StringTok{"}\VariableTok{$CAPTURE}\StringTok{"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{检测书本数量不正确}\label{ux68c0ux6d4bux4e66ux672cux6570ux91cfux4e0dux6b63ux786e}
+
+先尝试更换清晰、完整的参考帧：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{0 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\StringTok{"}\VariableTok{$CAPTURE}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}reference{-}frame}\NormalTok{ 12}
+\end{Highlighting}
+\end{Shaded}
+
+仍有漏检时可略微降低阈值：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{CUDA\_VISIBLE\_DEVICES}\OperatorTok{=}\NormalTok{0 }\DataTypeTok{\textbackslash{}}
+\StringTok{"}\VariableTok{$PYTHON}\StringTok{"}\NormalTok{ book\_thickness\_pipeline.py }\StringTok{"}\VariableTok{$CAPTURE}\StringTok{"} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}min{-}score}\NormalTok{ 0.45}
+\end{Highlighting}
+\end{Shaded}
+
+降低阈值可能增加重复检测，因此每次调整后必须检查
+\texttt{books\_thickness\_overlay.png}。
+
+\subsection{17.
+上线前安全要求}\label{17-ux4e0aux7ebfux524dux5b89ux5168ux8981ux6c42}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  随机选择至少 5 本不同厚度的书，用卡尺测量实际厚度。
+\item
+  对比 \texttt{book\_thickness.csv}，确认是否存在稳定系统偏差。
+\item
+  检查夹爪控制接口使用的单位是 mm 还是 m。
+\item
+  首次抓取使用低速模式。
+\item
+  夹爪闭合必须启用力控、力矩限制或电流阈值。
+\item
+  \texttt{medium} 和 \texttt{low} 质量结果不得直接进行无人值守抓取。
+\item
+  书本紧密排列、手指无法插入时，应先执行抽书或建立间隙动作。
+\end{enumerate}
+
+本系统提供抓取预张开宽度，不替代机器人碰撞检测、力控和安全控制。
+
+\end{document}

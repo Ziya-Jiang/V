@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="eu_description.SLDASM">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.000271143380720587 -1.45624223891963E-07 0.0212276640929457"
+        rpy="0 0 0" />
+      <mass
+        value="0.224326210963137" />
+      <inertia
+        ixx="0.000259581168031503"
+        ixy="-6.77973682153197E-10"
+        ixz="4.68897335782087E-07"
+        iyy="0.000258097656228815"
+        iyz="-2.35610613243494E-10"
+        izz="0.000357781360640089" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="Empty_Link1">
+    <inertial>
+      <origin
+        xyz="1.20832049132641E-07 -0.015310100073193 -0.013209318292789"
+        rpy="0 0 0" />
+      <mass
+        value="0.0999196072879922" />
+      <inertia
+        ixx="0.000152620824608138"
+        ixy="2.02698293525706E-11"
+        ixz="-2.81690642251598E-11"
+        iyy="0.00013205475739736"
+        iyz="2.02072101918654E-05"
+        izz="0.000123375713740903" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j1"
+    type="revolute">
+    <origin
+      xyz="0 0 0.104"
+      rpy="3.1416 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="Empty_Link1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="Empty_Link2">
+    <inertial>
+      <origin
+        xyz="1.91363203468492E-15 -0.0999999999999887 -0.0519855825453447"
+        rpy="0 0 0" />
+      <mass
+        value="0.264362055399394" />
+      <inertia
+        ixx="0.00181743732652346"
+        ixy="-2.00438878296581E-09"
+        ixz="-1.18099316402759E-19"
+        iyy="0.000321693430407686"
+        iyz="-1.61502285967688E-15"
+        izz="0.00175043556442435" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j2"
+    type="revolute">
+    <origin
+      xyz="0 -0.05 0"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="Empty_Link1" />
+    <child
+      link="Empty_Link2" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="Empty_Link3">
+    <inertial>
+      <origin
+        xyz="-6.47871081890984E-07 -0.0865426284115771 0.0431097853928406"
+        rpy="0 0 0" />
+      <mass
+        value="0.205633121174224" />
+      <inertia
+        ixx="0.00113696503351763"
+        ixy="1.79911639098374E-08"
+        ixz="-1.63929461397199E-09"
+        iyy="0.000172771878389113"
+        iyz="0.000115949086929296"
+        izz="0.00111204868733001" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j3"
+    type="revolute">
+    <origin
+      xyz="0 -0.2 -0.001"
+      rpy="0 0 0" />
+    <parent
+      link="Empty_Link2" />
+    <child
+      link="Empty_Link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="Empty_Link4">
+    <inertial>
+      <origin
+        xyz="-1.03314216638644E-07 0.0113555351701789 0.00501521841883146"
+        rpy="0 0 0" />
+      <mass
+        value="0.0701399365543762" />
+      <inertia
+        ixx="7.63010922915408E-05"
+        ixy="4.55006991417514E-10"
+        ixz="-3.94549454312629E-10"
+        iyy="6.77482950520601E-05"
+        iyz="3.9852299288345E-06"
+        izz="5.81844012876147E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j4"
+    type="revolute">
+    <origin
+      xyz="0 -0.18 -0.0285"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="Empty_Link3" />
+    <child
+      link="Empty_Link4" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="Empty_Link5">
+    <inertial>
+      <origin
+        xyz="-1.03314175644177E-07 -0.0113555351701794 -0.00501521841883144"
+        rpy="0 0 0" />
+      <mass
+        value="0.0701399365543762" />
+      <inertia
+        ixx="7.63010922915422E-05"
+        ixy="-4.55006991334931E-10"
+        ixz="3.94549454209186E-10"
+        iyy="6.77482950520601E-05"
+        iyz="3.98522992883461E-06"
+        izz="5.8184401287616E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j5"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.0745"
+      rpy="-1.5708 0 -3.1416" />
+    <parent
+      link="Empty_Link4" />
+    <child
+      link="Empty_Link5" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="Empty_Link6">
+    <inertial>
+      <origin
+        xyz="1.11022302462516E-16 -2.05664535951913E-14 -0.0152587781245676"
+        rpy="0 0 0" />
+      <mass
+        value="0.0672078396504437" />
+      <inertia
+        ixx="2.00859843799161E-05"
+        ixy="4.45933163314854E-36"
+        ixz="1.16709949232152E-20"
+        iyy="2.00859843799161E-05"
+        iyz="-3.7629496779081E-21"
+        izz="3.04321493975354E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j6"
+    type="revolute">
+    <origin
+      xyz="0 0 0.0645"
+      rpy="0 0 1.5708" />
+    <parent
+      link="Empty_Link5" />
+    <child
+      link="Empty_Link6" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="Empty_Link">
+    <inertial>
+      <origin
+        xyz="0.00196729200405212 0.00196729220309844 -0.0528856296590023"
+        rpy="0 0 0" />
+      <mass
+        value="0.0146085832604218" />
+      <inertia
+        ixx="6.07143364701314E-06"
+        ixy="5.65381287186438E-08"
+        ixz="-3.70324504265208E-07"
+        iyy="6.0714322209807E-06"
+        iyz="-3.70324687479281E-07"
+        izz="3.72790473522765E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="c:/users/cklam/desktop/eu_robot/meshes/Empty_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j7"
+    type="fixed">
+    <origin
+      xyz="0 0 0.07"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="Empty_Link6" />
+    <child
+      link="Empty_Link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>

@@ -1,0 +1,124 @@
+<mujoco model="Robot">
+  <compiler angle="radian" meshdir="../share/meshes" autolimits="true" eulerseq="xyz"/>
+  <option integrator="implicitfast"/>
+  <default>
+    <joint axis="0 1 0" range="-6.28319 6.28319"/>
+    
+    <default class="visual">
+      <geom group="0" type="mesh" contype="0" mass="0"/>
+    </default>
+    <default class="collision">
+      <geom group="3" type="mesh"  contype="0"/>
+    </default>
+
+    <default class="joint_setting">
+      <joint frictionloss="3" damping="0.05" />
+    </default>
+  </default>
+
+  <asset>
+    <material name="white" specular="0.6" shininess="0.55" rgba="1.000000 1.000000 1.000000 1.000000"/>
+    <material name="grey" specular="0.6" shininess="0.75" rgba="0.200000 0.200000 0.200000 1.000000"/>
+    <mesh file="visual/Base_01.obj"/>
+    <mesh file="visual/Base_02.obj"/>
+    <mesh file="visual/L1_01.obj"/>
+    <mesh file="visual/L1_02.obj"/>
+    <mesh file="visual/L2.STL"/>
+    <mesh file="visual/L3.STL"/>
+    <mesh file="visual/L4.STL"/>
+    <mesh file="visual/L5.STL"/>
+    <mesh file="visual/L6.STL"/>
+    <mesh name="L7" file="visual/L71.STL"/>
+
+    <mesh name="Base_collision" file="collision/convex/Base.stl"/>
+    <mesh name="L1_collision" file="collision/convex/L1.stl"/>
+    <mesh name="L2_collision" file="collision/convex/L2.stl"/>
+    <mesh name="L3_collision" file="collision/convex/L3.stl"/>
+    <mesh name="L4_collision" file="collision/convex/L4.stl"/>
+    <mesh name="L5_collision" file="collision/convex/L5.stl"/>
+    <mesh name="L6_collision" file="collision/convex/L6.stl"/>
+    <mesh name="L7_collision" file="collision/convex/L7.stl"/>
+  </asset>
+  
+  <worldbody>
+    <body name="Module_A">
+      <inertial mass="3.0" pos="-0.05 0 0.134" diaginertia="0.025 0.035 0.025"/>
+      <geom mesh="Base_01" material="white" class="visual"/>
+      <geom mesh="Base_02" material="grey" class="visual"/>
+      <geom mesh="Base_collision" class="collision"/>
+      <body name="Module_B" pos="0 0 0.537" gravcomp="0">
+        <inertial pos="-0.0 0 -0.15" mass="3.89" diaginertia="0.035 0.032 0.016"/>
+        <joint name="J1"  class="joint_setting" axis="0 0 1"/>
+        <geom mesh="L1_01" material="white" class="visual"/>
+        <geom mesh="L1_02" material="grey" class="visual"/>
+        <geom mesh="L1_collision" class="collision"/>
+        <body name="Module_B_Pitch" pos="0 0 0" quat="0.707107 -0.707107 0 0" gravcomp="0">
+          <inertial pos="0 0 0" mass="1.21" diaginertia="0.002 0.002 0.002"/>
+          <joint name="J2" axis="0 0 1" class="joint_setting"/>
+          <geom mesh="L2" material="white" class="visual"/>
+          <geom mesh="L2_collision" class="collision" euler="-1.57079632679 0 0"/>
+          <body name="Module_C" pos="0 -0.322 0" quat="0.707107 0.707107 0 0" gravcomp="0">
+            <inertial pos="-0.0 0 -0.13" mass="3.89" diaginertia="0.035 0.032 0.016"/>
+            <joint name="J3" axis="0 0 1" class="joint_setting"/>
+            <geom mesh="L3" material="white" class="visual"/>
+            <geom mesh="L3_collision" class="collision" euler="-1.57079632679 0 0"/>
+            <body name="Module_C_Pitch" pos="0 0 0" quat="0.707107 -0.707107 0 0" gravcomp="0">
+              <inertial pos="0 0 0" mass="1.21" diaginertia="0.002 0.002 0.002"/>
+              <joint name="J4" axis="0 0 1" class="joint_setting"/>
+              <geom mesh="L4" material="white" class="visual"/>
+              <geom mesh="L4_collision" class="collision" euler="-1.57079632679 0 0"/>
+              <body name="Module_D" pos="0 -0.28 0" quat="0.707107 0.707107 0 0" gravcomp="0">
+                <inertial pos="0 0 -0.11" mass="1.89" diaginertia="0.015 0.013 0.004"/>
+                <joint name="J5" axis="0 0 1" class="joint_setting" />
+                <geom mesh="L5" material="white" class="visual"/>
+                <geom mesh="L5_collision" class="collision" euler="-1.57079632679 0 0"/>
+                <body name="Module_D_Pitch" pos="0 0 0" quat="-0.707107 0.707107 0 0" gravcomp="0">
+                  <inertial pos="0.0 0.0 0" mass="1.11" diaginertia="0.001 0.001 0.001"/>
+                  <joint name="J6" axis="0 0 1" class="joint_setting" />
+                  <geom mesh="L6" material="white" class="visual"/>
+                  <geom mesh="L6_collision" class="collision" euler="-1.57079632679 0 0"/>
+                  <body name="End_Effector" pos="0 -0.0945 0" quat="0.707107 0.707107 0 0" gravcomp="0">
+                    <inertial pos="-0.0 -0.0 -0.01" mass="0.05" diaginertia="2.20875e-05 1.5143e-05 1.46711e-05"/>
+                    <joint name="J7" axis="0 0 1" class="joint_setting" />
+                    <geom mesh="L7" material="white" class="visual"/>
+                    <geom mesh="L7_collision" class="collision" euler="-1.57079632679 0 0"/>
+                    <body name="Gripper" pos="0 0 0.09" gravcomp="0">
+                      <inertial pos="-0.0 -0.0 -0.01" mass="0.54" diaginertia="2.20875e-05 1.5143e-05 1.46711e-05"/>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  
+  <contact>
+    <exclude name="exclude1" body1="Module_A" body2="Module_B"/>
+    <exclude name="exclude2" body1="Module_A" body2="Module_B_Pitch"/>
+    <exclude name="exclude3" body1="Module_B" body2="Module_B_Pitch"/>
+    <exclude name="exclude4" body1="Module_B_Pitch" body2="Module_C_Pitch"/>
+    <exclude name="exclude5" body1="Module_C" body2="Module_C_Pitch"/>
+    <exclude name="exclude6" body1="Module_C_Pitch" body2="Module_D_Pitch"/>
+    <exclude name="exclude7" body1="Module_D" body2="Module_D_Pitch"/>
+    <exclude name="exclude8" body1="Module_D_Pitch" body2="End_Effector"/>
+  </contact>
+
+  
+  <actuator>
+    <general joint="J1" class="joint_setting" />
+    <general joint="J2" class="joint_setting" />
+    <general joint="J3" class="joint_setting" />
+    <general joint="J4" class="joint_setting" />
+    <general joint="J5" class="joint_setting" />
+    <general joint="J6" class="joint_setting" />
+    <general joint="J7" class="joint_setting" />
+  </actuator>
+
+  <keyframe>
+    <key name="home" qpos="0 0 0 0 0 0 0"
+        ctrl="0 0 0 0 0 0 0"/>
+  </keyframe>
+</mujoco>

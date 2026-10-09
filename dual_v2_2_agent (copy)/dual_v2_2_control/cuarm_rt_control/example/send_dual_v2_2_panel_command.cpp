@@ -1,0 +1,187 @@
+#include <unistd.h>
+
+#include <cstring>
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+#include <yaml-cpp/yaml.h>
+
+#include "curi_udp/c/curi_udp.h"
+#include "robot_platform_utils/cpp/include/config_loader.h"
+#include "robot_platform_utils/cpp/include/cuarm_message_handler.h"
+#include "robot_platform_utils/cpp/include/cuarm_state.h"
+
+namespace {
+
+struct Options {
+    std::string mode = "open";
+    std::vector<float> left_hand_angles;
+    std::string local_ip = "127.0.0.1";
+    int local_port = 0;
+    std::string remote_ip = "127.0.0.1";
+    int remote_port = 21201;
+    int count = 20;
+    int period_ms = 50;
+    std::string config_path = std::string(CONFIG_PREFIX_PATH) + "/config.yaml";
+};
+
+void usage(const char* argv0) {
+    std::cout
+        << "Usage: " << argv0 << " [open|close|left_open|left_close|lefthand_open|lefthand_close|lefthand_angles A0 A1 A2 A3 A4 A5|righthand_open|righthand_close|right_open|right_close|shutdown] [options]\n"
+        << "Options:\n"
+        << "  --local-ip IP       default 127.0.0.1\n"
+        << "  --local-port PORT   default 0\n"
+        << "  --remote-ip IP      default 127.0.0.1\n"
+        << "  --remote-port PORT  default 21201\n"
+        << "  --count N           default 20\n"
+        << "  --period-ms MS      default 50\n"
+        << "  --config PATH       default " << CONFIG_PREFIX_PATH << "/config.yaml\n";
+}
+
+Options parseArgs(int argc, char** argv) {
+    Options opts;
+    int i = 1;
+    if (i < argc && std::string(argv[i]).rfind("--", 0) != 0) {
+        opts.mode = argv[i++];
+    }
+    if (opts.mode == "lefthand_angles") {
+        if (argc - i < 6) throw std::invalid_argument("lefthand_angles requires 6 values");
+        for (int j = 0; j < 6; ++j) {
+            opts.left_hand_angles.push_back(std::stof(argv[i++]));
+        }
+    }
+    while (i < argc) {
+        std::string arg = argv[i++];
+        auto need_value = [&](const std::string& name) -> std::string {
+            if (i >= argc) throw std::invalid_argument(name + " requires a value");
+            return argv[i++];
+        };
+        if (arg == "--local-ip") opts.local_ip = need_value(arg);
+        else if (arg == "--local-port") opts.local_port = std::stoi(need_value(arg));
+        else if (arg == "--remote-ip") opts.remote_ip = need_value(arg);
+        else if (arg == "--remote-port") opts.remote_port = std::stoi(need_value(arg));
+        else if (arg == "--count") opts.count = std::stoi(need_value(arg));
+        else if (arg == "--period-ms") opts.period_ms = std::stoi(need_value(arg));
+        else if (arg == "--config") opts.config_path = need_value(arg);
+        else if (arg == "--help" || arg == "-h") {
+            usage(argv[0]);
+            std::exit(0);
+        } else {
+            throw std::invalid_argument("unknown argument: " + arg);
+        }
+    }
+    return opts;
+}
+
+void copyRobotName(char dest[MAX_ROBOTNAME_SIZE], const std::string& value) {
+    std::memset(dest, 0, MAX_ROBOTNAME_SIZE);
+    std::strncpy(dest, value.c_str(), MAX_ROBOTNAME_SIZE - 1);
+}
+
+void fillPanelCommandFromConfig(PanelCommand& cmd, const YAML::Node& config, const Options& opts, uint32_t sequence_id) {
+    const std::string& mode = opts.mode;
+    std::memset(&cmd, 0, sizeof(cmd));
+    cmd.send_timestamp = get_time_now();
+    cmd.sequence_id = sequence_id;
+    cmd.connection_state = (mode == "shutdown") ? ConnectionState::kShutDown : ConnectionState::kRemote;
+    cmd.need_setting_update = false;
+    cmd.simulation = false;
+    cmd.motion_type = MotionControl::kNull;
+    cmd.task_orien_type = OrientControl::kBase;
+    cmd.reset_control_mem = false;
+    cmd.target_type = ControlType::kPosition;
+    cmd.actuator_mode = ControlType::kPosition;
+    cmd.interpolation_type = InterpolationMethod::kCos;
+    cmd.interpolation_speed_ratio = 0.1f;
+    cmd.InterpolationAccTime = 5.0f;
+    cmd.InterpolationConstVelTime = 1.0f;
+    cmd.NoneInterpolationSaturationRatio = 0.15f;
+    cmd.reset_interpolation = false;
+    cmd.control_algorithm = ControlAlgorithm::kNone;
+    cmd.arm_target_mode = PanelTargetMode::kSinglePoint;
+
+    const auto arm_config = config["robot"]["arm"];
+    cmd.ArmSize = static_cast<uint8_t>(arm_config.size());
+    for (int arm_i = 0; arm_i < cmd.ArmSize; ++arm_i) {
+        const auto arm = arm_config[arm_i];
+        cmd.JointSize[arm_i] = arm["joint_size"].as<uint8_t>();
+        copyRobotName(cmd.RobotName[arm_i], arm["name"].as<std::string>() + "-" + arm["type"].as<std::string>());
+        for (int j = 0; j < cmd.JointSize[arm_i]; ++j) {
+            cmd.enable_joint[arm_i][j] = false;
+            cmd.MotorCmd[arm_i][j] = 0.0f;
+            cmd.JointCmd[arm_i][j] = 0.0f;
+            cmd.arm_soft_limit_position[arm_i][j][0] = -360.0f;
+            cmd.arm_soft_limit_position[arm_i][j][1] = 360.0f;
+            cmd.arm_soft_limit_velocity[arm_i][j][0] = -360.0f;
+            cmd.arm_soft_limit_velocity[arm_i][j][1] = 360.0f;
+        }
+        for (int j = 0; j < 6; ++j) cmd.TaskCmd[arm_i][j] = 0.0f;
+    }
+
+    cmd.ArmWaypointSize = 0;
+    cmd.ArmWaypointDt = 0.0f;
+
+    const auto gripper_config = config["robot"]["gripper"];
+    cmd.GripperSize = gripper_config ? static_cast<uint8_t>(gripper_config.size()) : 0;
+    for (int gri_i = 0; gri_i < cmd.GripperSize; ++gri_i) {
+        cmd.GripperJointSize[gri_i] = gripper_config[gri_i]["joint_size"].as<uint8_t>();
+        for (int j = 0; j < cmd.GripperJointSize[gri_i]; ++j) {
+            cmd.GripperJointCmd[gri_i][j] = 0.0f;
+            cmd.gripper_soft_limit_position[gri_i][j][0] = 0.0f;
+            cmd.gripper_soft_limit_position[gri_i][j][1] = 1.0f;
+        }
+    }
+
+    bool left_close = mode == "close" || mode == "left_close" || mode == "lefthand_close" || mode == "righthand_close";
+    bool right_close = mode == "close" || mode == "right_close";
+    if (mode == "open" || mode == "left_open" || mode == "lefthand_open" || mode == "righthand_open") left_close = false;
+    if (mode == "open" || mode == "right_open") right_close = false;
+
+    if (cmd.GripperSize > 0 && cmd.GripperJointSize[0] >= 6) {
+        if (mode == "lefthand_angles") {
+            for (int j = 0; j < 6; ++j) cmd.GripperJointCmd[0][j] = opts.left_hand_angles[j];
+        } else {
+            cmd.GripperJointCmd[0][0] = 1.0f;
+            for (int j = 1; j < 6; ++j) cmd.GripperJointCmd[0][j] = left_close ? 1.0f : 0.0f;
+        }
+    }
+    if (cmd.GripperSize > 1 && cmd.GripperJointSize[1] >= 1) {
+        cmd.GripperJointCmd[1][0] = right_close ? 1.0f : 0.0f;
+    }
+}
+
+}  // namespace
+
+int main(int argc, char** argv) {
+    try {
+        Options opts = parseArgs(argc, argv);
+        YAML::Node config = loadYamlConfig(opts.config_path);
+
+        udp_node udp;
+        int ret = udp_init(&udp, opts.local_ip.data(), opts.local_port, opts.remote_ip.data(), opts.remote_port, 60000);
+        if (ret != 0) {
+            throw std::runtime_error("udp_init failed with code " + std::to_string(ret));
+        }
+
+        std::cout << "Sending PanelCommand mode=" << opts.mode
+                  << " local=" << opts.local_ip << ":" << opts.local_port
+                  << " remote=" << opts.remote_ip << ":" << opts.remote_port
+                  << " count=" << opts.count << " period_ms=" << opts.period_ms << std::endl;
+
+        for (int i = 0; i < opts.count; ++i) {
+            PanelCommand cmd;
+            fillPanelCommandFromConfig(cmd, config, opts, static_cast<uint32_t>(i + 1));
+            CuarmMessageHandler::pack_panel_command(&cmd, udp.send_buffer, 60000);
+            udp_send(&udp, 60000);
+            usleep(opts.period_ms * 1000);
+        }
+
+        udp_close(&udp);
+        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << "send_dual_v2_2_panel_command failed: " << e.what() << std::endl;
+        return 1;
+    }
+}

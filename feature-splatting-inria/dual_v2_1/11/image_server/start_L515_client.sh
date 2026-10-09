@@ -1,0 +1,1 @@
+python3 image_client.py --host 10.30.3.175 --port 5555 --show --show-depth

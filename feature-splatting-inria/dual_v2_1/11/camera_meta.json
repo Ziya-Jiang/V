@@ -1,0 +1,19 @@
+{
+  "camera_model": "515",
+  "camera_serial": "f1481047",
+  "width": 960,
+  "height": 540,
+  "fps": 30,
+  "depth_scale_device": 0.0002500000118743628,
+  "depth_png_unit": "millimeter_uint16",
+  "distortion_model": "distortion.brown_conrady",
+  "coeffs": [
+    0.17228710651397705,
+    -0.5256160497665405,
+    -0.0015026259934529662,
+    0.00012417831749189645,
+    0.48631083965301514
+  ],
+  "num_frames": 121,
+  "record_duration_sec": 5.303392011000142
+}

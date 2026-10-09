@@ -1,0 +1,5 @@
+table
+bread
+plate
+bowl
+cup

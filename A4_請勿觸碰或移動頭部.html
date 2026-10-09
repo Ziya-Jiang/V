@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <title>請勿觸碰或移動頭部</title>
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 297mm;
+      height: 210mm;
+      margin: 0;
+      background: #fff;
+      color: #000;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: "Noto Sans CJK TC", "Noto Sans CJK SC",
+                   "Microsoft JhengHei", "PingFang TC", sans-serif;
+      font-weight: 700;
+    }
+
+    .cantonese {
+      margin: 0 0 24mm;
+      font-size: 22mm;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .english {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13.5mm;
+      line-height: 1;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <p class="cantonese">唔該，請勿觸碰或移動頭部</p>
+  <p class="english">Please do not touch or move the head.</p>
+</body>
+</html>

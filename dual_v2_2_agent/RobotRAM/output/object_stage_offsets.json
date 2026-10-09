@@ -1,0 +1,184 @@
+{
+  "units": "mm",
+  "generated_from": [
+    "RobotRAM/scripts/step4_manual_planning.py",
+    "RobotRAM/scripts/step5_execute.py"
+  ],
+  "coordinate_semantics": {
+    "object_center": "XY offset is relative to the detected object center_position.",
+    "planned_place_target": "XY offset is relative to the incoming planned placement target.",
+    "target_z_base": "Absolute Z coordinate in the robot base frame; it is not a relative offset."
+  },
+  "objects": {
+    "bowl": {
+      "variant": "right_arm_bowl",
+      "runtime_note": "The nominal pickup XY offset is [-15, -40]. Runtime IK may rotate this rim point around the bowl center while preserving a 42.72 mm radius; the selected delta is applied to all pickup stages.",
+      "stages": [
+        {
+          "action": "move_above_grasp",
+          "reference": "object_center",
+          "offset_xy": [-15, -40],
+          "target_z_base": 120
+        },
+        {
+          "action": "move_down_to_grasp",
+          "reference": "object_center",
+          "offset_xy": [-15, -40],
+          "target_z_base": 30
+        },
+        {
+          "action": "close_gripper",
+          "reference": "object_center",
+          "offset_xy": [-15, -40],
+          "target_z_base": 30
+        },
+        {
+          "action": "lift_object",
+          "reference": "object_center",
+          "offset_xy": [-15, -40],
+          "target_z_base": 120
+        },
+        {
+          "action": "move_to_target",
+          "reference": "planned_place_target",
+          "offset_xy": [0, 0],
+          "target_z_base": 120
+        },
+        {
+          "action": "move_down_to_place",
+          "reference": "planned_place_target",
+          "offset_xy": [0, 0],
+          "target_z_base": 70
+        },
+        {
+          "action": "open_gripper",
+          "reference": "planned_place_target",
+          "offset_xy": [0, 0],
+          "target_z_base": 70
+        },
+        {
+          "action": "move_up_after_release",
+          "reference": "planned_place_target",
+          "offset_xy": [0, 0],
+          "target_z_base": 120
+        }
+      ]
+    },
+    "bread": {
+      "stages": [
+        {
+          "action": "move_above_grasp",
+          "reference": "object_center",
+          "offset_xy": [-25, -20],
+          "target_z_base": 200
+        },
+        {
+          "action": "move_down_to_grasp",
+          "reference": "object_center",
+          "offset_xy": [-25, -20],
+          "target_z_base": 45
+        },
+        {
+          "action": "close_gripper",
+          "reference": "object_center",
+          "offset_xy": [-25, -20],
+          "target_z_base": 45
+        },
+        {
+          "action": "lift_object",
+          "reference": "object_center",
+          "offset_xy": [-25, -20],
+          "target_z_base": 200
+        },
+        {
+          "action": "move_to_target",
+          "reference": "planned_place_target",
+          "offset_xy": [-20, -30],
+          "target_z_base": 200
+        },
+        {
+          "action": "move_down_to_place",
+          "reference": "planned_place_target",
+          "offset_xy": [-20, -30],
+          "target_z_base": 120
+        },
+        {
+          "action": "open_gripper",
+          "reference": "planned_place_target",
+          "offset_xy": [-20, -30],
+          "target_z_base": 120
+        },
+        {
+          "action": "move_up_after_release",
+          "reference": "planned_place_target",
+          "offset_xy": [-20, -30],
+          "target_z_base": 265
+        }
+      ]
+    },
+    "cup": {
+      "stages": [
+        {
+          "action": "move_above_grasp",
+          "reference": "object_center",
+          "offset_xy": [20, 50],
+          "target_z_base": 170
+        },
+        {
+          "action": "move_down_to_grasp",
+          "reference": "object_center",
+          "offset_xy": [20, 50],
+          "target_z_base": 70
+        },
+        {
+          "action": "close_to_object_center",
+          "reference": "object_center",
+          "offset_xy": [25, -5],
+          "target_z_base": 70
+        },
+        {
+          "action": "close_gripper",
+          "reference": "object_center",
+          "offset_xy": [25, -5],
+          "target_z_base": 70
+        },
+        {
+          "action": "lift_object",
+          "reference": "object_center",
+          "offset_xy": [25, -5],
+          "target_z_base": 130
+        },
+        {
+          "action": "move_to_target",
+          "reference": "planned_place_target",
+          "offset_xy": [0, 0],
+          "target_z_base": 180
+        },
+        {
+          "action": "adjust_orientation_for_place",
+          "reference": "planned_place_target",
+          "offset_xy": [0, 0],
+          "target_z_base": 180
+        },
+        {
+          "action": "move_down_to_place",
+          "reference": "planned_place_target",
+          "offset_xy": [0, 0],
+          "target_z_base": 110
+        },
+        {
+          "action": "open_gripper",
+          "reference": "planned_place_target",
+          "offset_xy": [0, 0],
+          "target_z_base": 100
+        },
+        {
+          "action": "move_up_after_release",
+          "reference": "planned_place_target",
+          "offset_xy": [0, 0],
+          "target_z_base": 220
+        }
+      ]
+    }
+  }
+}

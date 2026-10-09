@@ -1,0 +1,222 @@
+# robot_config.yaml
+robot:
+  num_arms: 2
+  num_joints_per_arm: 7
+  num_joints_head: 2
+  pulse_to_degree: 0.00549316
+  pulse_to_radian: 0.00009587
+# kinematics : MDH parameters for left arm, right arm and head
+kinematics:
+  left_arm:
+    a: [0.0, -0.311, 0.096, 0.016, -0.384, -0.002, 61.746]
+    alpha: [0.0, -1.57256, 1.57382, -1.56897, 1.57176, -1.57521, 1.55307]
+    d: [85.0, 0.929, 250.875, -0.411, 209.548, 0.757, 2.933]
+    sign: [1, -1, 1, 1, 1, 1, 1]
+    base_to_world: [0.0, 143.31, 332.44, -1.047197533, 0.0, 0.0]
+    offset: [0.0, 0.038988, -0.21857, 0.0, 0.022887, -1.5405, 0.05531]
+    init_mdhpos: [12779.006766, 15048.4891, 5787.779584, -9909.200571, 1060.964537, -7076.24566, 304.124757]
+    limits: 
+    min: [-180.0, -90.0, -180.0, -90.0, -180.0, -90.0, -90.0]
+    max: [180.0, 90.0, 180.0, 90.0, 180.0, 90.0, 90.0]
+  right_arm:
+    a: [0.0, -0.125, -0.329, -0.083, 2.233, -0.251, 62.127]
+    alpha: [0.0, -1.564617835, 1.57519453, -1.57217511, 1.56950476, -1.567061295, 1.567794333]
+    d: [85.0, -0.192, 250.381, 0.759, 210.103, 0.142, -0.502]
+    sign: [1, 1, 1, -1, 1, 1, 1]
+    base_to_world: [0.0, -143.31, 332.44, 1.047197533, 0.0, 0.0]
+    offset: [0.0, -0.02335, 0.020409, -0.0019373, 0.0025133, -1.58151, 0.037943]
+    init_mdhpos: [10183.271274, -8012.312190, 5555.435955, 9481.595161, -8732.410534, 10497.291431, -11387.935914]
+    limits: 
+      min: [-180.0, -90.0, -180.0, -90.0, -180.0, -90.0, -90.0]
+      max: [180.0, 90.0, 180.0, 90.0, 180.0, 90.0, 90.0]
+  head:
+    a: [0.0, 0.0]
+    alpha: [0.0, 0.0]
+    d: [0.0, 0.0]
+    sign: [1, 1]
+    base_to_world: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    offset: [0.0, 0.0]
+    init_mdhpos: [4098.9436, -13938]
+    limits: 
+      min: [-180.0, -34.5]
+      max: [180.0, 34.5]
+# dynamics :dynamics parameters for left arm and right arm:
+dynamics: 
+  left_arm:
+    dynamics_parm: # 28, 7x4 parameters
+        [-0.0329, -0.0548, 0.0, 0.0,
+        0.0306, 0.0002, -0.0548, 0.0139,
+        -0.0225, -0.0213, -0.0001, 0.0039,
+        0.0419, 0.0, -0.0213, 0.0005,
+        0.0258, 0.0116, 0.0, 0.0024,
+        0.0, 0.0095, 0.0116, -0.0018,
+        -0.0255, -0.0006, 0.0096, 0.0019]
+  right_arm:
+    dynamics_parm:
+        [-0.0289, 0.0548, 0.0, 0.0,
+        0.0286, -0.0002, 0.0548, 0.0139,
+        -0.0205, 0.0213, -0.0001, 0.0039,
+        0.0359, 0.0, 0.0213, 0.0005,
+        0.0218, -0.0116, 0.0, 0.0024,
+        0.0, 0.0095, -0.0116, -0.0018,
+        0.0255, 0.0, 0.0000, 0.0019]
+
+#hardware parameters
+hardware:
+  can:
+    use_pdo: false
+    left_arm:
+      channel: 0
+      baudrate:  1000000
+      pdo_auto_report_ms: 20 #ms
+    right_arm:
+      channel: 0
+      baudrate:  1000000
+      pdo_auto_report_ms: 20 #ms
+    torque_sensor:
+      channel: [0, 1]
+      device_type: 1 # 0 for CANABLE, 2 for USBCANII
+      baudrate:  1000000
+    head:
+      channel: 0
+      baudrate:  1000000
+      pdo_auto_report_ms: 20 #ms
+
+  motor:
+    left_arm:
+      ids: [1, 2, 3, 4, 5, 6, 7]
+      enabled: [1, 1, 1, 1, 1, 1, 1]
+      # enabled: [0, 0, 0, 0, 0, 0, 0]
+      gear_ratios: [121, 121, 101, 101, 101, 101, 101]
+      sign: [1, -1, 1, 1, 1, 1, 1]
+      rated_torque: [78.0, 78.0, 8.6, 8.6, 1.6, 1.6, 1.6]
+
+    right_arm:
+      ids: [8, 9, 10, 11, 12, 13, 14]
+      enabled: [1, 1, 1, 1, 1, 1, 1]
+      # enabled: [0, 0, 0, 0, 0, 0, 0]
+      gear_ratios: [121, 121, 101, 101, 101, 101, 101]
+      sign: [1, 1, 1, -1, 1, 1, 1]
+      rated_torque: [78.0, 78.0, 8.6, 8.6, 1.6, 1.6, 1.6]
+          
+    head:
+      ids: [15, 16]
+      enabled: [1, 1]
+      gear_ratios: [101, 101]
+      sign: [1, 1]
+      rated_torque: [1.6, 1.6]
+      init_pos_degrees: [0.0, 0.0]
+      
+
+  torque_sensor:
+    left_arm:
+      ids: [21, 22, 23, 24, 25, 32, 33]
+      enabled: [1, 1, 1, 1, 1, 1, 1]
+    right_arm:
+      ids: [34, 35, 36, 37, 38, 39, 40]
+      enabled: [0, 0, 0, 0, 0, 0, 0]
+  hand:
+    left_arm:
+      id: 2
+      cmd: [1000, 1000, 1000, 1000, 1000, 1000]
+    right_arm:
+      id: 1
+      cmd: 
+        #[500, 500, 500, 380, 600, 300]
+        #[500, 1000, 1000, 700, 800, 0]
+        #[900, 700, 800, 500, 600, 100]
+        #[1000, 1000, 500, 500, 500, 100]
+        [0, 0, 0, 0, 1000, 1000]
+        #[750, 920, 820, 850, 500, 0]
+#parameters for the controller
+control:
+  position:
+    left_arm:
+      dt: 0.01
+      T: 30
+      use_hand: false
+      use_torque_sensor: false
+      command_degrees: [0.0, 0.0, 0.0, 0.0, 360.0, 70.0, 0.0]
+      # command_degrees: [20.0, 40.0, 0.0, 50.0, 80.0, 0.0, -20.0] #VLM intermediate reset point
+      # command_degrees: [23.294993, 67.260393, -0.300710, 0.383433, -24.084352, 76.133131, -38.131178 ] #camera calibration
+      # command_degrees: [0.0, 70.0, -10.0, 50.0, 70.0, 0.0, 0.0] #Vision pro initial position
+      cartesian_command: [377.649, 377.137, 207.334, -1.50145, 0.20123, -0.691257] # [x, y, z, rx, ry, rz]
+    right_arm:
+      dt: 0.01
+      T: 20
+      use_hand: false
+      use_torque_sensor: false
+      command_degrees:  [-100.0, 0.0, 100.0, 80.0, -60.0, 80.0, 0.0]
+      # command_degrees: [-20.0, 40.0, 0.0, 50.0, 0.0, 20.0, 0.0] #VLM intermediate reset point
+      # command_degrees: [-44.894, 27.621, -100.837, -30.000, 89.198, 18.318, 21.333]
+      # command_degrees: [0.0, 70.0, 10.0, 50.0, -70.0, 20.0, 0.0] #Vision pro initial position
+      # command_degrees: [-25.78310078,  34.37746771,  22.91831181,  85.94366927, -31.51267873,  22.91831181, -16.04281826] #VLA initial position
+      cartesian_command: [376.06, -378.18, 205.897, 1.50351, 0.200977, 0.690875] # [x, y, z, rx, ry, rz]
+    head:
+      dt: 0.01
+      T: 2
+      # command_degrees: [0.0, 0.0]
+      # command_degrees: [0, 34.4978] # vlm 3cam
+      # command_degrees: [0, 44.498] # vla kinect
+      command_degrees: [0, 25] # transparent grasp 3cam
+ 
+
+  velocity:
+    left_arm:
+      interpolation_dt: 0.01
+      interpolation_T: 10
+      kp: [18.5, 18.5, 18.5, 18.5, 18.5, 18.5, 18.5]
+      max_velocity: [4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0]
+      error_tolerance: 50.0
+      use_torque_sensor: false
+      command_degrees: [55.070700, 56.936422, -25.906014, 47.423157, 30.365563, 34.855786, -34.930951]
+
+    right_arm:
+      interpolation_dt: 0.01
+      interpolation_T: 10
+      kp: [18.5, 18.5, 18.5, 18.5, 18.5, 18.5, 18.5]
+      max_velocity: [4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0, 4000.0]
+      error_tolerance: 50.0
+      use_torque_sensor: false
+      command_degrees: [0, 0, 0, 0, 0, 0, 0]
+
+    head:
+      interpolation_dt: 0.01
+      interpolation_T: 10
+      kp: [8.5, 8.5]
+      max_velocity: [9000.0, 9000.0]
+      error_tolerance: 0.08
+      command_degrees: [0.0, 0.0]
+
+  force:
+    gravity_compensation:  
+      left_arm:
+        dt: 0.02 #ms
+        T: 10 #s
+        use_torque_sensor: false
+        K: [0.3, -0.3, 0.3, 0.25, 0.35, 0.3, 0.3]
+        damp: [0.008, 0.008, 0.008, 0.005, 0.001, 0.001, 0.001]
+      right_arm:
+        dt: 0.02 #ms
+        T: 10 #s
+        use_torque_sensor: false
+        K: [0.25, 0.45, 0.15, -0.15, 0.3, 0.25, 0.3]
+        damp: [0.008, 0.008, 0.008, 0.005, 0.001, 0.001, 0.00]
+
+    admittance:
+      left_arm:
+        dt: 0.02
+        T: 10
+        K: [-15.00,-15.00,-20.0,-20.0,-100.0,-100.0,-100.0]
+        damp: [0.008, 0.008, 0.008, 0.005, 0.001, 0.001, 0.001]
+        inertia: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        deadzone: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        output_limits: [50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0]
+      right_arm:
+        dt: 0.02
+        T: 10
+        K: [-15.00,-15.00,-20.0,-20.0,-100.0,-100.0,-100.0]
+        damp: [0.008, 0.008, 0.008, 0.005, 0.001, 0.001, 0.001]
+        inertia: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        deadzone: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        output_limits: [50.0, 50.0, 50.0, 50.0, 50.0, 50.0, 50.0]

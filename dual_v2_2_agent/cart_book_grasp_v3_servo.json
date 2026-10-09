@@ -1,0 +1,23 @@
+{
+  "reference": null,
+  "probe_mm": 2.0,
+  "max_step_mm": 2.0,
+  "max_offset_mm": 20.0,
+  "max_path_mm": 80.0,
+  "tolerance_px": 3.0,
+  "gain": 0.5,
+  "damping_px_per_mm": 0.2,
+  "max_condition": 15.0,
+  "min_response_px_per_mm": 0.2,
+  "max_fit_error_px": 2.0,
+  "max_iterations": 15,
+  "stable_frames": 2,
+  "max_frame_age_seconds": 2.0,
+  "max_seconds": 180.0,
+  "max_pose_error_mm": 1.0,
+  "max_orientation_error_deg": 1.0,
+  "max_reference_gap_error_mm": 10.0,
+  "max_reference_orientation_error_deg": 3.0,
+  "min_surface_gap_mm": 100.0,
+  "settle_seconds": 0.15
+}

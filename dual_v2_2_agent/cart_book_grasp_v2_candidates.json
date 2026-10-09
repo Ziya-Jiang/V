@@ -1,0 +1,14 @@
+{
+  "book_prompt": "book.",
+  "book_score": 0.25,
+  "text_score": 0.2,
+  "nms_iou": 0.55,
+  "min_depth_pixels": 60,
+  "min_depth_fraction": 0.5,
+  "selected_crop_padding": 0.15,
+  "depth_range_mm": [
+    400.0,
+    1200.0
+  ],
+  "depth_crop_padding_px": 80
+}

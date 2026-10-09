@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="arm_v2" xmlns:xacro="http://ros.org/wiki/xacro">
+    <mujoco>
+        <compiler meshdir="meshes/arm/" balanceinertia="true" discardvisual="false" />
+    </mujoco>
+    <xacro:include filename="../../components/arm_obj.xacro" />
+
+    <xacro:arm_macro base_link="base_link" end_effector_link="end_effector" prefix="arm"
+        meshdir="package://arm_v2/meshes/arm" />
+</robot>

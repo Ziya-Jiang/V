@@ -1,0 +1,81 @@
+mainwindow_size: [600,900]
+enable_ndi: false
+dt: 0.03
+general:
+  interpolation: Cos
+  target_type: Position
+  actuator_mode: Velocity
+  acc_time: 1.0
+  vel_time: 0
+qml: 
+  camera:
+    field_of_view: 1.8
+    position: [25.0, 25.0, 8.0]
+    view_center: [0, 0, 0.4]
+arm:
+  - name: "arm"
+    type: "Euarm"
+    joint_size: 6
+    joint_lower_limit: [-150, -150, -150, -150, -150, -150]
+    joint_upper_limit: [150, 150, 150, 150, 150, 150]
+    motor:
+      pos_vel_kp: [5, 5, 5, 5, 5, 5]
+      pos_tor_kp: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+      tor_vel_kp: [0.3, 0.3, 0.3, 0.3, 0.3, 0.3]
+      pos_vel_kd: [0.3, 0.3, 0.3, 0.3, 0.3, 0.3]
+      pos_tor_kd: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+      tor_vel_kd: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+    safety:
+      quick_stop:
+        position: 1000
+        velocity: 1000
+        torque: 20
+      saturation:
+        position: 1000
+        velocity: 100
+        torque: 50
+    force_control:
+      gravity:
+        ratio: 0.35
+        kd: 0
+      impedance:
+        tool_force_kp: [0, 0, 0, 0, 0, 0]
+        tool_force_kd: [0, 0, 0, 0, 0, 0]
+        tool_force_saturation: [10, 10, 10, 2, 2, 2]
+      joint_impedance:
+        joint_force_kp: [0, 0, 0, 0, 0, 0]
+        joint_force_kd: [0, 0, 0, 0, 0, 0]
+        joint_force_saturation: [5,5,5,5,5,5]
+      admittance:
+        upperBound: 10
+        threshold: 3
+        maxSpeed: 15
+    qml:
+      transformation:
+        rotation: [0, 0, 80]
+        translation: [0, 0, 0]
+      mesh:  #x,y,z,roll,pitch,yaw (relative to previous joint)
+      - source: "../share/meshes/visual/base_link.STL"
+        origin: [0,0,0,0,0,0] 
+        type: fixed
+      - source: "../share/meshes/visual/Empty_Link1.STL"
+        origin: [0,0,0.104,180,0,-90] 
+        type: revolute
+      - source: "../share/meshes/visual/Empty_Link2.STL"
+        origin: [0,-0.05,0,90,0,180] 
+        type: revolute
+      - source: "../share/meshes/visual/Empty_Link3.STL"
+        origin: [0,-0.2,-0.001,0,0,0] 
+        type: revolute
+      - source: "../share/meshes/visual/Empty_Link4.STL"
+        origin: [0,-0.18,-0.0285,90,0,180] 
+        type: revolute
+      - source: "../share/meshes/visual/Empty_Link5.STL"
+        origin: [0,0,-0.0745,-90,0,-180] 
+        type: revolute
+      - source: "../share/meshes/visual/Empty_Link6.STL"
+        origin: [0,0,0.0645,0,0,90] 
+        type: revolute
+      - source: "../share/meshes/visual/Empty_Link.STL"
+        origin: [0,0,0.07,0,0,-90] 
+        type: fixed

@@ -1,0 +1,6 @@
+name: left_hand_right_gripper_vlm_discard
+urdf: share/left_hand_right_gripper/vlm_discard/dual_v1.urdf
+import_yaml: share/config/components/dual_v1.yaml
+gripper:
+  - import_yaml: share/config/components/hand_left_vlm_discard.yaml
+  - import_yaml: share/config/components/gripper_right.yaml

@@ -1,0 +1,4 @@
+xml_file: scene.xml
+arm:
+- robot_name: "cuarmV2_2"
+  joint_size: 7

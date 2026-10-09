@@ -1,0 +1,405 @@
+{
+  "unit": "millimetres",
+  "definition": "thickness + uncertainty_95 + clearance",
+  "commands": {
+    "S2-01": {
+      "opening_mm": 35.85183948060441,
+      "opening_m": 0.035851839480604414,
+      "measured_thickness_mm": 29.683022472971007,
+      "uncertainty_95_mm": 3.168817007633402,
+      "quality": "low"
+    },
+    "S2-02": {
+      "opening_mm": 35.23281157178164,
+      "opening_m": 0.03523281157178164,
+      "measured_thickness_mm": 29.02802438732688,
+      "uncertainty_95_mm": 3.2047871844547617,
+      "quality": "low"
+    },
+    "S2-03": {
+      "opening_mm": 42.051070022563366,
+      "opening_m": 0.042051070022563364,
+      "measured_thickness_mm": 34.7010589679447,
+      "uncertainty_95_mm": 4.35001105461867,
+      "quality": "low"
+    },
+    "S2-04": {
+      "opening_mm": 35.4515563066589,
+      "opening_m": 0.0354515563066589,
+      "measured_thickness_mm": 29.232562767274093,
+      "uncertainty_95_mm": 3.2189935393848046,
+      "quality": "low"
+    },
+    "S2-05": {
+      "opening_mm": 31.774154901774256,
+      "opening_m": 0.03177415490177426,
+      "measured_thickness_mm": 25.554848965482996,
+      "uncertainty_95_mm": 3.2193059362912604,
+      "quality": "low"
+    },
+    "S2-06": {
+      "opening_mm": 27.287289312074122,
+      "opening_m": 0.027287289312074123,
+      "measured_thickness_mm": 21.103411170516228,
+      "uncertainty_95_mm": 3.1838781415578947,
+      "quality": "low"
+    },
+    "S2-07": {
+      "opening_mm": 27.553873866272646,
+      "opening_m": 0.027553873866272647,
+      "measured_thickness_mm": 21.358204523020845,
+      "uncertainty_95_mm": 3.1956693432518017,
+      "quality": "low"
+    },
+    "S2-08": {
+      "opening_mm": 26.50008278200512,
+      "opening_m": 0.026500082782005118,
+      "measured_thickness_mm": 20.301664769158997,
+      "uncertainty_95_mm": 3.198418012846124,
+      "quality": "low"
+    },
+    "S2-09": {
+      "opening_mm": 19.705396403358414,
+      "opening_m": 0.019705396403358413,
+      "measured_thickness_mm": 13.516556698001441,
+      "uncertainty_95_mm": 3.188839705356972,
+      "quality": "low"
+    },
+    "S2-10": {
+      "opening_mm": 49.28455497101559,
+      "opening_m": 0.04928455497101559,
+      "measured_thickness_mm": 43.15736880861345,
+      "uncertainty_95_mm": 3.127186162402138,
+      "quality": "low"
+    },
+    "S2-11": {
+      "opening_mm": 33.932390915464325,
+      "opening_m": 0.03393239091546432,
+      "measured_thickness_mm": 27.793623977593622,
+      "uncertainty_95_mm": 3.138766937870699,
+      "quality": "low"
+    },
+    "S2-12": {
+      "opening_mm": 40.342142381639725,
+      "opening_m": 0.040342142381639724,
+      "measured_thickness_mm": 34.20024782372018,
+      "uncertainty_95_mm": 3.1418945579195423,
+      "quality": "low"
+    },
+    "S2-13": {
+      "opening_mm": 29.654709210254943,
+      "opening_m": 0.029654709210254943,
+      "measured_thickness_mm": 23.463517185702884,
+      "uncertainty_95_mm": 3.191192024552059,
+      "quality": "low"
+    },
+    "S2-14": {
+      "opening_mm": 21.455726980181744,
+      "opening_m": 0.021455726980181743,
+      "measured_thickness_mm": 15.291776325807858,
+      "uncertainty_95_mm": 3.1639506543738873,
+      "quality": "low"
+    },
+    "S2-15": {
+      "opening_mm": 36.55515049216556,
+      "opening_m": 0.03655515049216556,
+      "measured_thickness_mm": 30.421530925340054,
+      "uncertainty_95_mm": 3.133619566825508,
+      "quality": "low"
+    },
+    "S2-16": {
+      "opening_mm": 31.03379621610699,
+      "opening_m": 0.03103379621610699,
+      "measured_thickness_mm": 24.886276643095037,
+      "uncertainty_95_mm": 3.1475195730119516,
+      "quality": "low"
+    },
+    "S2-17": {
+      "opening_mm": 28.799686624879165,
+      "opening_m": 0.028799686624879164,
+      "measured_thickness_mm": 22.66451024751439,
+      "uncertainty_95_mm": 3.135176377364775,
+      "quality": "low"
+    },
+    "S2-18": {
+      "opening_mm": 24.36337715936908,
+      "opening_m": 0.02436337715936908,
+      "measured_thickness_mm": 18.223731194413322,
+      "uncertainty_95_mm": 3.1396459649557573,
+      "quality": "low"
+    },
+    "S2-19": {
+      "opening_mm": 24.879158341727862,
+      "opening_m": 0.024879158341727863,
+      "measured_thickness_mm": 18.705672609427413,
+      "uncertainty_95_mm": 3.1734857323004504,
+      "quality": "low"
+    },
+    "S2-20": {
+      "opening_mm": 37.59694166437956,
+      "opening_m": 0.03759694166437956,
+      "measured_thickness_mm": 31.48066627093727,
+      "uncertainty_95_mm": 3.116275393442289,
+      "quality": "low"
+    },
+    "S2-21": {
+      "opening_mm": 31.147762961754264,
+      "opening_m": 0.031147762961754265,
+      "measured_thickness_mm": 24.96123204665619,
+      "uncertainty_95_mm": 3.1865309150980763,
+      "quality": "low"
+    },
+    "S2-22": {
+      "opening_mm": 36.45926559151411,
+      "opening_m": 0.03645926559151411,
+      "measured_thickness_mm": 30.338557327588504,
+      "uncertainty_95_mm": 3.120708263925606,
+      "quality": "low"
+    },
+    "S2-23": {
+      "opening_mm": 27.432785016391406,
+      "opening_m": 0.027432785016391407,
+      "measured_thickness_mm": 21.307624289590233,
+      "uncertainty_95_mm": 3.1251607268011727,
+      "quality": "low"
+    },
+    "S2-24": {
+      "opening_mm": 34.60284760837804,
+      "opening_m": 0.03460284760837804,
+      "measured_thickness_mm": 28.505814317120777,
+      "uncertainty_95_mm": 3.097033291257267,
+      "quality": "low"
+    },
+    "S2-25": {
+      "opening_mm": 43.79630720040037,
+      "opening_m": 0.04379630720040037,
+      "measured_thickness_mm": 36.543394297038965,
+      "uncertainty_95_mm": 4.252912903361404,
+      "quality": "low"
+    },
+    "S2-26": {
+      "opening_mm": 37.36819343979343,
+      "opening_m": 0.03736819343979343,
+      "measured_thickness_mm": 31.262355322032697,
+      "uncertainty_95_mm": 3.1058381177607317,
+      "quality": "low"
+    },
+    "S2-27": {
+      "opening_mm": 33.464718590426386,
+      "opening_m": 0.033464718590426386,
+      "measured_thickness_mm": 27.381363601042537,
+      "uncertainty_95_mm": 3.0833549893838517,
+      "quality": "low"
+    },
+    "S2-28": {
+      "opening_mm": 51.85515483120571,
+      "opening_m": 0.05185515483120571,
+      "measured_thickness_mm": 44.59845460149195,
+      "uncertainty_95_mm": 4.256700229713758,
+      "quality": "low"
+    },
+    "S3-01": {
+      "opening_mm": 35.901261789382225,
+      "opening_m": 0.03590126178938222,
+      "measured_thickness_mm": 29.406490900146938,
+      "uncertainty_95_mm": 3.494770889235284,
+      "quality": "low"
+    },
+    "S3-02": {
+      "opening_mm": 39.106413524028596,
+      "opening_m": 0.0391064135240286,
+      "measured_thickness_mm": 32.65240554930247,
+      "uncertainty_95_mm": 3.454007974726121,
+      "quality": "low"
+    },
+    "S3-03": {
+      "opening_mm": 33.079604015414006,
+      "opening_m": 0.03307960401541401,
+      "measured_thickness_mm": 26.776357389716885,
+      "uncertainty_95_mm": 3.303246625697125,
+      "quality": "low"
+    },
+    "S3-04": {
+      "opening_mm": 52.81020245234429,
+      "opening_m": 0.052810202452344294,
+      "measured_thickness_mm": 46.20482804783003,
+      "uncertainty_95_mm": 3.605374404514264,
+      "quality": "low"
+    },
+    "S3-05": {
+      "opening_mm": 37.2231483215102,
+      "opening_m": 0.037223148321510205,
+      "measured_thickness_mm": 29.869253841463042,
+      "uncertainty_95_mm": 4.353894480047159,
+      "quality": "low"
+    },
+    "S3-06": {
+      "opening_mm": 27.552326189715505,
+      "opening_m": 0.027552326189715506,
+      "measured_thickness_mm": 21.273773469880993,
+      "uncertainty_95_mm": 3.2785527198345115,
+      "quality": "low"
+    },
+    "S3-07": {
+      "opening_mm": 43.49288004825908,
+      "opening_m": 0.04349288004825908,
+      "measured_thickness_mm": 37.2383230496522,
+      "uncertainty_95_mm": 3.2545569986068834,
+      "quality": "low"
+    },
+    "S3-08": {
+      "opening_mm": 42.78217650071891,
+      "opening_m": 0.04278217650071891,
+      "measured_thickness_mm": 36.55566314128174,
+      "uncertainty_95_mm": 3.22651335943717,
+      "quality": "low"
+    },
+    "S3-09": {
+      "opening_mm": 35.2633555766363,
+      "opening_m": 0.0352633555766363,
+      "measured_thickness_mm": 28.989554063340645,
+      "uncertainty_95_mm": 3.2738015132956573,
+      "quality": "low"
+    },
+    "S3-10": {
+      "opening_mm": 27.120350766196683,
+      "opening_m": 0.027120350766196684,
+      "measured_thickness_mm": 20.912312939855937,
+      "uncertainty_95_mm": 3.2080378263407456,
+      "quality": "low"
+    },
+    "S3-11": {
+      "opening_mm": 44.0023957965046,
+      "opening_m": 0.0440023957965046,
+      "measured_thickness_mm": 37.80876678031942,
+      "uncertainty_95_mm": 3.193629016185181,
+      "quality": "low"
+    },
+    "S3-12": {
+      "opening_mm": 30.32890996798718,
+      "opening_m": 0.03032890996798718,
+      "measured_thickness_mm": 22.994719214242064,
+      "uncertainty_95_mm": 4.334190753745117,
+      "quality": "low"
+    },
+    "S3-13": {
+      "opening_mm": 27.713902843479204,
+      "opening_m": 0.027713902843479205,
+      "measured_thickness_mm": 21.551812925063025,
+      "uncertainty_95_mm": 3.1620899184161777,
+      "quality": "low"
+    },
+    "S3-14": {
+      "opening_mm": 44.81392874575917,
+      "opening_m": 0.04481392874575917,
+      "measured_thickness_mm": 38.67035018129927,
+      "uncertainty_95_mm": 3.1435785644599012,
+      "quality": "low"
+    },
+    "S3-15": {
+      "opening_mm": 35.969644923606324,
+      "opening_m": 0.035969644923606325,
+      "measured_thickness_mm": 28.684614105687057,
+      "uncertainty_95_mm": 4.285030817919266,
+      "quality": "low"
+    },
+    "S3-16": {
+      "opening_mm": 30.6492727511817,
+      "opening_m": 0.030649272751181702,
+      "measured_thickness_mm": 24.39310800612136,
+      "uncertainty_95_mm": 3.2561647450603433,
+      "quality": "low"
+    },
+    "S3-17": {
+      "opening_mm": 38.838162401910175,
+      "opening_m": 0.038838162401910174,
+      "measured_thickness_mm": 32.67591626816789,
+      "uncertainty_95_mm": 3.1622461337422876,
+      "quality": "low"
+    },
+    "S3-18": {
+      "opening_mm": 29.809040717745,
+      "opening_m": 0.029809040717744997,
+      "measured_thickness_mm": 23.651999956846726,
+      "uncertainty_95_mm": 3.1570407608982736,
+      "quality": "low"
+    },
+    "S3-19": {
+      "opening_mm": 40.135903774628,
+      "opening_m": 0.040135903774628,
+      "measured_thickness_mm": 33.972312900992634,
+      "uncertainty_95_mm": 3.163590873635364,
+      "quality": "low"
+    },
+    "S3-20": {
+      "opening_mm": 47.896629043443966,
+      "opening_m": 0.04789662904344397,
+      "measured_thickness_mm": 41.74027583921977,
+      "uncertainty_95_mm": 3.1563532042241933,
+      "quality": "low"
+    },
+    "S3-21": {
+      "opening_mm": 48.017772163749996,
+      "opening_m": 0.04801777216374999,
+      "measured_thickness_mm": 41.84427959473201,
+      "uncertainty_95_mm": 3.1734925690179896,
+      "quality": "low"
+    },
+    "S3-22": {
+      "opening_mm": 47.21866054935482,
+      "opening_m": 0.04721866054935482,
+      "measured_thickness_mm": 41.01076308599277,
+      "uncertainty_95_mm": 3.2078974633620554,
+      "quality": "low"
+    },
+    "S3-23": {
+      "opening_mm": 39.43516049895577,
+      "opening_m": 0.03943516049895577,
+      "measured_thickness_mm": 33.22622139804005,
+      "uncertainty_95_mm": 3.2089391009157127,
+      "quality": "low"
+    },
+    "S3-24": {
+      "opening_mm": 30.04907953624282,
+      "opening_m": 0.03004907953624282,
+      "measured_thickness_mm": 23.782372498804566,
+      "uncertainty_95_mm": 3.266707037438254,
+      "quality": "low"
+    },
+    "S3-25": {
+      "opening_mm": 28.99118488362889,
+      "opening_m": 0.02899118488362889,
+      "measured_thickness_mm": 22.59222557699223,
+      "uncertainty_95_mm": 3.3989593066366606,
+      "quality": "low"
+    },
+    "S3-26": {
+      "opening_mm": 30.33184289539013,
+      "opening_m": 0.030331842895390128,
+      "measured_thickness_mm": 24.15537292198839,
+      "uncertainty_95_mm": 3.1764699734017383,
+      "quality": "low"
+    },
+    "S3-27": {
+      "opening_mm": 28.011034238607497,
+      "opening_m": 0.028011034238607496,
+      "measured_thickness_mm": 21.82952009297451,
+      "uncertainty_95_mm": 3.181514145632987,
+      "quality": "low"
+    },
+    "S3-28": {
+      "opening_mm": 36.54095431485527,
+      "opening_m": 0.03654095431485527,
+      "measured_thickness_mm": 30.38042637043357,
+      "uncertainty_95_mm": 3.160527944421697,
+      "quality": "low"
+    },
+    "S3-29": {
+      "opening_mm": 45.86791977353378,
+      "opening_m": 0.04586791977353378,
+      "measured_thickness_mm": 39.60118671898018,
+      "uncertainty_95_mm": 3.2667330545535944,
+      "quality": "low"
+    }
+  }
+}

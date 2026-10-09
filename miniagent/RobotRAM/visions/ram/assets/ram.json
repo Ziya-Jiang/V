@@ -1,0 +1,5 @@
+{
+    "ram_checkpoint": "../ckpts/model.pth",
+    "template_dir": "../template",
+    "ram_k": 5
+}

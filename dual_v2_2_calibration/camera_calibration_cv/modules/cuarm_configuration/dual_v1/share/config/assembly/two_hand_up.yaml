@@ -1,0 +1,6 @@
+name: dual_v1_two_hand_up
+urdf: share/two_hand_up/3cam_head_fixed/dual_v1.urdf
+import_yaml: share/config/components/dual_v1.yaml
+gripper:
+  - import_yaml: share/config/components/hand_left.yaml
+  - import_yaml: share/config/components/hand_right.yaml

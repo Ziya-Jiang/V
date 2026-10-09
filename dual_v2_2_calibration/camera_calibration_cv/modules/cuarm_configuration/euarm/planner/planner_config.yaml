@@ -1,0 +1,66 @@
+dt: 0.002
+robotics_library: "pinocchio"
+arm:
+  - name: "arm"
+    type: "Euarm"
+    urdf: "../share/robot.urdf"
+    joint_size: 6
+    joint_limit_boundary_k: 0.85 
+    joint_lower_limit: [-150, -150, -150, -150, -150, -150]
+    joint_upper_limit: [150, 150, 150, 150, 150, 150]
+    outer_gear_ratio: [1, 1, 1, 1, 1, 1]
+    inner_gear_ratio: [1, 1, 1, 1, 1, 1]
+    motor_direction: [1, 1, 1, 1, 1, 1]
+    k : 800
+    alpha: 8
+    omega1: 1
+    omega2: 2
+    joint_pos_limitation:
+      limitation_kv: 25
+    force_control:
+      filter_k: 0.96
+      gravity:
+        ratio: 0.46 #Robot v3.0 with housing
+        kd: [0, 0, 0, 0, 0, 0]
+      gravity_with_boundary:
+        kp: [100, 100, 100]
+        boundary: [0.15, 0.15, 0.15]
+        joint_saturation: [1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
+      task_impedance:
+        kp: [0, 0, 100, 20, 20, 20] #Task impedance
+        kd: [0.2, 0.2, 0.2, 0.1, 0.1, 0.1]
+        ki: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+        ki_ratio: 0.9
+        joint_torque_ratio: [1, 1, 1, 1, 1, 1]
+        joint_additional_kd: [0, 0, 0, 0, 0, 0]
+        joint_saturation: [1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
+        task_null_k: [10, 10, 10, 10, 10, 10]
+      joint_impedance:
+        kp: [1, 1, 1, 1, 1, 1]
+        kd: [0, 0, 0, 0, 0, 0]
+        saturation: [1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
+      admittance:
+        forceUpperBound: 10
+        threshold: 3
+        maxSpeed: 15
+      task_admittance:
+        kp : 1
+      joint_admittance:
+        kd: 10
+        forceUpperBound: [10, 10, 10, 10, 10, 10]
+        threshold:  [1, 1, 1, 1, 1, 1]
+        maxSpeed:   [20, 20, 20, 20, 20, 20]
+        maxAcceleration: [10, 10, 10, 10, 10, 10]
+        extern_force_k: [200, 50, 200, 100, 200, 150]
+      null_admittance:
+        kp: 0.1
+        kd: 0.5
+        threshold: 1.5
+        saturation: 0.1
+        geometric_ji: 1
+    friction:
+      joint_vel_filter_k: 0.8
+      CoulumbWithViscous:
+        ratio: [0, 0, 0, 0, 0, 0]
+        Coulumb: [0, 0, 0, 0, 0, 0]
+        Viscous: [0, 0, 0, 0, 0, 0]

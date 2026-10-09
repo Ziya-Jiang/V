@@ -1,0 +1,5 @@
+{
+    "ram_checkpoint": "/mnt/ssd/user/V/dual_v2_2_agent/RobotRAM/visions/ram/ckpts/model.pth",
+    "template_dir": "/mnt/ssd/user/V/dual_v2_2_agent/RobotRAM/visions/ram/template",
+    "ram_k": 5
+}

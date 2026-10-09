@@ -1,0 +1,79 @@
+{
+  "camera": "Orbbec",
+  "preset": "Default",
+  "alignment": "hardware_d2c",
+  "calibration_path": "/mnt/ssd/user/wx/vlm_demo/calibration/session_seed/base_to_camera/results/machine-readable results.json",
+  "resolution": [
+    848,
+    530
+  ],
+  "depth_unit": "mm",
+  "point_unit": "m",
+  "point_count": 375790,
+  "valid_depth_pixels": 375790,
+  "valid_depth_ratio": 0.836129405482378,
+  "depth_mm": {
+    "minimum": 404.75,
+    "median": 826.2999877929688,
+    "maximum": 2999.7001953125
+  },
+  "stride": 1,
+  "voxel_size_mm": 0.0,
+  "distortion_corrected": true,
+  "K": [
+    [
+      409.23599187340665,
+      0.0,
+      422.43374198360226
+    ],
+    [
+      0.0,
+      409.4777074411914,
+      266.67246638755205
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "D": [
+    -0.026721774389643637,
+    0.026473245538935403,
+    0.00018511527249615888,
+    -0.0004853601117670007,
+    -0.008847814271510882
+  ],
+  "T_base_from_camera_m": [
+    [
+      -0.1326651358360748,
+      -0.5451348841800987,
+      0.8277849477874952,
+      0.10609697840691834
+    ],
+    [
+      -0.9907155935215706,
+      0.047900019993277684,
+      -0.1272328606840461,
+      -0.0035490803635637442
+    ],
+    [
+      0.02970815522374476,
+      -0.8369788206009718,
+      -0.5464282929887578,
+      0.5652749368136215
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "outputs": {
+    "camera_cloud": "point_cloud_camera_xyzrgb.npy",
+    "base_cloud": "point_cloud_base_xyzrgb.npy",
+    "camera_ply": "point_cloud_camera.ply",
+    "base_ply": "point_cloud_base.ply"
+  }
+}

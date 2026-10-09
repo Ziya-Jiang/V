@@ -1,0 +1,53 @@
+base:
+  urdf_joints: []
+  urdf_links: ["arm_base_link"] 
+arm:
+  - name: arm
+    type: Spark2_V1
+    joint_size: 6
+    urdf_joints: ["arm_J1", "arm_J2", "arm_J3", "arm_J4", "arm_J5", "arm_J6"]
+    urdf_links: ["arm_L1", "arm_L2", "arm_L3", "arm_L4", "arm_L5", "arm_L6", "arm_end_effector"]
+    enable_joint: [true, true, true, true, true, true]
+    pid:
+      pos_vel_kp: [3.0, 3.0, 3.0, 3.0, 3.0, 3.0]
+      pos_tor_kp: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      vel_tor_kp: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      pos_vel_kd: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      pos_tor_kd: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+      vel_tor_kd: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    safety: 
+      joint_soft_limit:                                 # Saturate cmd on reach
+        position:     [[-180.0, -90.0, -180.0, -225, -180.0, -360.0], [180.0, 90.0, 180.0, 50, 180.0, 360.0]]
+        velocity:     [100, 100, 100, 100, 100, 100]
+        acceleration: [100, 100, 100, 100, 100, 100]
+        torque:       [3.0, 3.0, 3.0, 3.0, 3.0, 3.0]
+      joint_hard_limit:                                 # Program terminates if exceed
+        position:     [[-185.0, -95.0, -185.0, -230.0, -195.0, -365.0], [185.0, 95.0, 185.0, 55.0, 195.0, 365.0]]
+        velocity:     [150, 150, 150, 150, 150, 400]
+        torque:       [20.0, 20.0, 20.0, 5.0, 5.0, 5.0]
+      joint_follow:                                     # Program terminates if exceed
+        position: [5.0, 5.0, 5.0, 5.0, 5.0, 5.0]
+        velocity: [5.0, 5.0, 5.0, 5.0, 5.0, 5.0]
+        torque:   [0.5, 0.5, 0.5, 0.5, 0.5, 3.0]
+      joint_jump:                                       # Saturate cmd on reach
+        position: [100, 100, 100, 100, 100, 100]
+        velocity: [100, 100, 100, 100, 100, 100]
+        torque:   [3.0, 3.0, 3.0, 3.0, 3.0, 3.0]
+      task_motion_limit:
+        linear_velocity:  [0.2, 0.2, 0.2]               # in m/s, x, y, z
+        angular_velocity: [20, 20, 20]                  # in deg/s 
+    force_control:
+      gravity:
+        ratio: [0.3, 1.0, 1.0, 1.0, 1.0, 1.0]
+        kd: [0.3, 0.0, 0.0, 0.5, 0.2, 0.5]
+      joint_impedance: #Activate when torque control reach joint position limit
+        kp: [50.0, 150.0, 20.0, 50.0, 30.0, 30.0]
+        kd: [5.0, 5.0, 5.0, 10.0, 1.0, 1.0]
+        torque_saturation: [1.5, 4.0, 1.5, 3.0, 3.0, 3.0]
+      velocity_low_pass_filter_ratio: [0.9, 0.9, 0.8, 0, 0, 0]
+      friction:
+        coulumb_with_viscous:
+          ratio: [1.0, 1.0, 1.0, 0.0, 0.0, 0.0]
+          coulumb: [0.55, 0.6, 0.7, 0.1, 1.58421626091361,2.07803699751541]
+          viscous: [0.0, 0.05, 0.1, 0.0, 0.0, 0.0]
+    use_joint_torque_sensor: false

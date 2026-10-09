@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>SOrbitCameraController.qml</file>
+        <file>RobotEntity.qml</file>
+        <file>RenderEntity.qml</file>
+        <file>MeshEntityOBJ.qml</file>
+        <file>MeshEntitySTL.qml</file>
+
+        <file alias="floor31.png">../images/floor31.png</file>
+        
+        <file>meshes/visual/SAKE_Finger_L1_Gen2.obj</file>   
+        <file>meshes/visual/SAKE_Finger_L2_Gen2.obj</file>   
+    </qresource>
+</RCC>

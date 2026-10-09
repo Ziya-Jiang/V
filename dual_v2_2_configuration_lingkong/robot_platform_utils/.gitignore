@@ -1,0 +1,4 @@
+cpp/build/
+.vscode/
+build/
+*.pdb

@@ -1,0 +1,16 @@
+calibration_type: "eye_to_hand" # "eye_in_hand" or "eye_to_hand"
+camera_type: "orbbec" # "usb_cam" or "realsense" or "zed" or "kinect" or "orbbec"
+# camera_id: 4  # camera index or serial number
+# robot_config_path: "/home/camera_calibration_cv/modules/cuarm_configuration/dual_v1/config.yaml" # absolute or relative path to robot config file
+robot_config_path: "/mnt/ssd/user/wx/vlm_demo/cuarm_panel_control/cuarm_configuration/dual_v2_2/config.yaml"
+chessboard_dimension: [11, 8] # [rows, cols] as inner-corner counts
+chessboard_square_edge_size_m: 0.01 # checker square edge size (meters)
+receive_robot_state:
+  enabled: true
+  local_ip: "127.0.0.1"
+  local_port: 30241   # script receives panel state (must match panel remote_port)
+  remote_ip: "127.0.0.1"
+  remote_port: 30240  # script sends commands (must match panel local_port)
+# calibration_path: "./calibration/session_0702" # output root folder
+# calibration_path: "./calibration/session_0702" # output root folder
+calibration_path: "./calibration/session_demo" # output root folder

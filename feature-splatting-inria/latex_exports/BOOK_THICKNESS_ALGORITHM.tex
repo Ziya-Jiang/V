@@ -1,0 +1,1496 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\PassOptionsToPackage{space}{xeCJK}
+\documentclass[
+  chinese,
+  11pt,
+  a4paper,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{Noto Serif CJK SC}
+  \setsansfont[]{Noto Sans CJK SC}
+  \setmonofont[]{Noto Sans Mono CJK SC}
+  \ifXeTeX
+    \usepackage{xeCJK}
+    \setCJKmainfont[]{Noto Serif CJK SC}
+  \fi
+  \ifLuaTeX
+    \usepackage[]{luatexja-fontspec}
+    \setmainjfont[]{Noto Serif CJK SC}
+  \fi
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off,provide=*]{babel}
+\else
+\usepackage[bidi=default,shorthands=off,provide=*]{babel}
+\fi
+\ifPDFTeX
+\else
+\babelfont{rm}[]{Noto Serif CJK SC}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={RGB-D 书本厚度与夹爪开口算法说明},
+  pdflang={zh-CN},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{RGB-D 书本厚度与夹爪开口算法说明}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{目录}
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\subsection{1. 文档目的}\label{1-ux6587ux6863ux76eeux7684}
+
+本文说明 \texttt{book\_thickness\_pipeline.py} 如何从 RGB-D 数据中：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  找到每一本可见书脊。
+\item
+  区分书脊正面与因斜视产生的书本侧面。
+\item
+  计算书脊的毫米厚度。
+\item
+  拒绝无法可靠测量的候选。
+\item
+  在多帧模式下融合多个视角。
+\item
+  计算双指夹爪的建议预张开宽度。
+\end{enumerate}
+
+算法面向机器人抓取规划，不是计量认证系统。输出宽度必须配合夹爪力控、电流阈值和
+碰撞检测使用。
+
+\subsection{2. 问题定义}\label{2-ux95eeux9898ux5b9aux4e49}
+
+\subsubsection{2.1
+需要计算的量}\label{21-ux9700ux8981ux8ba1ux7b97ux7684ux91cf}
+
+目标量是书脊左右边界之间的物理距离：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{book\_thickness\_mm}
+\end{Highlighting}
+\end{Shaded}
+
+它不是：
+
+\begin{itemize}
+\tightlist
+\item
+  RGB 图像中的水平包围框宽度。
+\item
+  书本在图像中的完整可见轮廓宽度。
+\item
+  书本封面向后延伸的深度。
+\item
+  书架平面上的书本占用宽度。
+\end{itemize}
+
+对于倾斜书本，算法沿书脊自身的横向轴测量，而不是沿图像水平方向测量。
+
+\subsubsection{2.2 主要困难}\label{22-ux4e3bux8981ux56f0ux96be}
+
+实际场景包含以下误差来源：
+
+\begin{itemize}
+\tightlist
+\item
+  书脊在 RGB 图像中倾斜。
+\item
+  相机不能正对所有书本。
+\item
+  书本排列松散时会看到封面、页块或侧面。
+\item
+  语义分割可能把书脊与侧面合成同一个实例。
+\item
+  深度图存在空洞、边缘混合、多径和量化误差。
+\item
+  RGB 与 depth 的分辨率可能不同。
+\item
+  单帧无法观察被遮挡的真实边界。
+\item
+  多帧中的同一本书需要可靠匹配。
+\end{itemize}
+
+其中最危险的是``侧面被算入书脊宽度''，因为它会产生系统性的厚度偏高。当前实现使用
+深度多平面分解和安全拒绝机制处理该问题。
+
+\subsection{3. 输入模式}\label{3-ux8f93ux5165ux6a21ux5f0f}
+
+\subsubsection{3.1
+通用单帧模式}\label{31-ux901aux7528ux5355ux5e27ux6a21ux5f0f}
+
+直接提供三个路径：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{python}\NormalTok{ book\_thickness\_pipeline.py }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}rgb}\NormalTok{ /path/to/rgb.png }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}depth}\NormalTok{ /path/to/depth.png }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}intrinsics}\NormalTok{ /path/to/intrinsics.json }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}output}\NormalTok{ /path/to/result}
+\end{Highlighting}
+\end{Shaded}
+
+通用模式不要求 Record3D、confidence、位姿或固定目录结构。
+
+支持的深度格式：
+
+\begin{itemize}
+\tightlist
+\item
+  单通道 PNG、TIFF。
+\item
+  二维 \texttt{.npy}。
+\item
+  包含 \texttt{depth} 数组或唯一数组的 \texttt{.npz}。
+\end{itemize}
+
+深度单位约定：
+
+\begin{itemize}
+\tightlist
+\item
+  浮点深度默认单位为米。
+\item
+  16 位及以上整数深度默认单位为毫米。
+\item
+  其他单位通过 \texttt{-\/-depth-scale} 指定``米/数值''。
+\end{itemize}
+
+内参可使用：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\{}
+  \DataTypeTok{"fx"}\FunctionTok{:} \FloatTok{677.7016}\FunctionTok{,}
+  \DataTypeTok{"fy"}\FunctionTok{:} \FloatTok{677.9246}\FunctionTok{,}
+  \DataTypeTok{"cx"}\FunctionTok{:} \FloatTok{490.9557}\FunctionTok{,}
+  \DataTypeTok{"cy"}\FunctionTok{:} \FloatTok{270.4970}
+\FunctionTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+或标准 3×3 相机矩阵：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fx  0  cx}
+\NormalTok{0  fy  cy}
+\NormalTok{0   0   1}
+\end{Highlighting}
+\end{Shaded}
+
+内参必须对应 RGB 图像坐标系，depth 必须已经对齐到 RGB。
+
+\subsubsection{3.2 Record3D
+单帧模式}\label{32-record3d-ux5355ux5e27ux6a21ux5f0f}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{python}\NormalTok{ book\_thickness\_pipeline.py CAPTURE }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}single{-}frame{-}rgbd} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}reference{-}frame}\NormalTok{ 24}
+\end{Highlighting}
+\end{Shaded}
+
+该模式读取：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{CAPTURE/rgbd/24.jpg}
+\item
+  \texttt{CAPTURE/rgbd/24.depth}
+\item
+  \texttt{CAPTURE/metadata} 中的尺寸与内参
+\end{itemize}
+
+它不读取 \texttt{.conf}，也不使用 \texttt{metadata.poses}。
+
+\subsubsection{3.3 Record3D
+多帧模式}\label{33-record3d-ux591aux5e27ux6a21ux5f0f}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{python}\NormalTok{ book\_thickness\_pipeline.py CAPTURE }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}frames}\NormalTok{ 0,12,24,36,48,60,71 }\DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}{-}reference{-}frame}\NormalTok{ 24}
+\end{Highlighting}
+\end{Shaded}
+
+多帧模式额外使用：
+
+\begin{itemize}
+\tightlist
+\item
+  Record3D 深度 confidence。
+\item
+  每帧相机内参。
+\item
+  ARKit 相机位姿。
+\end{itemize}
+
+\subsection{4.
+坐标系与单位}\label{4-ux5750ux6807ux7cfbux4e0eux5355ux4f4d}
+
+\subsubsection{4.1 图像坐标}\label{41-ux56feux50cfux5750ux6807}
+
+RGB 像素使用：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{u：向右}
+\NormalTok{v：向下}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{4.2 相机坐标}\label{42-ux76f8ux673aux5750ux6807}
+
+反投影后的相机坐标使用：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X：相机右方}
+\NormalTok{Y：相机下方}
+\NormalTok{Z：相机前方}
+\end{Highlighting}
+\end{Shaded}
+
+内部 3D 单位统一为米，最终厚度与夹爪开口输出为毫米。
+
+\subsubsection{4.3 相机内参}\label{43-ux76f8ux673aux5185ux53c2}
+
+相机矩阵为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    [fx  0  cx]}
+\NormalTok{K = [0  fy  cy]}
+\NormalTok{    [0   0   1]}
+\end{Highlighting}
+\end{Shaded}
+
+像素 \texttt{(u,\ v)} 对应的未归一化相机射线为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r(u, v) = [(u {-} cx) / fx, (v {-} cy) / fy, 1]}
+\end{Highlighting}
+\end{Shaded}
+
+深度为 \texttt{z} 时，3D 点为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P = z · r(u, v)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{5. 算法总流程}\label{5-ux7b97ux6cd5ux603bux6d41ux7a0b}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{RGB}
+\NormalTok{ └─ SAM3 书本实例分割}
+\NormalTok{     └─ 掩码清理与重复实例抑制}
+\NormalTok{         └─ PCA 拟合书脊长轴/横轴及轮廓边界}
+
+\NormalTok{Depth + K}
+\NormalTok{ └─ 有效深度筛选与反投影}
+\NormalTok{     └─ 每本书 RANSAC 多平面分解}
+\NormalTok{         └─ 全画面书脊法向共识}
+\NormalTok{             └─ 每本书选择主书脊平面}
+\NormalTok{                 ├─ 无可见侧面：保留 RGB 边界}
+\NormalTok{                 ├─ 有可见侧面：裁剪到书脊/侧面交界}
+\NormalTok{                 └─ 几何不可靠：拒绝测量}
+
+\NormalTok{修正边界 + 书脊平面}
+\NormalTok{ └─ 射线/平面求交}
+\NormalTok{     └─ 毫米厚度}
+\NormalTok{         ├─ 单帧低质量结果}
+\NormalTok{         └─ 多帧关联、异常值剔除与鲁棒融合}
+\NormalTok{             └─ 不确定度 + 安全间隙}
+\NormalTok{                 └─ 建议夹爪开口}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{6. RGB
+书脊实例分割}\label{6-rgb-ux4e66ux810aux5b9eux4f8bux5206ux5272}
+
+\subsubsection{6.1 SAM3 检测}\label{61-sam3-ux68c0ux6d4b}
+
+默认文本提示为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{book}
+\end{Highlighting}
+\end{Shaded}
+
+默认阈值：
+
+\begin{itemize}
+\tightlist
+\item
+  SAM3 processor 初始阈值：0.10。
+\item
+  最终检测分数阈值：0.50。
+\item
+  实例 NMS IoU：0.40。
+\end{itemize}
+
+\subsubsection{6.2
+初始几何过滤}\label{62-ux521dux59cbux51e0ux4f55ux8fc7ux6ee4}
+
+候选需要满足：
+
+\begin{itemize}
+\tightlist
+\item
+  包围框宽度至少 6 px。
+\item
+  包围框高度至少 100 px。
+\item
+  宽度不超过图像宽度的 18\%。
+\item
+  高度不超过图像高度的 65\%。
+\item
+  拟合后的书脊宽度至少 5 px。
+\item
+  拟合后的有效长度至少 100 px。
+\end{itemize}
+
+这些阈值用于去除整层书架、背景和小碎片。对于分辨率明显低于 540p
+或书本只露出很小 区域的图像，需要重新标定最小高度阈值。
+
+\subsubsection{6.3 掩码清理}\label{63-ux63a9ux7801ux6e05ux7406}
+
+每个实例只保留面积最大的连通区域，并填充内部孔洞。这样可以避免书脊文字、标签或
+反光造成的掩码破洞影响边界拟合。
+
+\subsubsection{6.4
+重复实例抑制}\label{64-ux91cdux590dux5b9eux4f8bux6291ux5236}
+
+候选按分数从高到低处理。同层候选先检查包围框重叠，再计算掩码 IoU。掩码
+IoU 超过 默认阈值 0.40 时，只保留分数更高的实例。
+
+\subsection{7.
+书脊二维几何拟合}\label{7-ux4e66ux810aux4e8cux7ef4ux51e0ux4f55ux62dfux5408}
+
+\subsubsection{7.1 PCA 主轴}\label{71-pca-ux4e3bux8f74}
+
+将掩码内所有像素组成二维点集，计算协方差矩阵：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C = (1 / (N {-} 1)) Σ (p\_i {-} p\_mean)(p\_i {-} p\_mean)\^{}T}
+\end{Highlighting}
+\end{Shaded}
+
+最大特征值对应的特征向量定义为书脊长轴：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l = long\_axis}
+\end{Highlighting}
+\end{Shaded}
+
+与其垂直的向量定义为书脊横向轴：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t = transverse\_axis}
+\end{Highlighting}
+\end{Shaded}
+
+因此，即使书本在图像中倾斜，厚度方向仍跟随书脊自身方向。
+
+\subsubsection{7.2
+分段边界拟合}\label{72-ux5206ux6bb5ux8fb9ux754cux62dfux5408}
+
+把掩码像素投影到 \texttt{(l,\ t)} 坐标：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{s\_i = (p\_i {-} p\_mean) · l}
+\NormalTok{q\_i = (p\_i {-} p\_mean) · t}
+\end{Highlighting}
+\end{Shaded}
+
+处理步骤：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  使用长轴坐标的 3\%--97\% 分位范围。
+\item
+  再从两端各去掉 13\%，减少书顶、书底和书架边缘影响。
+\item
+  将剩余长轴区间分成 32 段。
+\item
+  每段使用横轴坐标的 1\% 和 99\% 分位作为左右边界。
+\item
+  分别对左右边界执行一次线性拟合。
+\item
+  在书脊中部计算初始宽度。
+\end{enumerate}
+
+该宽度是 RGB 轮廓宽度，仍可能包含侧面，必须经过后续深度平面检查。
+
+\subsection{8. 深度预处理}\label{8-ux6df1ux5ea6ux9884ux5904ux7406}
+
+\subsubsection{8.1 RGB 掩码映射到
+depth}\label{81-rgb-ux63a9ux7801ux6620ux5c04ux5230-depth}
+
+RGB 掩码以面积插值映射到 depth 分辨率。深度像素的掩码覆盖率需要达到
+0.35。
+
+如果 RGB 和 depth
+分辨率不同，算法假设二者视场和宽高比已经对齐。通用输入的宽高比 相差超过
+2\% 时会直接报错。
+
+\subsubsection{8.2
+深度有效范围}\label{82-ux6df1ux5ea6ux6709ux6548ux8303ux56f4}
+
+只接受：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{0.1 m \textless{} depth \textless{} 5.0 m}
+\end{Highlighting}
+\end{Shaded}
+
+同时删除 NaN、Inf 和零值。
+
+\subsubsection{8.3 confidence}\label{83-confidence}
+
+Record3D 多帧模式优先使用 confidence 等级 2。如果高置信度点少于 8
+个，则回退到 等级不低于 1 的点。
+
+通用单帧模式没有
+confidence，所有通过数值检查的深度点作为可用点处理。输出中的
+\texttt{uses\_confidence\ =\ false} 明确记录这一事实。
+
+\subsubsection{8.4 深度统计}\label{84-ux6df1ux5ea6ux7edfux8ba1}
+
+先计算书本区域深度中位数和 MAD：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MAD = median(|z\_i {-} median(z)|)}
+\end{Highlighting}
+\end{Shaded}
+
+用于深度统计的核心点满足：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{|z\_i {-} median(z)| ≤ max(12 mm, 4.5 × 1.4826 × MAD)}
+\end{Highlighting}
+\end{Shaded}
+
+多平面分解使用范围检查后的表面点，而不是只使用该窄深度核心，否则真实侧面可能在
+进入平面分解前就被错误删除。
+
+\subsection{9.
+深度多平面分解}\label{9-ux6df1ux5ea6ux591aux5e73ux9762ux5206ux89e3}
+
+\subsubsection{9.1
+为什么不能只拟合一个平面}\label{91-ux4e3aux4ec0ux4e48ux4e0dux80fdux53eaux62dfux5408ux4e00ux4e2aux5e73ux9762}
+
+当书本排列松散且相机斜视时，一个 SAM 掩码可能同时包含：
+
+\begin{itemize}
+\tightlist
+\item
+  书脊正面。
+\item
+  封面或页块侧面。
+\item
+  少量背景或相邻书本。
+\end{itemize}
+
+如果对全部点直接做一次最小二乘平面拟合，结果可能位于两个真实平面之间，或者选择
+面积更大的侧面。因此当前算法先进行多平面分解。
+
+\subsubsection{9.2 RANSAC
+平面模型}\label{92-ransac-ux5e73ux9762ux6a21ux578b}
+
+平面表示为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n · P + d = 0}
+\end{Highlighting}
+\end{Shaded}
+
+其中 \texttt{n} 是单位法向量，\texttt{d} 是平面偏移。
+
+每个实例最多提取三个平面。每次提取流程：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  从当前剩余点中随机取三个点生成平面。
+\item
+  执行 96 次 RANSAC 假设。
+\item
+  点到平面距离不超过 6 mm 时视为内点。
+\item
+  候选点超过 2000 时，随机选 2000 点生成和评分假设。
+\item
+  使用全部点重新计算最佳假设的内点。
+\item
+  对内点执行 SVD 平面拟合，最多迭代细化三次。
+\item
+  删除该平面的内点，再提取下一个平面。
+\end{enumerate}
+
+每个候选平面至少需要：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{max(12 个点, 当前实例总点数的 4\%)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{9.3
+平面纵向覆盖率}\label{93-ux5e73ux9762ux7eb5ux5411ux8986ux76d6ux7387}
+
+仅靠内点数量不足以判断书脊。背景小块或标签也可能形成平面，因此还计算平面内点沿
+书脊长轴的覆盖率：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{coverage =}
+\NormalTok{  (longitudinal\_95\% {-} longitudinal\_5\%) / fitted\_spine\_length}
+\end{Highlighting}
+\end{Shaded}
+
+真正书脊平面通常沿书脊高度具有较高覆盖率。
+
+\subsection{10.
+全画面书脊法向共识}\label{10-ux5168ux753bux9762ux4e66ux810aux6cd5ux5411ux5171ux8bc6}
+
+\subsubsection{10.1 目的}\label{101-ux76eeux7684}
+
+单本书的面积最大平面未必是书脊。如果相机从侧面观察，封面侧面可能比书脊正面占据
+更多像素。算法利用``同一画面大部分书脊方向接近''这一场景先验，估计共同书脊法向。
+
+\subsubsection{10.2
+参与共识的候选}\label{102-ux53c2ux4e0eux5171ux8bc6ux7684ux5019ux9009}
+
+候选平面需要满足：
+
+\begin{itemize}
+\tightlist
+\item
+  纵向覆盖率至少 45\%。
+\item
+  在当前书本中的内点比例至少 6\%。
+\item
+  法向量垂直分量约束 \texttt{\textbar{}n\_y\textbar{}\ ≤\ 0.55}。
+\item
+  相对相机光轴的夹角不超过 75°。
+\end{itemize}
+
+\subsubsection{10.3
+聚类与权重}\label{103-ux805aux7c7bux4e0eux6743ux91cd}
+
+每个候选的权重为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{weight =}
+\NormalTok{  inlier\_count}
+\NormalTok{  × longitudinal\_coverage}
+\NormalTok{  × (0.35 + 0.65 × |n\_z|)}
+\end{Highlighting}
+\end{Shaded}
+
+对每个候选统计法向夹角在 22°
+内的总权重，选择权重最大的法向簇。最后对该簇法向
+做加权平均并归一化，得到：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{expected\_spine\_normal}
+\end{Highlighting}
+\end{Shaded}
+
+该机制倾向于选择覆盖书本数量多、纵向完整且更接近正视方向的共同书脊平面。
+
+\subsection{11.
+单本书主书脊平面选择}\label{11-ux5355ux672cux4e66ux4e3bux4e66ux810aux5e73ux9762ux9009ux62e9}
+
+对每本书，在纵向覆盖率至少 45\% 的候选中，选择与
+\texttt{expected\_spine\_normal} 夹角最小的平面。
+
+选择后执行安全检查：
+
+\begin{itemize}
+\tightlist
+\item
+  主平面内点比例至少 35\%。
+\item
+  主平面纵向覆盖率至少 55\%。
+\item
+  主平面与全局书脊法向夹角不超过 32°。
+\item
+  主平面相对相机光轴的观察夹角不超过 60°。
+\end{itemize}
+
+不满足时拒绝该候选，不输出厚度。
+
+\subsection{12.
+书本侧面检测与边界裁剪}\label{12-ux4e66ux672cux4fa7ux9762ux68c0ux6d4bux4e0eux8fb9ux754cux88c1ux526a}
+
+\subsubsection{12.1 侧面候选}\label{121-ux4fa7ux9762ux5019ux9009}
+
+除主书脊平面外，第二平面需要同时满足以下条件才视为侧面：
+
+\begin{itemize}
+\tightlist
+\item
+  内点比例至少 4\%。
+\item
+  沿书脊长轴覆盖至少 40\%。
+\item
+  与主书脊平面的法向夹角至少 35°。
+\item
+  横向中位位置距离掩码中心至少为掩码宽度的 15\%。
+\end{itemize}
+
+最后一个条件要求第二平面位于书脊边缘，避免把书脊中央标签误识别为侧面。
+
+若所有侧面候选的总占比超过 40\%，说明掩码主要不是可靠书脊，直接拒绝。
+
+\subsubsection{12.2
+使用主平面支持区重新拟合边界}\label{122-ux4f7fux7528ux4e3bux5e73ux9762ux652fux6301ux533aux91cdux65b0ux62dfux5408ux8fb9ux754c}
+
+只使用主书脊平面的深度内点：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  使用长轴坐标 8\%--92\% 的范围。
+\item
+  分为 16 个长轴区间。
+\item
+  每段至少需要 3 个主平面内点。
+\item
+  每段以横向 2\% 和 98\% 分位作为主平面左右支持边界。
+\item
+  至少 6 个有效区间。
+\item
+  对左右支持边界分别执行线性拟合。
+\end{enumerate}
+
+如果侧面位于左侧，则使用主平面左支持边界替代原 RGB 左边界；右侧同理。
+
+只有裁剪量满足以下条件才执行修正：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trim\_px \textgreater{} max(1.5 px, 原掩码宽度的 4\%)}
+\end{Highlighting}
+\end{Shaded}
+
+如果检测到侧面却无法得到有效裁剪边界，候选会被拒绝，避免继续使用包含侧面的原始
+轮廓宽度。
+
+修正后的宽度还必须满足：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{35\% × 原宽度 ≤ 修正宽度 ≤ 原宽度}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{12.3 诊断量}\label{123-ux8bcaux65adux91cf}
+
+算法同时保留：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{silhouette\_thickness\_mm}：原始完整轮廓在主平面上的宽度。
+\item
+  \texttt{side\_trim\_mm}：侧面裁剪掉的物理宽度。
+\item
+  \texttt{boundary\_trim\_left\_px}：左侧裁剪像素。
+\item
+  \texttt{boundary\_trim\_right\_px}：右侧裁剪像素。
+\item
+  \texttt{side\_face\_fraction}：侧面平面内点比例。
+\end{itemize}
+
+\subsection{13.
+三维厚度计算}\label{13-ux4e09ux7ef4ux539aux5ea6ux8ba1ux7b97}
+
+\subsubsection{13.1
+射线与平面求交}\label{131-ux5c04ux7ebfux4e0eux5e73ux9762ux6c42ux4ea4}
+
+书脊平面为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n · P + d = 0}
+\end{Highlighting}
+\end{Shaded}
+
+边界像素射线为 \texttt{r}，交点写为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P = λr}
+\end{Highlighting}
+\end{Shaded}
+
+代入平面方程：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{λ = {-}d / (n · r)}
+\end{Highlighting}
+\end{Shaded}
+
+分别计算修正后左、右边界的交点：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P\_left}
+\NormalTok{P\_right}
+\end{Highlighting}
+\end{Shaded}
+
+书本厚度为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{thickness\_mm = 1000 × ||P\_right {-} P\_left||}
+\end{Highlighting}
+\end{Shaded}
+
+只保留 3--100 mm 的结果。
+
+\subsubsection{13.2
+为什么该方法能校正斜视}\label{132-ux4e3aux4ec0ux4e48ux8be5ux65b9ux6cd5ux80fdux6821ux6b63ux659cux89c6}
+
+两个边界点都在实际书脊平面上求交，因此距离是在 3D
+平面中计算，不是简单使用：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{像素宽度 × 中心深度 / fx}
+\end{Highlighting}
+\end{Shaded}
+
+对于可可靠拟合的书脊平面，射线/平面交点可以校正透视缩短。但是它不能恢复完全被
+遮挡的真实边界；这种情况必须拒绝或增加视角。
+
+\subsection{14.
+安全拒绝机制}\label{14-ux5b89ux5168ux62d2ux7eddux673aux5236}
+
+常见拒绝原因及含义：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{insufficient\_depth\_surface}：有效深度点不足。
+\item
+  \texttt{no\_depth\_plane}：无法形成稳定深度平面。
+\item
+  \texttt{insufficient\_plane\_coverage}：没有纵向覆盖足够的平面。
+\item
+  \texttt{low\_spine\_plane\_inlier\_ratio}：主书脊平面内点比例低于
+  35\%。
+\item
+  \texttt{low\_spine\_plane\_coverage}：主书脊平面纵向覆盖低于 55\%。
+\item
+  \texttt{inconsistent\_spine\_plane\_normal}：与全局书脊方向偏差超过
+  32°。
+\item
+  \texttt{grazing\_view\_angle}：相机观察角超过 60°。
+\item
+  \texttt{side\_face\_dominates\_mask}：侧面占比超过 40\%。
+\item
+  \texttt{side\_face\_boundary\_unresolved}：主平面支持边界无法拟合。
+\item
+  \texttt{side\_face\_boundary\_ambiguous}：检测到侧面但裁剪量不可靠。
+\item
+  \texttt{invalid\_corrected\_spine\_width}：修正宽度比例不合理。
+\item
+  \texttt{thickness\_out\_of\_range}：厚度不在 3--100 mm。
+\end{itemize}
+
+被拒绝候选：
+
+\begin{itemize}
+\tightlist
+\item
+  不写入 \texttt{gripper\_openings.json}。
+\item
+  不产生机器人抓取开口。
+\item
+  写入 \texttt{frame\_statistics{[}{]}.rejected\_detections}。
+\item
+  在 \texttt{rejected\_books\_overlay.png} 中以红色显示。
+\end{itemize}
+
+安全原则是宁可少输出，也不把高风险宽度传给机器人。
+
+\subsection{15. 多帧关联}\label{15-ux591aux5e27ux5173ux8054}
+
+单帧模式跳过本节。
+
+\subsubsection{15.1
+相机到世界坐标}\label{151-ux76f8ux673aux5230ux4e16ux754cux5750ux6807}
+
+Record3D 位姿中的四元数和平移用于构造相机到世界变换：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{P\_world = R\_wc P\_camera + t\_wc}
+\end{Highlighting}
+\end{Shaded}
+
+实现中还处理 ARKit 与计算机视觉相机坐标轴方向的差异。
+
+\subsubsection{15.2 参考帧}\label{152-ux53c2ux8003ux5e27}
+
+参考帧负责：
+
+\begin{itemize}
+\tightlist
+\item
+  书本实例编号。
+\item
+  最终二维边界。
+\item
+  输出总览图和逐书裁剪图。
+\end{itemize}
+
+书本按每层从左到右编号：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S1{-}01, S1{-}02, ...}
+\NormalTok{S2{-}01, S2{-}02, ...}
+\NormalTok{S3{-}01, S3{-}02, ...}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{15.3 跨帧代价}\label{153-ux8de8ux5e27ux4ee3ux4ef7}
+
+参考帧书本中心先投影到目标帧。匹配代价为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cost =}
+\NormalTok{  pixel\_distance}
+\NormalTok{  + 0.15 × min(world\_distance\_mm, 50)}
+\end{Highlighting}
+\end{Shaded}
+
+同一层书架内使用匈牙利算法求一对一匹配。默认最大匹配代价为 60
+px，超过该阈值的 匹配被丢弃。
+
+\subsection{16.
+多帧鲁棒融合}\label{16-ux591aux5e27ux9c81ux68d2ux878dux5408}
+
+\subsubsection{16.1
+初始中位数}\label{161-ux521dux59cbux4e2dux4f4dux6570}
+
+对同一本书的所有有效厚度：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m = median(thickness\_i)}
+\NormalTok{σ\_robust = 1.4826 × median(|thickness\_i {-} m|)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{16.2
+异常值剔除}\label{162-ux5f02ux5e38ux503cux5254ux9664}
+
+保留：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{|thickness\_i {-} m| ≤ max(3 mm, 3.5 × σ\_robust)}
+\end{Highlighting}
+\end{Shaded}
+
+最终厚度是保留值的中位数。
+
+\subsubsection{16.3 重复性}\label{163-ux91cdux590dux6027}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{repeatability\_mad\_mm =}
+\NormalTok{  1.4826 × median(|thickness\_i {-} final\_median|)}
+\end{Highlighting}
+\end{Shaded}
+
+单帧只有一个值，因此该字段为
+0。这只表示没有第二次观测，不能解释为零误差。
+
+\subsection{17.
+不确定度估计}\label{17-ux4e0dux786eux5b9aux5ea6ux4f30ux8ba1}
+
+\subsubsection{17.1
+像素采样项}\label{171-ux50cfux7d20ux91c7ux6837ux9879}
+
+横向一个 RGB 像素对应的毫米尺度为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{metric\_per\_pixel\_mm =}
+\NormalTok{  depth}
+\NormalTok{  × sqrt((t\_x / fx)² + (t\_y / fy)²)}
+\NormalTok{  × 1000}
+\end{Highlighting}
+\end{Shaded}
+
+基础像素项：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pixel\_floor =}
+\NormalTok{  median(metric\_per\_pixel\_mm)}
+\NormalTok{  × √2}
+\NormalTok{  × 0.85}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{17.2
+斜视放大项}\label{172-ux659cux89c6ux653eux5927ux9879}
+
+设书脊平面观察夹角为 \texttt{θ}：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{view\_factor = 1 / max(cos θ, 0.5)}
+\end{Highlighting}
+\end{Shaded}
+
+最终像素项乘以多帧 \texttt{view\_factor}
+中位数。角度越斜，同样一个像素的边界误差对应更大 物理误差。
+
+\subsubsection{17.3 其他项}\label{173-ux5176ux4ed6ux9879}
+
+\begin{itemize}
+\tightlist
+\item
+  标定下限：0.8 mm。
+\item
+  检测到并修正侧面时的附加项：1.5 mm。
+\item
+  多帧随机项：
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{random\_component = repeatability / sqrt(number\_of\_used\_views)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{17.4 95\%
+工程不确定度}\label{174-95-ux5de5ux7a0bux4e0dux786eux5b9aux5ea6}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{U95 = max(}
+\NormalTok{  1.5 mm,}
+\NormalTok{  1.96 × sqrt(}
+\NormalTok{    random\_component²}
+\NormalTok{    + pixel\_floor²}
+\NormalTok{    + calibration\_floor²}
+\NormalTok{    + side\_face\_floor²}
+\NormalTok{  )}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+该值是抓取规划用的工程估计，不是计量机构校准后的置信区间。
+
+\subsection{18. 质量等级}\label{18-ux8d28ux91cfux7b49ux7ea7}
+
+初始等级为 \texttt{high}。
+
+满足任意一项时降为 \texttt{medium}：
+
+\begin{itemize}
+\tightlist
+\item
+  有效视角少于 4。
+\item
+  \texttt{U95\ \textgreater{}\ 3\ mm}。
+\item
+  中位匹配残差大于 25 px。
+\item
+  任一使用视角检测到侧面。
+\item
+  任一使用视角的观察角大于 40°。
+\end{itemize}
+
+满足任意一项时降为 \texttt{low}：
+
+\begin{itemize}
+\tightlist
+\item
+  有效视角少于 2。
+\item
+  \texttt{U95\ \textgreater{}\ 5\ mm}。
+\item
+  中位匹配残差大于 45 px。
+\end{itemize}
+
+因此单帧结果必然为 \texttt{low}。\texttt{low}
+不等于程序失败，而是表示不能直接用于无人值守抓取。
+
+\subsection{19. 夹爪开口}\label{19-ux5939ux722aux5f00ux53e3}
+
+建议预张开宽度：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{recommended\_gripper\_opening\_mm}
+\NormalTok{= thickness\_mm}
+\NormalTok{ + uncertainty\_95\_mm}
+\NormalTok{ + gripper\_clearance\_mm}
+\end{Highlighting}
+\end{Shaded}
+
+默认：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gripper\_clearance\_mm = 3.0}
+\end{Highlighting}
+\end{Shaded}
+
+这只是接近书本前的预张开值。实际闭合必须依赖：
+
+\begin{itemize}
+\tightlist
+\item
+  力控。
+\item
+  力矩限制。
+\item
+  电机电流阈值。
+\item
+  触觉或接触检测。
+\end{itemize}
+
+\subsection{20. 输出与诊断}\label{20-ux8f93ux51faux4e0eux8bcaux65ad}
+
+\subsubsection{20.1
+结构化数据}\label{201-ux7ed3ux6784ux5316ux6570ux636e}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{book\_thickness.json}：完整算法结果与逐帧诊断。
+\item
+  \texttt{book\_thickness.csv}：逐书汇总。
+\item
+  \texttt{gripper\_openings.json}：仅包含通过几何检查的机器人开口。
+\item
+  \texttt{reference\_book\_masks.npz}：最终通过检查的参考帧掩码。
+\end{itemize}
+
+\subsubsection{20.2 图像}\label{202-ux56feux50cf}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{books\_thickness\_overlay.png}：通过检查的书本。
+\item
+  \texttt{rejected\_books\_overlay.png}：被拒绝候选和原因。
+\item
+  \texttt{shelf\_1\_thickness.png} 等：分层结果。
+\item
+  \texttt{book\_crops/BOOK\_ID.png}：逐书边界、厚度和侧面裁剪信息。
+\item
+  \texttt{reference\_depth\_map.png}：深度可视化。
+\end{itemize}
+
+主结果图中，书本 ID 后带 \texttt{*} 表示检测到侧面并完成边界裁剪。
+
+\subsubsection{20.3
+关键诊断字段}\label{203-ux5173ux952eux8bcaux65adux5b57ux6bb5}
+
+每本书：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{reference\_view\_angle\_deg}
+\item
+  \texttt{reference\_spine\_plane\_inlier\_ratio}
+\item
+  \texttt{reference\_plane\_consensus\_angle\_deg}
+\item
+  \texttt{reference\_side\_face\_detected}
+\item
+  \texttt{reference\_side\_face\_fraction}
+\item
+  \texttt{reference\_boundary\_corrected}
+\item
+  \texttt{reference\_silhouette\_thickness\_mm}
+\item
+  \texttt{reference\_side\_trim\_mm}
+\item
+  \texttt{reference\_boundary\_trim\_left\_px}
+\item
+  \texttt{reference\_boundary\_trim\_right\_px}
+\end{itemize}
+
+每帧：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{detections}
+\item
+  \texttt{surface\_models}
+\item
+  \texttt{metric\_measurements}
+\item
+  \texttt{geometry\_rejections}
+\item
+  \texttt{expected\_spine\_normal}
+\item
+  \texttt{rejected\_detections}
+\end{itemize}
+
+\subsection{21.
+当前真机测试}\label{21-ux5f53ux524dux771fux673aux6d4bux8bd5}
+
+输入：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dual\_v2\_1/11/rgb/000001.png}
+\NormalTok{dual\_v2\_1/11/depth/000001.png}
+\NormalTok{dual\_v2\_1/11/cam\_K.txt}
+\end{Highlighting}
+\end{Shaded}
+
+相机与数据：
+
+\begin{itemize}
+\tightlist
+\item
+  RGB：960×540。
+\item
+  depth：960×540、uint16、单位毫米。
+\item
+  深度有效中位数约 765 mm。
+\end{itemize}
+
+侧面修正测试结果：
+
+\begin{itemize}
+\tightlist
+\item
+  SAM3 候选：66 本。
+\item
+  建立深度表面模型：66 本。
+\item
+  通过几何检查：57 本。
+\item
+  安全拒绝：9 本。
+\item
+  检测并修正侧面：6 本。
+\item
+  单本侧面裁剪：1.86--3.60 mm。
+\item
+  总侧面裁剪：14.58 mm。
+\end{itemize}
+
+9 个拒绝原因：
+
+\begin{itemize}
+\tightlist
+\item
+  5 个 \texttt{inconsistent\_spine\_plane\_normal}。
+\item
+  2 个 \texttt{side\_face\_boundary\_ambiguous}。
+\item
+  2 个 \texttt{low\_spine\_plane\_inlier\_ratio}。
+\end{itemize}
+
+该测试证明侧面检测、边界裁剪和安全拒绝分支能够在真机数据上运行。由于没有逐书卡尺
+真值，它不能证明绝对厚度误差已经达到毫米级。
+
+\subsection{22. 已知限制}\label{22-ux5df2ux77e5ux9650ux5236}
+
+\subsubsection{22.1
+单帧不可观测性}\label{221-ux5355ux5e27ux4e0dux53efux89c2ux6d4bux6027}
+
+如果真实书脊边界被侧面完全遮挡，单帧不能恢复不可见边界。算法只能：
+
+\begin{itemize}
+\tightlist
+\item
+  根据平面交界裁剪可见侧面；或
+\item
+  拒绝测量。
+\end{itemize}
+
+不能通过增加模型复杂度可靠``猜出''完全不可见的真实厚度。
+
+\subsubsection{22.2
+深度分辨率}\label{222-ux6df1ux5ea6ux5206ux8fa8ux7387}
+
+Record3D 低分辨率 LiDAR 深度可能没有足够点数分离很窄书脊与侧面。L515
+等与 RGB 同分辨率或高分辨率对齐深度更适合多平面分解。
+
+\subsubsection{22.3
+深度边缘混合}\label{223-ux6df1ux5ea6ux8fb9ux7f18ux6df7ux5408}
+
+在书脊---侧面交界、书本---背景交界处，一个深度像素可能混合多个表面。6 mm
+RANSAC 阈值和分位数边界能降低影响，但不能完全消除。
+
+\subsubsection{22.4
+全局方向先验}\label{224-ux5168ux5c40ux65b9ux5411ux5148ux9a8c}
+
+算法假设画面内多数书脊方向接近。如果大部分书本都以不同角度散乱摆放，全局法向共识
+可能失效，导致更多安全拒绝。
+
+\subsubsection{22.5
+透明、反光与吸光材料}\label{225-ux900fux660eux53cdux5149ux4e0eux5438ux5149ux6750ux6599}
+
+透明塑封、镜面封面或深色吸光材质可能产生无效深度。此时应增加视角、调整照明或使用
+其他深度传感器。
+
+\subsubsection{22.6
+书架层区域}\label{226-ux4e66ux67b6ux5c42ux533aux57df}
+
+当前部署使用三个归一化书架区域：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S1: 0.18H–0.45H}
+\NormalTok{S2: 0.43H–0.70H}
+\NormalTok{S3: 0.66H–0.94H}
+\end{Highlighting}
+\end{Shaded}
+
+这是当前书架场景先验，不是通用书架检测。相机位置或书架布局显著变化时，应把区域改为
+配置参数或自动检测层板。
+
+\subsection{23. 验证要求}\label{23-ux9a8cux8bc1ux8981ux6c42}
+
+上线前至少完成：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  选择不同厚度、不同颜色、不同倾角的书。
+\item
+  使用卡尺测量真实书脊厚度。
+\item
+  同时记录算法厚度、轮廓厚度、侧面裁剪量和观察角。
+\item
+  分别统计正视、轻度斜视和大角度斜视误差。
+\item
+  验证所有高误差样本是否被正确降级或拒绝。
+\item
+  检查 \texttt{gripper\_openings.json} 中不存在被拒绝候选。
+\item
+  使用低速、力控模式执行首次真机抓取。
+\end{enumerate}
+
+建议至少统计：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{平均误差}
+\NormalTok{中位绝对误差}
+\NormalTok{P95 绝对误差}
+\NormalTok{最大绝对误差}
+\NormalTok{拒绝率}
+\NormalTok{错误接受率}
+\NormalTok{侧面检测召回率}
+\end{Highlighting}
+\end{Shaded}
+
+其中机器人安全最关注错误接受率：存在明显侧面或遮挡的书本不应被当作可靠测量输出。
+
+\subsection{24. 单元测试}\label{24-ux5355ux5143ux6d4bux8bd5}
+
+\texttt{test\_book\_thickness\_pipeline.py} 当前覆盖：
+
+\begin{itemize}
+\tightlist
+\item
+  通用 uint16 深度读取和毫米单位转换。
+\item
+  JSON 相机内参读取。
+\item
+  无 \texttt{.conf} 的 Record3D 深度解码。
+\item
+  倾斜书脊二维宽度拟合。
+\item
+  射线/平面交点的毫米尺度。
+\item
+  位姿投影往返一致性。
+\item
+  主书脊平面共识排除可见侧面平面。
+\end{itemize}
+
+运行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{/mnt/ssd/robotarm/env/sam3\_full/bin/python} \DataTypeTok{\textbackslash{}}
+  \AttributeTok{{-}m}\NormalTok{ unittest }\AttributeTok{{-}v}\NormalTok{ test\_book\_thickness\_pipeline.py}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{25.
+设计原则总结}\label{25-ux8bbeux8ba1ux539fux5219ux603bux7ed3}
+
+本算法采用以下优先级：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{安全拒绝}
+\NormalTok{  \textgreater{} 防止侧面导致厚度偏高}
+\NormalTok{  \textgreater{} 跨视角一致性}
+\NormalTok{  \textgreater{} 单帧检测数量}
+\end{Highlighting}
+\end{Shaded}
+
+核心原则是：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  RGB 决定高分辨率语义候选和初始边界。
+\item
+  depth 决定物理尺度、平面方向和侧面分离。
+\item
+  全局书脊方向帮助单书避免选错平面。
+\item
+  可见侧面必须裁剪，无法裁剪必须拒绝。
+\item
+  单帧结果必须保持低质量标记。
+\item
+  只有通过几何检查的书本才允许生成夹爪开口。
+\end{enumerate}
+
+\end{document}

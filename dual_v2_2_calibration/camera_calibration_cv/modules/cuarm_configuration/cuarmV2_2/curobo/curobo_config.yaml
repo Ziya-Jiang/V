@@ -1,0 +1,107 @@
+arm:
+  - name: "arm"
+    joint_names: ["J1", "J2", "J3", "J4", "J5", "J6", "J7"]
+    end_effector_offset: [0, 0, 0]
+world_cfg:
+  cuboid:
+    floor:
+      dims: [2.0, 2.0, 0.2] # x, y, z
+      pose: [0.0, 0.0, -0.2, 1, 0, 0, 0.0] # x, y, z, qx, qy, qz, qw
+      color: [0.6, 0.6, 0.8, 1.0]
+    wall:
+      dims: [0.05, 2.0, 2.0] # x, y, z
+      pose: [-0.85, 0.0, 0.0, 1, 0, 0, 0.0] # x, y, z, qx, qy, qz, qw
+      color: [0.6, 0.6, 0.8, 1.0]
+robot_cfg:
+    kinematics:
+        usd_path: "../share/robot.usd"
+        usd_robot_root: "/robot"
+        isaac_usd_path: ""
+        usd_flip_joints: {}
+        usd_flip_joint_limits: []
+
+        urdf_path: "../share/robot.urdf"
+        asset_root_path: ""
+
+        base_link: "Module_A"
+        ee_link: "End_Effector"
+        link_names: null
+        lock_joints: null
+        extra_links: null
+
+        collision_link_names: ["Module_A", "Module_B", "Module_B_Pitch", "Module_C", "Module_C_Pitch", "Module_D", "Module_D_Pitch", "End_Effector"] # List[str]
+        collision_spheres:
+          Module_A:
+            - "center": [-0.116, 0.0, 0.148]
+              "radius": 0.165
+            - "center": [0.005, 0.0, 0.148]
+              "radius": 0.165
+          Module_B:
+            - "center": [-0.001, 0.054, -0.011]
+              "radius": 0.062
+            - "center": [-0.009, -0.001, -0.166]
+              "radius": 0.09
+            - "center": [-0.005, -0.058, -0.015]
+              "radius": 0.062
+            - "center": [-0.021, 0.001, -0.095]
+              "radius": 0.092
+          Module_B_Pitch:
+            - "center": [0.001, -0.03, 0.001]
+              "radius": 0.06
+          Module_C:
+            - "center": [-0.007, -0.0, -0.179]
+              "radius": 0.09
+            - "center": [-0.013, -0.001, -0.103]
+              "radius": 0.092
+            - "center": [-0.003, 0.057, -0.016]
+              "radius": 0.062
+            - "center": [0.0, -0.058, -0.014]
+              "radius": 0.062
+          Module_C_Pitch:
+            - "center": [0.005, -0.029, -0.005]
+              "radius": 0.06
+          Module_D:
+            - "center": [-0.0, 0.0, -0.082]
+              "radius": 0.077
+            - "center": [0.0, -0.038, -0.01]
+              "radius": 0.062
+            - "center": [0.0, -0.0, -0.152]
+              "radius": 0.075
+            - "center": [0.0, 0.042, -0.013]
+              "radius": 0.062
+          Module_D_Pitch:
+            - "center": [-0.003, -0.027, 0.002]
+              "radius": 0.05
+          End_Effector:
+            - "center": [-0.0, 0.0, -0.019]
+              "radius": 0.035
+        collision_sphere_buffer: 0.005
+        extra_collision_spheres: {}
+        self_collision_ignore: # Dict[str, List[str]]
+          "Module_A": ["Module_B", "Module_B_Pitch", "Module_C", "Module_C_Pitch"]
+          "Module_B": ["Module_B_Pitch", "Module_C", "Module_C_Pitch"]
+          "Module_B_Pitch": ["Module_C", "Module_C_Pitch", "Module_D", "Module_D_Pitch"]
+          "Module_C": ["Module_C_Pitch", "Module_D", "Module_D_Pitch", "End_Effector"]
+          "Module_C_Pitch": ["Module_D", "Module_D_Pitch", "End_Effector"]
+          "Module_D": ["Module_D_Pitch", "End_Effector"]
+          "Module_D_Pitch": ["End_Effector"]
+        self_collision_buffer: # Dict[str, float]
+          "Module_A": 0
+          "Module_B": 0
+          "Module_B_Pitch": 0
+          "Module_C": 0
+          "Module_C_Pitch" : 0
+          "Module_D" : 0
+          "Module_D_Pitch" : 0
+          "End_Effector" : 0
+
+        use_global_cumul: True
+        mesh_link_names: null # List[str]
+
+        cspace:
+          joint_names: ["J1", "J2", "J3", "J4", "J5", "J6", "J7"] # List[str]
+          retract_config: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # List[float]
+          null_space_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0] # List[str]
+          cspace_distance_weight: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0] # List[str]
+          max_jerk: 500.0
+          max_acceleration: 15.0

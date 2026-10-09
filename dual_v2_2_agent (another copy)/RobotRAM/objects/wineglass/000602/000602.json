@@ -1,0 +1,35 @@
+{
+    "name": "wineglass",
+    "primitives": {
+        "plane_0": {
+            "type": "plane",
+            "description": "The first plane is a horizontal plane defined by the base of the wineglass. Its centroid is located at the geometric center of the wineglass's bottom surface",
+            "position": [
+                -1.0228739965645106,
+                -4.980196022444841,
+                -498.9224441248276
+            ],
+            "orientation": [
+                -2.9918191457590352e-05,
+                0.0029580994870503628,
+                0.9999956243665901
+            ],
+            "align_with_axis": "z"
+        },
+        "plane_1": {
+            "type": "plane",
+            "description": "The second plane is a horizontal plane defined by the rim of the wineglass. Its centroid is positioned at the geometric center of the wineglass's top surface, and this plane is parallel to the base plane.",
+            "position": [
+                2.7573929702800632,
+                -5.580384141783514,
+                499.30822201500393
+            ],
+            "orientation": [
+                0.0016196062215404219,
+                0.00034529759359991553,
+                0.9999986288216893
+            ],
+            "align_with_axis": "z"
+        }
+    }
+}

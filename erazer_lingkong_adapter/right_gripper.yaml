@@ -1,0 +1,21 @@
+hardware:
+  # can1 已确认是 1 Mbps，但 2026-10-06 只读扫描节点 1..32 均无回复。
+  # 确认供电、接线、节点 ID 和机械端点前禁止解除标定锁。
+  interface_name: "can1"
+  node_id: 8
+  calibrated: false
+  open_angle_deg: -800.0
+  closed_angle_deg: -125.0
+  speed_dps: 50
+  torque_limit_raw: 200
+  max_speed_dps: 200
+  max_torque_limit_raw: 750
+  min_angle_deg: -800.0
+  max_angle_deg: 0.0
+  max_temperature_c: 60
+  min_voltage_v: 18.0
+  max_voltage_v: 30.0
+  response_timeout_ms: 300
+  telemetry_period_ms: 200
+  keepalive_ms: 500
+  command_watchdog_ms: 1000

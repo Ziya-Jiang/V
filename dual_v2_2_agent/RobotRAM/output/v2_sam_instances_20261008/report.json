@@ -1,0 +1,332 @@
+{
+  "status": "ok",
+  "rgb": "RobotRAM/output/scene_57_pcl/rgb_ext.png",
+  "calibration": "/mnt/ssd/user/wx/vlm_demo/calibration/session_seed/base_to_camera/results/machine-readable results.json",
+  "raw_calls": [
+    {
+      "prompt": "book",
+      "shape": [
+        530,
+        848
+      ],
+      "count": 16
+    },
+    {
+      "prompt": "book",
+      "shape": [
+        286,
+        329
+      ],
+      "count": 17
+    }
+  ],
+  "candidates": [
+    {
+      "box": [
+        292,
+        324,
+        341,
+        469
+      ],
+      "uv": [
+        317.0,
+        393.0
+      ],
+      "score": 0.8858597278594971,
+      "base_y_mm": 116.12980466901938,
+      "base_xyz_mm": [
+        681.4878227186384,
+        116.12980466901938,
+        -103.2796664125658
+      ],
+      "depth_median_mm": 824.9000244140625,
+      "recognition": "book_proposal",
+      "proposal_method": "sam3_instances",
+      "geometry_status": "not_checked",
+      "error": "",
+      "color": "unclassified",
+      "id": "book_1"
+    },
+    {
+      "box": [
+        347,
+        324,
+        380,
+        462
+      ],
+      "uv": [
+        364.5,
+        390.0
+      ],
+      "score": 0.8832573890686035,
+      "base_y_mm": 19.48101491163436,
+      "base_xyz_mm": [
+        671.2497417209847,
+        19.48101491163436,
+        -101.71387928805393
+      ],
+      "depth_median_mm": 855.7999877929688,
+      "recognition": "book_proposal",
+      "proposal_method": "sam3_instances",
+      "geometry_status": "not_checked",
+      "error": "",
+      "color": "unclassified",
+      "id": "book_2"
+    },
+    {
+      "box": [
+        404,
+        327,
+        422,
+        458
+      ],
+      "uv": [
+        413.0,
+        388.0
+      ],
+      "score": 0.8464305996894836,
+      "base_y_mm": -78.72522944225595,
+      "base_xyz_mm": [
+        650.7491289900732,
+        -78.72522944225595,
+        -71.34341344712736
+      ],
+      "depth_median_mm": 833.5,
+      "recognition": "book_proposal",
+      "proposal_method": "sam3_instances",
+      "geometry_status": "not_checked",
+      "error": "",
+      "color": "unclassified",
+      "id": "book_3"
+    },
+    {
+      "box": [
+        420,
+        344,
+        461,
+        445
+      ],
+      "uv": [
+        442.0,
+        405.0
+      ],
+      "score": 0.3329627215862274,
+      "base_y_mm": -160.18326681252614,
+      "base_xyz_mm": [
+        732.1783724867979,
+        -160.18326681252614,
+        -230.69127032718052
+      ],
+      "depth_median_mm": 970.4000244140625,
+      "recognition": "book_proposal",
+      "proposal_method": "sam3_instances",
+      "geometry_status": "not_checked",
+      "error": "",
+      "color": "unclassified",
+      "id": "book_4"
+    },
+    {
+      "box": [
+        436,
+        344,
+        461,
+        405
+      ],
+      "uv": [
+        447.0,
+        379.0
+      ],
+      "score": 0.32940757274627686,
+      "base_y_mm": -175.30891683424636,
+      "base_xyz_mm": [
+        776.1788954383702,
+        -175.30891683424636,
+        -189.28156501479214
+      ],
+      "depth_median_mm": 992.6000366210938,
+      "recognition": "book_proposal",
+      "proposal_method": "sam3_instances",
+      "geometry_status": "not_checked",
+      "error": "",
+      "color": "unclassified",
+      "id": "book_5"
+    }
+  ],
+  "diagnostics": {
+    "stage": "candidates_ready",
+    "filter_method": "sam3_mask_camera_depth",
+    "accepted_depth_mm": [
+      400.0,
+      1200.0
+    ],
+    "boxes": [
+      {
+        "box": [
+          292,
+          324,
+          341,
+          469
+        ],
+        "score": 0.8858597278594971,
+        "status": "accepted",
+        "area_px": 4081,
+        "depth_median_mm": 824.9000244140625,
+        "depth_p10_p90_mm": [
+          779.2000122070312,
+          890.9000244140625
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          681.4878227186384,
+          116.12980466901938,
+          -103.2796664125658
+        ]
+      },
+      {
+        "box": [
+          347,
+          324,
+          380,
+          462
+        ],
+        "score": 0.8832573890686035,
+        "status": "accepted",
+        "area_px": 2794,
+        "depth_median_mm": 855.7999877929688,
+        "depth_p10_p90_mm": [
+          786.9000244140625,
+          899.2999877929688
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          671.2497417209847,
+          19.48101491163436,
+          -101.71387928805393
+        ]
+      },
+      {
+        "box": [
+          404,
+          327,
+          422,
+          458
+        ],
+        "score": 0.8464305996894836,
+        "status": "accepted",
+        "area_px": 1180,
+        "depth_median_mm": 833.5,
+        "depth_p10_p90_mm": [
+          798.7000122070312,
+          882.7000122070314
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          650.7491289900732,
+          -78.72522944225595,
+          -71.34341344712736
+        ]
+      },
+      {
+        "box": [
+          420,
+          344,
+          461,
+          445
+        ],
+        "score": 0.3329627215862274,
+        "status": "accepted",
+        "area_px": 2763,
+        "depth_median_mm": 970.4000244140625,
+        "depth_p10_p90_mm": [
+          882.7000122070314,
+          1013.6000366210938
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          732.1783724867979,
+          -160.18326681252614,
+          -230.69127032718052
+        ]
+      },
+      {
+        "box": [
+          436,
+          344,
+          461,
+          405
+        ],
+        "score": 0.32940757274627686,
+        "status": "accepted",
+        "area_px": 1060,
+        "depth_median_mm": 992.6000366210938,
+        "depth_p10_p90_mm": [
+          920.0,
+          1028.800048828125
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          776.1788954383702,
+          -175.30891683424636,
+          -189.28156501479214
+        ]
+      },
+      {
+        "box": [
+          117,
+          187,
+          160,
+          203
+        ],
+        "score": 0.26758918166160583,
+        "status": "outside_depth_range",
+        "area_px": 497,
+        "depth_median_mm": 3492.10009765625,
+        "depth_p10_p90_mm": [
+          3369.10009765625,
+          3652.0
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          3655.7772649268754,
+          1945.8278471503322,
+          -899.020991428876
+        ]
+      },
+      {
+        "box": [
+          382,
+          306,
+          422,
+          323
+        ],
+        "score": 0.26497066020965576,
+        "status": "outside_depth_range",
+        "area_px": 526,
+        "depth_median_mm": 3210.800048828125,
+        "depth_p10_p90_mm": [
+          2971.5000000000005,
+          4409.4501953125
+        ],
+        "valid_fraction": 1.0,
+        "base_xyz_mm": [
+          2593.934881260996,
+          -296.46371275057686,
+          -1500.4983523091037
+        ]
+      }
+    ],
+    "prompt": "book",
+    "full_frame_raw_count": 16,
+    "full_frame_instance_count": 6,
+    "depth_recall_roi": [
+      212,
+      244,
+      541,
+      530
+    ],
+    "crop_raw_count": 17,
+    "candidate_count": 5
+  },
+  "gpt_called": false,
+  "robot_executed": false
+}

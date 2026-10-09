@@ -1,0 +1,25 @@
+[
+  {
+    "path": "miniagent.zip",
+    "archive_entries": [
+      "miniagent/RobotRAM/step_llm_planning.py"
+    ],
+    "reason": "hardcoded API key redacted"
+  },
+  {
+    "path": "dual_v2_2_agent (another copy)/RobotRAM/step_llm_planning.py",
+    "reason": "hardcoded API key redacted"
+  },
+  {
+    "path": "dual_v2_2_agent/RobotRAM/step_llm_planning.py",
+    "reason": "hardcoded API key redacted"
+  },
+  {
+    "path": "dual_v2_2_agent (copy)/RobotRAM/step_llm_planning.py",
+    "reason": "hardcoded API key redacted"
+  },
+  {
+    "path": "miniagent/RobotRAM/step_llm_planning.py",
+    "reason": "hardcoded API key redacted"
+  }
+]

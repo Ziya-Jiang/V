@@ -1,0 +1,5 @@
+{
+  "enabled": true,
+  "min_region_fraction": 0.25,
+  "max_depth_jump_mm": 25.0
+}

@@ -1,0 +1,74 @@
+dt: 0.002
+robotics_library: "pinocchio"
+arm:
+  - name: "arm"
+    type: "CuarmV2_2"
+    urdf: "../share/robot.urdf"
+    joint_size: 7
+    joint_limit_boundary_k: 0.85 
+    joint_lower_limit: [-150,  -75, -200,  -75,  -200, -110, -360]
+    joint_upper_limit: [150,   110,  200,  110,   200,  110,  360]
+    outer_gear_ratio: [26.0,  26.0, 26.0, 26.0,  26.0, 18.0, 18.0]
+    inner_gear_ratio: [ 100,    80,   80,   80,    80,   80,   80]
+    motor_direction: [1, -1, -1, -1, -1, 1, 1] # Joint1,2,7 torque and velocity is in same direction.
+    k : 800
+    alpha: 8
+    omega1: 1
+    omega2: 2
+    joint_pos_limitation:
+      limitation_kv: 25
+    force_control:
+      filter_k: 0.96
+      gravity:
+        ratio: 0.46
+        kd: [1.0, 1.0, 0.1, 0.1, 0.1, 0.3, 0.3]
+      gravity_with_boundary:
+        kp: [100, 100, 100]
+        boundary: [0.15, 0.15, 0.15]
+        joint_saturation: [1.5, 1.5, 1.5, 1.5, 1.5, 8.0, 8.0]
+      task_impedance:
+        kp: [0, 0, 100, 20, 20, 20]
+        kd: [0.2, 0.2, 0.2, 0.1, 0.1, 0.1]
+        ki: [0.01, 0.01, 0.01, 0.01, 0.01, 0.01]
+        ki_ratio: 0.9
+        joint_torque_ratio: [1, 1, 1, 9, 9, 15.0, 15.0]
+        joint_additional_kd: [0, 0, 0, 0.5, 0.3, 2.0, 2.0]
+        joint_saturation: [1.5, 1.5, 1.5, 1.5, 1.5, 8.0, 8.0]
+        task_null_k: [10, 10, 10, 10, 10, 10, 10]
+      joint_impedance:
+        kp: [20, 35, 35, 20, 20, 50, 50]
+        kd: [3.0, 3.0, 3.0, 3.0, 3.0, 5.0, 5.0]
+        saturation: [1.5, 1.5, 1.5, 1.5, 1.5, 5.0, 5.0]
+      admittance:
+        forceUpperBound: 10
+        threshold: 3
+        maxSpeed: 15
+      task_admittance:
+        kp : 1
+      joint_admittance:
+        kd: 10
+        forceUpperBound: [10, 10, 10, 10, 10, 10, 10]
+        threshold:  [1, 1, 1, 1, 1, 2, 2]
+        maxSpeed:   [20, 20, 20, 20, 20, 20, 20]
+        maxAcceleration: [10, 10, 10, 10, 10, 10, 10]
+        extern_force_k: [200, 50, 200, 100, 200, 150, 200]
+      null_admittance:
+        kp: 0.1
+        kd: 0.5
+        threshold: 1.5
+        saturation: 0.1
+        geometric_ji: 1
+    friction:
+      joint_vel_filter_k: 0.8
+      CoulumbWithViscous:
+        # ratio: [0, 0.15, 0.15, 0.15, 0.15, -0.35, -0.35]
+        ratio: [0, 0, 0, 0, 0, 0, 0]
+        Coulumb: [-0.3641, 0.8207, 0.8664, 0.6767, 1.1918, -2.1217, -3.8879]
+        Viscous: [-0.0011, 0.0296, 0.0090, 0.0094, 0.0061, -0.0218, -0.0038]
+gripper:
+  - gripper_name: InspireDexterousHand
+camera:
+  - camera_name: "Kinect"
+    fps: 30
+  - camera_name: "Usb"
+    fps: 30

@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<robot  name="Robot" >
+ <link  name="EmptyBase" />
+ <joint  name="Dummy"  type="fixed" >
+  <child  link="Module_A" />
+  <parent  link="EmptyBase" />
+ </joint>
+ <link  name="Module_A" >
+  <visual >
+   <geometry >
+    <mesh  scale="1 1 1" filename="package://cuarm_robotics/meshes/visual/Base.obj" />
+   </geometry>
+   <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 0.0 0.0" />
+  </visual>
+  <inertial >
+   <origin  rpy="0.0 0.0 0.0"  xyz="0 0 0" />
+   <mass  value="0" />
+   <inertia  ixy="0"  iyy="0"  ixx="0.0"  iyz="0"  ixz="0"  izz="0" />
+</inertial>
+ </link>
+ <joint  name="J1"  type="revolute" >
+  <child  link="Module_B" />
+  <parent  link="Module_A" />
+  <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 0.0 0.537" />
+  <axis  xyz="0 0 1" />
+  <limit  lower="-6.28"  upper="100"  velocity="100"  effort="6.28" />
+ </joint>
+ <link  name="Module_B" >
+  <visual >
+   <geometry >
+    <mesh   scale="1 1 1" filename="package://cuarm_robotics/meshes/visual/L1.obj" />
+   </geometry>
+   <origin  rpy="0 -0.0 0.0"  xyz="0.0 0.0 0.0" />
+  </visual>
+  <inertial >
+   <origin  rpy="0.0 0.0 0.0"  xyz="0.013 0 -0.160" />
+   <mass  value="3.89" />
+   <inertia  ixy="0"  iyy="0"  ixx="0"  iyz="0"  ixz="0"  izz="0" />
+  </inertial>
+ </link>
+ <joint  name="J2"  type="revolute" >
+  <child  link="Module_B_Pitch" />
+  <parent  link="Module_B" />
+  <origin  rpy="-1.5707963267948966 -0.0 0.0"  xyz="0.0 0.0 0.0" />
+  <axis  xyz="0 0 1" />
+  <limit  lower="-6.28"  upper="100"  velocity="100"  effort="6.28" />
+ </joint>
+ <link  name="Module_B_Pitch" >
+  <visual >
+   <geometry >
+    <mesh   scale="1 1 1" filename="package://cuarm_robotics/meshes/visual/L2.obj" />
+   </geometry>
+   <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 -0.0 0.0" />
+  </visual>
+  <inertial >
+   <origin  rpy="0 0 0"  xyz="0.0 -0.004 -0.0" />
+   <mass  value="1.21" />
+   <inertia  ixy="0"  iyy="0"  ixx="0"  iyz="0"  ixz="0"  izz="0" />
+  </inertial>
+ </link>
+ <joint  name="J3"  type="revolute" >
+  <child  link="Module_C" />
+  <parent  link="Module_B_Pitch" />
+  <origin  rpy="1.5707963267948966 -0.0 0.0"  xyz="0.0 -0.322 0.0" />
+  <axis  xyz="0 0 1" />
+  <limit  lower="-6.28"  upper="100"  velocity="100"  effort="6.28" />
+ </joint>
+ <link  name="Module_C" >
+  <visual >
+   <geometry >
+    <mesh  scale="1 1 1"  filename="package://cuarm_robotics/meshes/visual/L3.obj" />
+   </geometry>
+   <origin  rpy="0 -0.0 0.0"  xyz="0.0 0.0 0.0" />
+  </visual>
+  <inertial >
+   <origin  rpy="0 -0.0 0.0"  xyz="0.013 0 -0.160" />
+   <mass  value="3.89" />
+   <inertia  ixy="0"  iyy="0.00"  ixx="0.00"  iyz="0"  ixz="0"  izz="0" />
+  </inertial>
+ </link>
+ <joint  name="J4"  type="revolute" >
+  <child  link="Module_C_Pitch" />
+  <parent  link="Module_C" />
+  <origin  rpy="-1.5707963267948966 -0.0 0.0"  xyz="0.0 0.0 0.0" />
+  <axis  xyz="0 0 1" />
+  <limit  lower="-6.28"  upper="100"  velocity="100"  effort="6.28" />
+ </joint>
+ <link  name="Module_C_Pitch" >
+  <visual >
+   <geometry >
+    <mesh  scale="1 1 1"  filename="package://cuarm_robotics/meshes/visual/L4.obj" />
+   </geometry>
+   <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 -0.0 0.0" />
+  </visual>
+  <inertial >
+   <origin  rpy="0 -0.0 0.0"  xyz="0.0 -0.004 0" />
+   <mass  value="1.21" />
+   <inertia  ixy="0"  iyy="0.00"  ixx="0.00"  iyz="0"  ixz="0"  izz="0" />
+  </inertial>
+ </link>
+ <joint  name="J5"  type="revolute" >
+  <child  link="Module_D" />
+  <parent  link="Module_C_Pitch" />
+  <origin  rpy="1.5707963267948966 -0.0 0.0"  xyz="0.0 -0.28 0.0" />
+  <axis  xyz="0 0 1" />
+  <limit  lower="-6.28"  upper="100"  velocity="100"  effort="6.28" />
+ </joint>
+ <link  name="Module_D" >
+  <visual >
+   <geometry >
+    <mesh  scale="1 1 1"  filename="package://cuarm_robotics/meshes/visual/L5.obj" />
+   </geometry>
+   <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 0.0 0.0" />
+  </visual>
+  <inertial >
+   <origin  rpy="0 -0.0 0.0"  xyz="0.0 0.0 -0.127" />
+   <mass  value="1.89" />
+   <inertia  ixy="0"  iyy="0.00"  ixx="0.00"  iyz="0"  ixz="0"  izz="0" />
+  </inertial>
+ </link>
+ <joint  name="J6"  type="revolute" >
+  <child  link="Module_D_Pitch" />
+  <parent  link="Module_D" />
+  <origin  rpy="-1.5707963267948966 -0.0 0.0"  xyz="0.0 0.0 0.0" />
+  <axis  xyz="0 0 1" />
+  <limit  lower="-6.28"  upper="100"  velocity="100"  effort="6.28" />
+ </joint>
+ <link  name="Module_D_Pitch" >
+  <visual >
+   <geometry >
+    <mesh  scale="1 1 1"  filename="package://cuarm_robotics/meshes/visual/L6.obj" />
+   </geometry>
+   <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 -0.0 0.0" />
+  </visual>
+  <inertial >
+   <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 -0.006 0.0" />
+   <mass  value="1.11" />
+   <inertia  ixy="0"  iyy="0.00"  ixx="0.00"  iyz="0"  ixz="0"  izz="0" />
+  </inertial>
+ </link>
+ <joint  name="J7"  type="revolute" >
+  <child  link="End_Effector" />
+  <parent  link="Module_D_Pitch" />
+  <origin  rpy="1.5707963267948966 -0.0 0.0"  xyz="0.0 -0.0945 0.0" />
+  <axis  xyz="0 0 1" />
+  <limit  lower="-6.28"  upper="100"  velocity="100"  effort="6.28" />
+ </joint>
+ <link  name="End_Effector" >
+  <visual >
+   <geometry >
+    <mesh  scale="1 1 1"  filename="package://cuarm_robotics/meshes/visual/L7.obj" />
+   </geometry>
+   <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 0.0 0.0" />
+  </visual>
+  <inertial >
+   <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 -0.006 -0.36" />
+   <mass  value="0" />
+   <inertia  ixy="0"  iyy="0.00"  ixx="0.00"  iyz="0"  ixz="0"  izz="0" />
+  </inertial>
+ </link>
+ <joint  name="J8"  type="fixed" >
+  <child  link="Gripper" />
+  <parent  link="End_Effector" />
+  <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 0.0 0.09" />
+  <axis  xyz="0 0 1" />
+  <limit  lower="-6.28"  upper="100"  velocity="100"  effort="6.28" />
+ </joint>
+ <link  name="Gripper" >
+  <visual >
+   <geometry >
+    <mesh  scale="1 1 1"  filename="package://cuarm_robotics/meshes/visual/L8.obj" />
+   </geometry>
+   <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 0.0 0.0" />
+  </visual>
+  <inertial >
+   <origin  rpy="0.0 -0.0 0.0"  xyz="0.0 0.0 0.1" />
+   <mass  value="0.55" />
+   <inertia  ixy="0"  iyy="0.00"  ixx="0.00"  iyz="0"  ixz="0"  izz="0" />
+  </inertial>
+ </link>
+  
+</robot>

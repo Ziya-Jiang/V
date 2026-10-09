@@ -1,0 +1,220 @@
+{
+  "object_id": 0,
+  "object_name": "book",
+  "mode": "cart+",
+  "selection": "GPT 选择 book_3；书脊中心 [512.5, 400.4]，整书基座 X 中位数 571.8 mm",
+  "center_base_mm": [
+    580.3306241359037,
+    -255.4853756288863,
+    -56.18256701374447
+  ],
+  "thickness_mm": 177.6572157977665,
+  "length_mm": 98.13175098497129,
+  "height_mm": 173.84179756897464,
+  "approach_xy": [
+    1.0,
+    0.0
+  ],
+  "input_points": 1024,
+  "denoised_points": 1024,
+  "center_kind": "visible_book_spine_midline",
+  "book_selection_id": "book_3",
+  "book_selection_decision": {
+    "scene_id": "2cd29b1dffb441b19b88cc8eb7a8a067",
+    "candidate_reviews": [
+      {
+        "id": "book_1",
+        "kind": "book",
+        "confidence": 0.99,
+        "reason": "Single thin dark book with visible white page block and spine label.",
+        "duplicate_of": null
+      },
+      {
+        "id": "book_2",
+        "kind": "book",
+        "confidence": 0.99,
+        "reason": "Single red hardcover with page edges and a lower spine label.",
+        "duplicate_of": null
+      },
+      {
+        "id": "book_3",
+        "kind": "book",
+        "confidence": 0.99,
+        "reason": "Single blue hardcover with pale page edges and a lower spine label.",
+        "duplicate_of": null
+      },
+      {
+        "id": "book_4",
+        "kind": "not_book",
+        "confidence": 0.93,
+        "reason": "White tabletop fixture or tray with a circular opening, not a bound volume.",
+        "duplicate_of": null
+      },
+      {
+        "id": "book_5",
+        "kind": "not_book",
+        "confidence": 0.9,
+        "reason": "Gray rectangular tabletop container with a pale top; no recognizable binding or page block.",
+        "duplicate_of": null
+      }
+    ],
+    "status": "selected",
+    "selected_id": "book_3",
+    "matching_ids": [
+      "book_3"
+    ],
+    "confidence": 0.96,
+    "reason": "Book_3 is the blue hardcover and matches the same physical book in wrist_3 by its cover, page edges, and lower spine label.",
+    "wrist_reviews": [
+      {
+        "id": "wrist_1",
+        "kind": "book",
+        "confidence": 0.99,
+        "reason": "Single dark spine reading Visual Agnosia, with a white library label.",
+        "duplicate_of": null
+      },
+      {
+        "id": "wrist_2",
+        "kind": "book",
+        "confidence": 0.99,
+        "reason": "Single red hardcover with gold spine lettering.",
+        "duplicate_of": null
+      },
+      {
+        "id": "wrist_3",
+        "kind": "book",
+        "confidence": 0.99,
+        "reason": "Single blue-gray hardcover with visible page edges and a pale lower spine label.",
+        "duplicate_of": null
+      }
+    ],
+    "cross_view_matches": [
+      {
+        "head_id": "book_1",
+        "wrist_id": "wrist_1",
+        "status": "matched",
+        "confidence": 0.98,
+        "reason": "Matching thin dark spine, white page block, and long pale lower label."
+      },
+      {
+        "head_id": "book_2",
+        "wrist_id": "wrist_2",
+        "status": "matched",
+        "confidence": 0.98,
+        "reason": "Matching red hardcover, spine proportions, and page-edge appearance."
+      },
+      {
+        "head_id": "book_3",
+        "wrist_id": "wrist_3",
+        "status": "matched",
+        "confidence": 0.97,
+        "reason": "Matching blue-gray cover, pale page edges, and small lower spine label beside the red volume."
+      },
+      {
+        "head_id": "book_4",
+        "wrist_id": null,
+        "status": "not_visible",
+        "confidence": 0.95,
+        "reason": "Rejected nonbook tabletop object; no canonical wrist book correspondence."
+      },
+      {
+        "head_id": "book_5",
+        "wrist_id": null,
+        "status": "not_visible",
+        "confidence": 0.95,
+        "reason": "Rejected nonbook container; no canonical wrist book correspondence."
+      }
+    ],
+    "instruction": "blue book",
+    "model": "gpt-6-astra",
+    "verified_book_ids": [
+      "book_1",
+      "book_2",
+      "book_3"
+    ],
+    "dual_view": true,
+    "pair_gap_seconds": 1.06802832899848
+  },
+  "spine_center_uv": [
+    512.5173831852101,
+    400.3918041814212
+  ],
+  "spine_center_depth_mm": 764.2000122070312,
+  "spine_depth_samples": 181,
+  "spine_depth_p10_p90_mm": [
+    741.7000122070312,
+    780.4000244140625
+  ],
+  "spine_center_recovery": "stable_region",
+  "spine_original_center_uv": [
+    504.8641477120563,
+    421.3775675081611
+  ],
+  "spine_full_fit_failure": "3D spine depths are inconsistent",
+  "spine_stable_region_uv": [
+    [
+      517.3217560345672,
+      383.7788171477636
+    ],
+    [
+      507.7130103358529,
+      417.0047912150788
+    ]
+  ],
+  "spine_stable_region_fraction": 0.2625,
+  "spine_center_shift_px": -22.222320498501418,
+  "spine_image_tilt_deg": -16.129541347913502,
+  "spine_axis_base": [
+    0.2497397137446622,
+    -0.2926611004993465,
+    0.9230273861772714
+  ],
+  "spine_endpoints_base_m": [
+    [
+      0.5865314460041282,
+      -0.2644855122165826,
+      -0.03139796418497953
+    ],
+    [
+      0.5722705777616004,
+      -0.24777370722828396,
+      -0.08410552815687156
+    ]
+  ],
+  "spine_vertical_tilt_deg": 22.627243271607803,
+  "spine_3d_status": "valid",
+  "spine_axis_residual_mm": 5.654858440272188,
+  "depth_recovery_delta_z_mm": 49.31038005698217,
+  "depth_recovery_center_delta_base_mm": [
+    8.266422911981321,
+    -10.231464910969489,
+    49.31038005698217
+  ],
+  "spine_original_point_camera_m": [
+    0.15771586313782807,
+    0.2958258581020165,
+    0.783
+  ],
+  "book_surface_x_mm": 571.7768921574568,
+  "whole_book_depth_median_mm": 783.0,
+  "whole_book_depth_samples": 4720,
+  "whole_book_depth_valid_fraction": 1.0,
+  "whole_book_base_x_p10_p90_mm": [
+    534.4896889424448,
+    667.6004351206672
+  ],
+  "wrist_enabled": true,
+  "j7_current_deg": -0.0010886198107485643,
+  "j7_delta_deg": -23.17578828987024,
+  "j7_target_deg": -23.17687690968099,
+  "right_target_deg": [
+    114.99812987758949,
+    84.99977859792496,
+    -64.99787926568744,
+    111.99858122852059,
+    100.00032933646554,
+    -20.316510457543863,
+    -23.17687690968099
+  ],
+  "wrist_status": "ready"
+}

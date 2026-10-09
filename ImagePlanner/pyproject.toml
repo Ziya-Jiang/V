@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "imageplanner"
+version = "0.1.0"
+description = "Offline wrist-camera visual keyframe baseline"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.23", "Pillow>=9"]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+imageplanner = "imageplanner.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["imageplanner*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

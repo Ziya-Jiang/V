@@ -1,0 +1,5 @@
+{
+  "max_base_x_change_mm": 25.0,
+  "max_base_x_per_z": 0.35,
+  "min_base_z_span_mm": 20.0
+}

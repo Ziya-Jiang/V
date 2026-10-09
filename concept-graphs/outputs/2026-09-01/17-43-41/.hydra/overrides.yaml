@@ -1,0 +1,16 @@
+- repo_root=/mnt/ssd/user/V/concept-graphs
+- dataset_root=/mnt/ssd/user/V/concept-graphs/data
+- scene_id=2026-09-01--16-55-31_preprocessed
+- dataset_config=/mnt/ssd/user/V/concept-graphs/data/2026-09-01--16-55-31_preprocessed/dataconfig.yaml
+- start=0
+- end=150
+- stride=5
+- classes_file=/mnt/ssd/user/V/concept-graphs/conceptgraph/tableware_classes.txt
+- detections_exp_suffix=s_detections_ab150
+- exp_suffix=ab150_robust
+- force_detection=true
+- make_edges=false
+- use_rerun=false
+- save_rerun=false
+- save_video=false
+- vis_render=false

@@ -1,0 +1,19 @@
+{
+    "date_and_time": "2026-04-28 18:17:19",
+    "config_yaml_content": "calibration_type: \"eye_in_hand\" # \"eye_in_hand\" or \"eye_to_hand\"\ncamera_type: \"usb_cam\" # \"usb_cam\" or \"realsense\" or \"zed\" or \"kinect\"\ncamera_id: 4  # camera index or serial number\nrobot_config_path: \"/home/camera_calibration_cv/modules/cuarm_configuration/dual_v1/config.yaml\" # absolute or relative path to robot config file\nchessboard_dimension: [11, 8] # [rows, cols] as inner-corner counts\nchessboard_square_edge_size_m: 0.01 # checker square edge size (meters)\nreceive_robot_state:\n  enabled: true\n  local_ip: \"10.30.13.21\"\n  local_port: 30031\n  remote_ip: \"10.30.13.20\"\n  remote_port: 30030\ncalibration_path: \"./calibration/session_01\" # output root folder\n",
+    "reprojection_error": {
+        "mean": 0.013499401199026869,
+        "max": 0.014872040853978514
+    },
+    "used_sample_ids": [
+        5,
+        6,
+        8,
+        9,
+        13,
+        14,
+        15,
+        19,
+        20
+    ]
+}

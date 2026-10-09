@@ -1,0 +1,49 @@
+# Credentials and local environments
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+*.pem
+*.key
+cart_book_grasp_openai_key.txt
+# Dependencies, caches, generated output
+node_modules/
+.pnpm-store/
+__pycache__/
+.venv/
+venv/
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+build_lingkong/
+CMakeFiles/
+Log/
+log/
+logs/
+.robot_assistant_runtime/
+.robot_soul_runtime/
+*.pyc
+*.pyo
+*.o
+*.gch
+*.tsbuildinfo
+*.log
+*.rrd
+# Large model artifacts
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.engine
+# Large datasets from the original machine
+/concept-graphs/data/
+/feature-splatting-inria/2026-*/
+**/feat_data/
+/feature-splatting-inria/output/
+/feature-splatting-inria/feature-splatting-inria/output/
+/Anaconda3-*.sh
+/cuda_*.run

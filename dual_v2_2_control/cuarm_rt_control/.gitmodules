@@ -1,0 +1,51 @@
+[submodule "cuarm_robotics"]
+	path = cuarm_robotics
+	url = git@github.com:CURI-Simulation-and-Software-Group/cuarm_robotics.git
+	branch = dev
+[submodule "hardware_modules/motor_data"]
+	path = hardware_modules/motor_data
+	url = git@github.com:CURI-Simulation-and-Software-Group/motor_data.git
+[submodule "hardware_modules/depth_sensor"]
+	path = hardware_modules/depth_sensor
+	url = git@github.com:CURI-Simulation-and-Software-Group/depth_sensor.git
+[submodule "hardware_modules/serial"]
+	path = hardware_modules/serial
+	url = git@github.com:CURI-Simulation-and-Software-Group/serial.git
+[submodule "hardware_modules/serial_uart_servo"]
+	path = hardware_modules/serial_uart_servo
+	url = git@github.com:CURI-Simulation-and-Software-Group/serial_uart_servo.git
+[submodule "hardware_modules/eyou_dual_arm-multi_can"]
+	path = hardware_modules/eyou_dual_arm-multi_can
+	url = git@github.com:CURI-Simulation-and-Software-Group/eyou_dual_arm.git
+	branch = multi_can
+[submodule "hardware_modules/realman_dual_arm"]
+	path = hardware_modules/realman_dual_arm
+	url = git@github.com:CURI-Simulation-and-Software-Group/realman_dual_arm.git
+[submodule "hardware_modules/single_arm_v1"]
+	path = hardware_modules/single_arm_v1
+	url = git@github.com:CURI-Simulation-and-Software-Group/single_arm_v1.git
+	branch = cpp
+[submodule "hardware_modules/arm_base"]
+	path = hardware_modules/arm_base
+	url = git@github.com:hkclr-manipulation-group/arm_base.git
+[submodule "hardware_modules/cxt_can"]
+	path = hardware_modules/cxt_can
+	url = git@github.com:hkclr-manipulation-group/cxt_can.git
+[submodule "hardware_modules/rmd_motor"]
+	path = hardware_modules/rmd_motor
+	url = git@github.com:hkclr-manipulation-group/rmd_motor.git
+[submodule "hardware_modules/cxt_can_rmd_motor"]
+	path = hardware_modules/cxt_can_rmd_motor
+	url = git@github.com:hkclr-manipulation-group/cxt_can_rmd_motor.git
+[submodule "hardware_modules/tl_motor"]
+	path = hardware_modules/tl_motor
+	url = git@github.com:hkclr-manipulation-group/tl_motor.git
+[submodule "hardware_modules/cxt_can_tl_motor"]
+	path = hardware_modules/cxt_can_tl_motor
+	url = git@github.com:hkclr-manipulation-group/cxt_can_tl_motor.git
+[submodule "hardware_modules/spark2"]
+	path = hardware_modules/spark2
+	url = git@github.com:hkclr-manipulation-group/spark2_internal.git
+[submodule "hardware_modules/joint_interface"]
+	path = hardware_modules/joint_interface
+	url = git@github.com:hkclr-manipulation-group/joint_interface.git

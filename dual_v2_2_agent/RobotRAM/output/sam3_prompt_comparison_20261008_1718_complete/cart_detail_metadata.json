@@ -1,0 +1,10 @@
+{
+  "display_score_minimum": 0.5,
+  "display_crop_xyxy": [
+    260,
+    300,
+    470,
+    480
+  ],
+  "raw_inference_unchanged": true
+}

@@ -1,0 +1,8 @@
+- dataset_root=/mnt/ssd/user/V/concept-graphs/data
+- scene_id=2026-09-01--16-55-31_preprocessed
+- dataset_config=/mnt/ssd/user/V/concept-graphs/data/2026-09-01--16-55-31_preprocessed/dataconfig.yaml
+- stride=5
+- classes_file=/mnt/ssd/user/V/concept-graphs/conceptgraph/tableware_classes.txt
+- detections_exp_suffix=s_detections_stride5_tableware
+- exp_suffix=r_mapping_stride5_tableware
+- force_detection=true

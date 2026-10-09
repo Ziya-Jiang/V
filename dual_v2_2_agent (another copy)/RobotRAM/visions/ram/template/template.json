@@ -1,0 +1,19 @@
+{
+    "chair": {"template_id": 130, "is_symmetric": "False", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1209.8412292577457},
+    "cup": {"template_id": 562, "is_symmetric": "True", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1322.1257565468627},
+    "plate": {"template_id": 563, "is_symmetric": "True", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1418.737741734869},
+    "mug": {"template_id": 126, "is_symmetric": "False", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1444.3489357224585},
+    "bowl": {"template_id": 561, "is_symmetric": "True", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1472.5935255227193},
+    "table": {"template_id": 11, "is_symmetric": "True", "symmetry_axis": "z", "symmetry_type": "discrete", "object_scale": 1312.181935217659},
+    "webcam": {"template_id": 564, "is_symmetric": "False", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1312.44507286399},
+    "brush": {"template_id": 565, "is_symmetric": "False", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1054.3418368617238},
+    "dustpan": {"template_id": 566, "is_symmetric": "False", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1472.5935255227193},
+    "motorcycle": {"template_id": 127, "is_symmetric": "False", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1245.9740271220214},
+    "doll": {"template_id": 567, "is_symmetric": "False", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1229.7769795782065},
+    "trashcan": {"template_id": 562, "is_symmetric": "True", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1322.1257565468627},
+    "spoon": {"template_id": 568, "is_symmetric": "False", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1029.1088657258501},
+    "toycar": {"template_id": 569, "is_symmetric": "False", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1309.5253152570644},
+    "fork": {"template_id": 570, "is_symmetric": "False", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1010.4941395368377},
+    "bread": {"template_id": 571, "is_symmetric": "True", "symmetry_axis": "z", "symmetry_type": "discrete", "object_scale": 1187.9037732868749},
+    "wineglass": {"template_id": 602, "is_symmetric": "True", "symmetry_axis": "z", "symmetry_type": "continuous", "object_scale": 1187.9037732868749}
+}

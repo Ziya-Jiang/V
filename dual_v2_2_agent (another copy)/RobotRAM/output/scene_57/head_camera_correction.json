@@ -1,0 +1,104 @@
+{
+  "status": "applied",
+  "delta_pitch_deg": 2.992692630973871,
+  "pitch_axis_base": [
+    -0.9967848120668552,
+    -0.08012514232651471,
+    0.0
+  ],
+  "pitch_axis_source": "table_leveling",
+  "table_normal_camera": [
+    0.049890803803115995,
+    -0.7953504454836106,
+    -0.6040931853322807
+  ],
+  "table_normal_base_before": [
+    0.004183220941138062,
+    -0.05204073251632267,
+    0.9986362014376019
+  ],
+  "table_normal_base_after": [
+    -4.2151285735560707e-19,
+    1.093899898778497e-17,
+    1.0000000000000002
+  ],
+  "table_tilt_before_deg": 2.9926926309738846,
+  "table_tilt_after_deg": 0.0,
+  "table_centroid_camera_m": [
+    -0.009275966403328135,
+    0.17554258500496053,
+    0.7774749258334065
+  ],
+  "table_centroid_base_mm": [
+    617.0938730607568,
+    -61.070417986015585,
+    0.0
+  ],
+  "table_height_target_mm": 0.0,
+  "table_height_error_mm": 0.0,
+  "plane_inlier_count": 35184,
+  "plane_sample_count": 60000,
+  "plane_inlier_ratio": 0.5864,
+  "plane_rms_residual_mm": 4.0800669677797,
+  "translation_method": "table_height_only",
+  "anchor_count": 0,
+  "anchor_residuals_mm": [],
+  "manual_xy_offset_mm": [
+    0.0,
+    0.0
+  ],
+  "original_T_base_cam_mm": [
+    [
+      -0.09394432477984313,
+      -0.6092199958897482,
+      0.7874169546369666,
+      108.40684187055706
+    ],
+    [
+      -0.9955762786352584,
+      0.05870146226667497,
+      -0.07336219562229923,
+      8.308460906428866
+    ],
+    [
+      -0.0015288101352819439,
+      -0.790825603363883,
+      -0.6120396456143351,
+      551.9808087145353
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "corrected_T_base_cam_mm": [
+    [
+      -0.09404554825639226,
+      -0.6059000696024641,
+      0.7899623665143068,
+      108.40684187055706
+    ],
+    [
+      -0.9943170231616442,
+      0.017400417372914152,
+      -0.10502801019830274,
+      8.308460906428866
+    ],
+    [
+      0.04989080380311603,
+      -0.7953504454836106,
+      -0.6040931853322807,
+      609.7479630676339
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "warning": "No pivot or known-point anchor was supplied; pitch and table height are corrected, but translation parallel to the table cannot be observed from one plane.",
+  "correction_id": "a832afcb48194d259104f04a11afa673"
+}

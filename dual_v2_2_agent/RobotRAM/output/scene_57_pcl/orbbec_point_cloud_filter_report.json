@@ -1,0 +1,15 @@
+{
+  "coordinate_frame": "orbbec_camera",
+  "coordinate_unit": "m",
+  "raw_points": 223215,
+  "after_statistical_filter": 215343,
+  "optimized_points": 191942,
+  "statistical_neighbors": 20,
+  "statistical_std_ratio": 2.0,
+  "voxel_size_m": 0.003,
+  "range_valid_depth_pixels": 237116,
+  "rejected_local_depth_outliers": 13901,
+  "retained_depth_pixels": 223215,
+  "depth_median_kernel": 5,
+  "depth_outlier_threshold_mm": 50.0
+}

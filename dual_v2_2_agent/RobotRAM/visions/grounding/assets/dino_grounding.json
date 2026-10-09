@@ -1,0 +1,8 @@
+{
+    "sam2_checkpoint": "/home/medair/ckli/FairinoArm/visions/grounding/Grounded-SAM-2/checkpoints/sam2.1_hiera_large.pt",
+    "model_cfg": "/home/medair/ckli/FairinoArm/visions/grounding/Grounded-SAM-2/sam2/configs/sam2.1/sam2.1_hiera_l.yaml",
+    "grounding_dino_config": "/home/medair/ckli/FairinoArm/visions/grounding/Grounded-SAM-2/grounding_dino/groundingdino/config/GroundingDINO_SwinT_OGC.py",
+    "grounding_dino_checkpoint": "/home/medair/ckli/FairinoArm/visions/grounding/Grounded-SAM-2/gdino_checkpoints/groundingdino_swint_ogc.pth",
+    "box_threshold": 0.35,
+    "text_threshold": 0.25
+}

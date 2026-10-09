@@ -1,0 +1,9 @@
+{
+  "prompt": "book",
+  "min_score": 0.25,
+  "mask_nms_iou": 0.4,
+  "nms_min_area_ratio": 0.6,
+  "min_area_px": 100,
+  "crop_recall": true,
+  "crop_padding_px": 80
+}

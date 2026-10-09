@@ -1,0 +1,3 @@
+name: dual_v2_2_half_no_gripper
+urdf: share/no_gripper_half/dual_arm_half.urdf
+import_yaml: share/config/components/dual_v2_2_half.yaml

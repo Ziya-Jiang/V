@@ -1,0 +1,12 @@
+{
+    "name": "table",
+    "primitives": {
+        "plane_0": {
+            "type": "plane",
+            "description": "The plane is a horizontal plane defined by the top of the table. Its centroid is located at the geometric center of the tabletop",
+            "position": [3.6612287,-8.845294,263.333],
+            "orientation": [0.0, 0.0, 1.0],
+            "align_with_axis": "z"
+        }
+    }
+}

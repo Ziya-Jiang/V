@@ -1,0 +1,12 @@
+usd_path: "../share/robot.usd"
+arm:
+  - name: "arm"
+    joint_names: ["J1", "J2", "J3", "J4", "J5", "J6", "J7"]
+target_link_names: ["End_Effector"]
+targets:
+  - name: "target"
+    position: [0.2, 0.3, 0.2]
+    orientation: [0, 1, 0, 0]  # Quaternion (w, x, y, z)
+    color: [0.0, 0.0, 1.0]
+    size: 0.05
+    offset: [0.0, 0.0, -0.025]
