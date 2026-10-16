@@ -22,14 +22,14 @@
     {
       "path": "dual_v2_2_agent/BOOK_GRASP_QUESTION_LOG.md",
       "status": "A",
-      "bytes": 200886,
-      "sha256": "68d19138394f1aed26e597ae97afe1ed24cb0930b062ee6c1a5c5936a24e55c9"
+      "bytes": 202230,
+      "sha256": "cdd9704fcd088096b83d6a6ac18d67782c94a4de4dd73717bd872031f6b8ef94"
     },
     {
       "path": "dual_v2_2_agent/BOOK_GRASP_RESEARCH_LOG.md",
       "status": "A",
-      "bytes": 154958,
-      "sha256": "680a00b4265f1db3a0222f19e9ae323d4a5bcd9d7d76af36a231534e66134052"
+      "bytes": 155874,
+      "sha256": "b92796826366eb97778c2305846f78e0aa53be895d2cc39c90c3b23abd7d6e3d"
     },
     {
       "path": "dual_v2_2_agent/README_V4_2_RAISE_SERVO.md",
@@ -12583,5 +12583,11 @@
     }
   ],
   "policy": "Incremental source/config/test/docs update; preserve remote-only historical content; do not push local full snapshot commit.",
-  "test_fixture_note": "Historical planner SHA256 manifest moved into test_fixtures; no runtime recordings or weights included."
+  "test_fixture_note": "Historical planner SHA256 manifest moved into test_fixtures; no runtime recordings or weights included.",
+  "upload_verification": {
+    "code_commit": "26cb07c4f313431d01ad61bb55924703d6df5905",
+    "remote_main_verified": true,
+    "offline_tests_passed": 164,
+    "hardware_executed": false
+  }
 }
