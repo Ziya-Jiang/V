@@ -1,0 +1,15 @@
+{
+  "period_s": 0.02,
+  "raw_velocity_ratio": 0.3,
+  "position_gain": 3.0,
+  "rotation_gain": 3.0,
+  "linear_speed_m_s": 0.05,
+  "angular_speed_rad_s": 0.15,
+  "joint_speed_rad_s": 0.35,
+  "joint_acceleration_rad_s2": 1.0,
+  "joint_lead_rad": 0.025,
+  "damping": 0.005,
+  "stream_lease_s": 0.4,
+  "probe_timeout_s": 5.0,
+  "arrival_position_mm": 3.0
+}

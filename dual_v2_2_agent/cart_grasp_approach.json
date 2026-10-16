@@ -1,0 +1,10 @@
+{
+  "fingertip_offset_mm": 50.0,
+  "standoff_mm": 20.0,
+  "max_forward_mm": 250.0,
+  "max_x_step_mm": 6.0,
+  "x_tolerance_mm": 3.0,
+  "forward_gain": 0.35,
+  "ramp_seconds": 0.4,
+  "max_path_mm": 400.0
+}

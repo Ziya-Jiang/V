@@ -1,4 +1,5 @@
 from .base_arm import BaseArm
+from .servo_arrival import ServoArrival
 import time
 import copy
 # import Robot
@@ -50,7 +51,7 @@ CUARM_AVAILABLE = True
 
 # Cartesian error-reporting thresholds are deliberately stricter near the
 # object and slightly looser during collision-clear transport motions. They do
-# not decide motion completion.
+# gate successful completion after the controller reports motion finished.
 _GRASP_POSITION_TOLERANCE_M = {
     "fork": 0.015,
     "cup": 0.020,
@@ -77,6 +78,8 @@ _TRANSPORT_POSITION_ACTIONS = {
 _DEFAULT_POSITION_TOLERANCE_M = 0.030
 _TASK_POSITION_TOLERANCE_M = {
     ("book", "move_down_to_grasp"): 0.008,
+    ("book", "book_v3_xyz_servo"): 0.002,
+    ("book", "book_v42_raise_servo"): 0.003,
 }
 
 
@@ -545,7 +548,11 @@ class RobotArm(BaseArm):
                 return None
             
             # Receive current robot state once
-            curobo_state = self.udp.receive()
+            if hasattr(self.udp, 'receive_with_timestamp'):
+                curobo_state, received_monotonic = self.udp.receive_with_timestamp()
+            else:
+                curobo_state = self.udp.receive()
+                received_monotonic = None
             if curobo_state is None:
                 print("No robot state received")
                 return None
@@ -583,6 +590,10 @@ class RobotArm(BaseArm):
                 # 'left_gripper': int(gripper_mode_command[0]),
                 # 'right_gripper': int(gripper_mode_command[1]),
                 'timestamp': time.time(),
+                'received_monotonic': received_monotonic,
+                # Optional V3.1 metadata; receipt time retains its old meaning.
+                'pose_sample_monotonic': getattr(curobo_state, 'pose_sample_monotonic', None),
+                'pose_fk_completed_monotonic': getattr(curobo_state, 'pose_fk_completed_monotonic', None),
                 "joint_state": curobo_state.arm_joint_position,
                 "joint_velocity": joint_velocity.tolist(),
                 "processed_arm_joint_command": processed_arm_joint_command,
@@ -825,6 +836,7 @@ class RobotArm(BaseArm):
         joint_tolerance_rad=0.0175,
         max_missing_state_cycles=20,
         completion_settle_timeout=10.0,
+        require_fresh_stable=False,
     ):
         """
         Wait for a commanded motion to complete.
@@ -861,6 +873,12 @@ class RobotArm(BaseArm):
         command_acknowledged = False
         command_acknowledged_at = None
         completion_detected_at = None
+        servo_arrival = (ServoArrival(
+            getattr(self, '_cartesian_command_sent_monotonic', time.monotonic()),
+            getattr(self, '_cartesian_commanded_arms', (0,1)),
+            position_tolerance_m, orientation_tolerance_rad,
+            initial_state=getattr(self, '_servo_initial_state', None))
+            if require_fresh_stable else None)
 
         def _print_tcp_diagnostics(diagnostics):
             for arm_name in ("left", "right"):
@@ -929,7 +947,11 @@ class RobotArm(BaseArm):
         def completion_result(current_state, success_message):
             """Wait for measured state to catch up after an early done signal."""
             nonlocal completion_detected_at
-            if report_completion_error(current_state):
+            arrived = (servo_arrival.update(current_state, expected_processed_command, time.monotonic())
+                       if servo_arrival is not None else report_completion_error(current_state))
+            if arrived:
+                if servo_arrival is not None:
+                    print('V3 伺服到位检查通过：'+servo_arrival.detail, flush=True)
                 print(success_message)
                 return True
 
@@ -944,13 +966,15 @@ class RobotArm(BaseArm):
                 return None
 
             report_completion_error(current_state, verbose=True)
+            if servo_arrival is not None:
+                print('V3 伺服到位检查失败：'+servo_arrival.detail, flush=True)
             print(
                 "控制器报告结束后实机反馈仍未收敛，"
                 "本步判为失败。"
             )
             return False
 
-        if not is_joint_command and self.prev_arm_tool_command is not None and \
+        if not require_fresh_stable and not is_joint_command and self.prev_arm_tool_command is not None and \
             np.allclose(
                 self.prev_arm_tool_command,
                 self.target_command.arm_tool_command,
@@ -974,6 +998,7 @@ class RobotArm(BaseArm):
         while time.time() - start_time < max_wait_time:
             current_state = self.get_current_state()
             if current_state is None:
+                if servo_arrival is not None:servo_arrival.reset()
                 missing_state_cycles += 1
                 if missing_state_cycles >= max_missing_state_cycles:
                     print(
@@ -1028,6 +1053,7 @@ class RobotArm(BaseArm):
                 )
 
             if not response_matches_command:
+                if servo_arrival is not None:servo_arrival.reset()
                 time.sleep(check_interval)
                 continue
             if not command_acknowledged:
@@ -1062,6 +1088,11 @@ class RobotArm(BaseArm):
             elif curobo_status == succeeded_value:
                 curobo_started_planning = True
                 curobo_succeeded = True
+
+            if servo_arrival is not None and not (
+                curobo_succeeded and robot_started_running and robot_status == available_value
+            ):
+                servo_arrival.reset()
 
             if curobo_succeeded and robot_status == busy_value and not robot_started_running:
                 robot_started_running = True
@@ -1624,7 +1655,7 @@ class RobotArm(BaseArm):
             time.sleep(0.05)
         return False, "planner preview timeout", None
 
-    def master_control(self, left_arm=None, right_arm=None, left_gripper=None, right_gripper=None, action="", object_category='cup'):
+    def master_control(self, left_arm=None, right_arm=None, left_gripper=None, right_gripper=None, action="", object_category='cup', wait_for_completion=True):
         """
         Master control function that intelligently controls arms and grippers
         Only moves/controls what has values, keeps unchanged what doesn't have values
@@ -1636,6 +1667,9 @@ class RobotArm(BaseArm):
         @return: 0 if successful, -1 if error occurs
         """
         # try:
+        if not wait_for_completion and (action not in ('book_v3_1_stream', 'book_v3_1_hold') or self.ik_lib != 'curobo'
+                or right_arm is None or left_arm is not None or left_gripper is not None or right_gripper is not None):
+            raise ValueError('Nonblocking motion is reserved for V3.1 right-arm streaming')
         if not self.udp or not self.target_command:
             print("UDP communication not available for master control")
             return -1
@@ -1657,6 +1691,14 @@ class RobotArm(BaseArm):
         if not self._target_position_is_reasonable(right_arm, "right_arm"):
             return False
 
+        position_tolerance_m = _position_tolerance_for_task(
+            object_category, action
+        )
+        if action in ('book_v3_xyz_servo', 'book_v3_1_stream'):
+            configured = float(getattr(self, '_v3_servo_position_tolerance_mm', 2.))
+            if not np.isfinite(configured) or not .1 <= configured <= 3.:
+                raise ValueError('Invalid V3 servo arrival tolerance')
+            position_tolerance_m = configured / 1000.
         arm_motion_requested = left_arm is not None or right_arm is not None
         current_state = None
         if arm_motion_requested and (left_arm is None or right_arm is None):
@@ -1679,6 +1721,9 @@ class RobotArm(BaseArm):
                 for arm_index, arm_pose in ((0, left_arm), (1, right_arm))
                 if arm_pose is not None
             )
+
+        if action in ('book_v3_xyz_servo', 'book_v3_1_stream') and arm_motion_requested:
+            self._servo_initial_state = current_state if current_state is not None else self.get_current_state()
 
         configured_gripper_size = self.target_command.gripper_size
         if configured_gripper_size == 0 and (
@@ -1737,26 +1782,29 @@ class RobotArm(BaseArm):
         # Send the complete command
         # print(self.target_command)
         if self.ik_lib == 'curobo':
+            if arm_motion_requested:
+                self._cartesian_command_sent_monotonic = time.monotonic()
             self.udp.send(self.target_command)
         elif self.ik_lib == 'pinocchio':
             self._convert_target_command_to_teleop_command()
             self.udp.send(self.teleop_command)
         # print("Master control command sent successfully")
         
+        if not wait_for_completion:
+            return True  # Sent only; the V3.1 loop checks acknowledgement and feedback.
         # Wait for movement to complete if any arm moved
         if left_arm is not None or right_arm is not None:
             # Wait for the entire robot to stop moving
-            position_tolerance_m = _position_tolerance_for_task(
-                object_category, action
-            )
             print(
                 "Motion error diagnostic threshold: "
                 f"object={object_category}, action={action}, "
                 f"position={position_tolerance_m * 1000.0:.1f}mm"
             )
-            result = self._wait_for_robot_stop(
-                position_tolerance_m=position_tolerance_m
-            )
+            wait_options = dict(position_tolerance_m=position_tolerance_m)
+            if action in ('book_v3_xyz_servo', 'book_v3_1_stream', 'book_v42_raise_servo'):
+                wait_options.update(check_interval=.02,
+                    orientation_tolerance_rad=np.deg2rad(1.), require_fresh_stable=True)
+            result = self._wait_for_robot_stop(**wait_options)
             return result
           
         # time.sleep(10)  

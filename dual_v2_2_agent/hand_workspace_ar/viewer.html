@@ -1,0 +1,25 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>手部工作空间 · LIVE AR</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080e16;color:#e6f3fc;font:14px system-ui,sans-serif}main{max-width:1300px;margin:32px auto;padding:0 24px}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}h1{font-size:25px;margin:4px 0}small{color:#7c94ac;letter-spacing:2px}.pill{border:1px solid #665332;border-radius:30px;padding:9px 14px;color:#e6cc98}.grid{display:grid;grid-template-columns:1fr 250px;gap:20px}.stage{position:relative;background:#101e2c;border:1px solid #20384c;border-radius:18px;min-height:360px;overflow:hidden;display:grid;place-items:center}canvas{width:100%;height:auto;display:block}canvas.hidden{display:none}.empty{position:absolute;color:#93a9bc;padding:30px}.overlay{position:absolute;top:18px;left:18px;background:#071423d9;padding:9px 12px;border-radius:8px;font-size:12px}.card{background:#101a28;border:1px solid #23354a;border-radius:14px;padding:20px;margin-bottom:14px}.value{font-size:36px;font-weight:600;color:#e8cc93;margin:12px 0}.label{color:#8fa4ba;font-size:12px}.status{line-height:1.7;color:#d8e6f3}.note{color:#7f96ae;font-size:12px;line-height:1.8;margin-top:18px}.key{display:inline-block;width:8px;height:8px;background:#e3b84f;border-radius:50%;margin-right:6px}footer{margin-top:18px;color:#71899f;font-size:12px;line-height:1.9}@media(max-width:850px){.grid{grid-template-columns:1fr}aside{display:grid;grid-template-columns:1fr 1fr;gap:10px}h1{font-size:20px}.stage{min-height:240px}}
+</style><main><header><div><small>ROBOT VISION / READ ONLY</small><h1>手部平面工作空间</h1></div><span class="pill" id="badge">连接中</span></header><div class="grid"><section class="stage"><span class="empty" id="empty">等待头部 RGB-D 图像</span><canvas id="view" class="hidden" role="img" aria-label="实时头部图像与手部高度工作空间"></canvas><div class="overlay">右臂 · 金色工作空间平面</div></section><aside><div class="card"><div class="label">右手第七轴末端原点高度</div><div class="value" id="height">—</div><div class="label">mm · 相对 dummy_world 的 Z</div><div class="note">参考点：arm_end_effector_r<br>与第七轴末端坐标原点重合<br>不含夹爪／指尖偏移</div></div><div class="card"><div class="status" id="status">正在连接</div><div class="note"><span class="key"></span>金色平面：第七轴末端原点高度<br>工作空间内：面上原色，面下压暗<br>依据真实深度判断 · 遮挡裁切关闭</div></div><div class="card"><div class="label" id="stats">帧率 — · 图像延迟 —</div><div class="note" id="connection">持续监听 · Connect 后自动恢复</div></div></aside></div><footer>仅显示，不发送机器人指令。工作空间基于 URDF 采样，固定向前抓取、滚转自由；当前不显示深度遮挡，范围未经过碰撞检查。相机外参沿用已有标定。更新间隔保留上一帧；数据过期或中断时整帧暂停并标注时间，新数据到达后恢复。</footer></main>
+<script>
+const $=id=>document.getElementById(id);let last=Date.now(),shownStamp=null,shownAt=null;
+const canvas=$('view'),ctx=canvas.getContext('2d');
+function pause(text){$('badge').textContent=shownAt?'画面已暂停':'等待画面';$('status').textContent=text;if(!shownAt)$('empty').textContent=text;else $('stats').textContent='保留画面时间 '+new Date(shownAt*1000).toLocaleTimeString()+' · '+Math.max(0,(Date.now()/1000-shownAt)).toFixed(1)+' 秒前'}
+async function update(){try{
+  const r=await fetch('/api/frame',{cache:'no-store',signal:AbortSignal.timeout(1500)});if(!r.ok)throw Error(r.status);
+  const d=await r.json();last=Date.now();$('connection').textContent=(d.camera_message||'相机等待中')+' · 状态持续监听 · Connect 后自动恢复';
+  if(d.image&&d.frame_unix_s!==shownStamp){
+    const next=new Image();next.src='data:image/jpeg;base64,'+d.image;await next.decode();
+    // Decode offscreen first; keep the existing canvas untouched until ready.
+    if(canvas.width!==next.naturalWidth||canvas.height!==next.naturalHeight){canvas.width=next.naturalWidth;canvas.height=next.naturalHeight}
+    ctx.drawImage(next,0,0);canvas.classList.remove('hidden');$('empty').textContent='';
+    shownStamp=d.frame_unix_s;shownAt=d.frame_unix_s||Date.now()/1000;
+    $('height').textContent=d.height_mm==null?'—':d.height_mm.toFixed(1);
+  }
+  if(d.mode==='paused'||!d.image){pause(d.message);}
+  else{$('badge').textContent=d.mode==='live'?'● LIVE AR':d.mode==='waiting_state'?'等待手部状态':'状态检查';$('status').textContent=d.message+' · 状态来源：'+(d.state_source||'等待接入');$('stats').textContent=`帧率 ${d.fps??'—'} FPS · 图像延迟 ${d.frame_age_s==null?'—':Math.round(d.frame_age_s*1000)} ms`;}
+}catch(e){pause('连接暂时中断 · 保留上一帧，恢复后自动更新')}
+setTimeout(update,80)}
+setInterval(()=>{if(Date.now()-last>1200)pause('等待新数据 · 保留上一帧')},200);update();
+</script></html>

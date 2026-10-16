@@ -1,0 +1,4 @@
+device=/dev/v4l/by-id/usb-LRCP_G-720P_LRCP_G-720P_SN0001-video-index0
+inner_corners=11x8
+square_m=0.01
+resolution=1280x720

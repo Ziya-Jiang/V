@@ -39,6 +39,7 @@ from cuarm_utils import same_quaternion, same_array, add_tool_offset, remove_too
 
 from curobo_config import CuroboConfig
 from curobo_ik_solver import create_ik_solver
+from servo_cartesian_policy import is_book_servo, poses_close
 
 class CuroboPlanner(CuroboConfig):
     def __init__(self, config: CuroboConfig, connection_method: PlannerConnectionMethod, solver_type:PlannerCuroboSolverType=PlannerCuroboSolverType.MOTION_GEN, catch_SIGINT=True, **kwargs):
@@ -851,6 +852,12 @@ class CuroboPlanner(CuroboConfig):
                             (target_cmd.arm_command_type == TargetCommandArmCommandType.CARTESIAN and \
                             same_array(self.target_arm_tool_position, self.arm_tool_position, atol=self.target_cartesian_position_precision) and \
                             same_quaternion(self.target_arm_tool_orientation, self.arm_tool_orientation, atol=self.target_cartesian_orientation_precision))
+                        if (target_cmd.arm_command_type == TargetCommandArmCommandType.CARTESIAN
+                                and is_book_servo(self.target_description)):
+                            arm_reached = poses_close(
+                                self.target_arm_tool_position, self.target_arm_tool_orientation,
+                                self.arm_tool_position, self.arm_tool_orientation,
+                                position_m=.002, angle_deg=1.)
                         gripper_reached = self.gripper_size == 0 or (
                             (target_cmd.gripper_command_type == TargetCommandGripperCommandType.JOINT and \
                             same_array(target_cmd.gripper_joint_command, self.curobo_state.gripper_joint_position, atol=1e-2)) or \
@@ -867,6 +874,14 @@ class CuroboPlanner(CuroboConfig):
         # allowed the unrequested arm to change redundant joint configuration.
         self._move_arm = []
         for i in range(self.arm_size):
+            if is_book_servo(self.target_description):
+                # This action is explicitly right-arm-only. Keep the left arm
+                # fixed even if its held pose changes slightly in feedback.
+                self._move_arm.append(i == 1 and not poses_close(
+                    arm_tool_position[i:i+1], arm_tool_orientation[i:i+1],
+                    target_tool_position[i:i+1], target_tool_orientation[i:i+1],
+                    position_m=.00001, angle_deg=.01))
+                continue
             target_reached = same_array(arm_tool_position[i], target_tool_position[i], atol=1e-3) and \
                 same_quaternion(arm_tool_orientation[i], target_tool_orientation[i], atol=self.target_cartesian_orientation_precision)
             self._move_arm.append(not target_reached)
@@ -1027,6 +1042,19 @@ class CuroboPlanner(CuroboConfig):
         self._prev_target_description = target_description
         return replan
 
+    def _cartesian_target_changed(self):
+        if is_book_servo(self.target_description):
+            return not poses_close(
+                self.target_arm_tool_position, self.target_arm_tool_orientation,
+                self._prev_target_tool_position, self._prev_target_tool_orientation,
+                position_m=.00001, angle_deg=.01)
+        return (self._prev_target_tool_position is None or
+                self._prev_target_tool_orientation is None or
+                not same_array(self.target_arm_tool_position, self._prev_target_tool_position,
+                               atol=self.target_cartesian_position_precision) or
+                not same_quaternion(self.target_arm_tool_orientation, self._prev_target_tool_orientation,
+                                    atol=self.target_cartesian_orientation_precision))
+
     def _motion_gen_plan_single(self) -> bool:
         """
         Generate motion plan for Cartesian space target using Curobo motion generation.
@@ -1052,11 +1080,7 @@ class CuroboPlanner(CuroboConfig):
 
         replan = False
         #Replan if a new target is given and previous target reached
-        if (self._prev_target_tool_position is None or \
-            self._prev_target_tool_orientation is None or \
-            not same_array(target_tool_position, self._prev_target_tool_position, atol=self.target_cartesian_position_precision) or \
-            not same_quaternion(target_tool_orientation, self._prev_target_tool_orientation, atol=self.target_cartesian_orientation_precision)
-        ):
+        if self._cartesian_target_changed():
             print("current tool_position: ",    arm_tool_position) 
             print("current tool_orientation: ", arm_tool_orientation) 
             print("target tool position: ",     target_tool_position) 
@@ -1121,11 +1145,7 @@ class CuroboPlanner(CuroboConfig):
         joint_position = self.get_input_state(PlannerInputStateType.JOINT_POSITION)
         target_tool_position, target_tool_orientation = self.target_arm_tool_position, self.target_arm_tool_orientation
         
-        if (self._prev_target_tool_position is None or \
-            self._prev_target_tool_orientation is None or \
-            not same_array(target_tool_position, self._prev_target_tool_position, atol=self.target_cartesian_position_precision) or \
-            not same_quaternion(target_tool_orientation, self._prev_target_tool_orientation, atol=self.target_cartesian_orientation_precision)
-        ):
+        if self._cartesian_target_changed():
             self.status = CuroboStatus.SOLVING_IK
             self._curobo_planning_status_planning_count = 0
             

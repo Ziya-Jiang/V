@@ -17,7 +17,7 @@ from book_spine_recovery_v1_1 import spine_axis_3d, DepthConsistencyError
 from cart_book_grasp_v1_3_geometry import recover_stable_spine, base_z_compensation
 
 
-def _spine_frame(mask, shape=None):
+def _spine_frame(mask, shape=None, *, check_geometry=True):
     mask = np.asarray(mask, dtype=np.uint8)
     if mask.ndim != 2:
         raise ValueError('Invalid spine mask dimensions')
@@ -27,11 +27,11 @@ def _spine_frame(mask, shape=None):
     if count < 2:
         raise ValueError('Empty spine mask')
     component = 1 + int(np.argmax(stats[1:, cv2.CC_STAT_AREA]))
-    mask = labels == component
+    mask = (labels == component) if check_geometry else mask.astype(bool)
     yy, xx = np.nonzero(mask)
-    if len(xx) < 100:
-        raise ValueError('Spine mask has fewer than 100 pixels')
-    if xx.min() <= 1 or yy.min() <= 1 or xx.max() >= mask.shape[1]-2 or yy.max() >= mask.shape[0]-2:
+    if len(xx) < (100 if check_geometry else 3):
+        raise ValueError('Spine mask has too few pixels: '+str(len(xx)))
+    if check_geometry and (xx.min() <= 1 or yy.min() <= 1 or xx.max() >= mask.shape[1]-2 or yy.max() >= mask.shape[0]-2):
         raise ValueError('Spine is clipped by the image border')
     pixels = np.column_stack((xx, yy)).astype(float)
     origin = pixels.mean(axis=0)
@@ -45,41 +45,48 @@ def _spine_frame(mask, shape=None):
     lo, hi = np.percentile(longitudinal, [1, 99])
     width = float(np.diff(np.percentile(lateral, [1, 99]))[0])
     length = hi-lo
-    if length < 40 or width < 2 or length < 2*width:
+    if check_geometry and (length < 40 or width < 2 or length < 2*width):
         raise ValueError(f'Not an elongated spine: axial length={length:.1f}, width={width:.1f} px')
     return mask, pixels, origin, along, across, longitudinal, lateral, lo, hi, width
 
 
-def _spine_center_from_mask(mask, depth, intrinsic):
+def _spine_center_from_mask(mask, depth, intrinsic, *, check_depth_consistency=True, check_geometry=True):
     """Fit boundary midpoints in the spine's own axes, independent of tilt."""
     depth = np.asarray(depth, dtype=float)
     if depth.ndim != 2:
         raise ValueError('Invalid depth dimensions')
-    mask, pixels, origin, along, across, t, s, lo, hi, width = _spine_frame(mask, depth.shape)
+    mask, pixels, origin, along, across, t, s, lo, hi, width = _spine_frame(mask, depth.shape, check_geometry=check_geometry)
     middle = (lo+hi)/2
     length = hi-lo
-    bin_ids = np.floor((t-lo)/2).astype(int)
-    row_t, row_s = [], []
-    for index in np.unique(bin_ids[np.abs(t-middle) <= .25*length]):
-        member = bin_ids == index
-        if member.sum() < 4:
-            continue
-        edge_lo, edge_hi = np.percentile(s[member], [5, 95])
-        row_t.append(float(np.median(t[member])))
-        row_s.append(float((edge_lo+edge_hi)/2))
-    if len(row_t) < 8:
-        raise ValueError('Too few spine cross-sections')
-    row_t, row_s = np.asarray(row_t)-middle, np.asarray(row_s)
-    fit = np.polyfit(row_t, row_s, 1)
-    residual = np.abs(row_s-np.polyval(fit, row_t))
-    good = residual <= max(2., 3*np.median(residual))
-    if good.sum() < 8:
-        raise ValueError('Unstable spine midline')
-    fit = np.polyfit(row_t[good], row_s[good], 1)
-    center = origin + middle*along + fit[1]*across
-    ui, vi = np.rint(center).astype(int)
-    if not (0 <= vi < mask.shape[0] and 0 <= ui < mask.shape[1] and mask[vi, ui]):
-        raise ValueError('Spine center falls outside the mask')
+    if check_geometry:
+        bin_ids = np.floor((t-lo)/2).astype(int)
+        row_t, row_s = [], []
+        for index in np.unique(bin_ids[np.abs(t-middle) <= .25*length]):
+            member = bin_ids == index
+            if member.sum() < 4:
+                continue
+            edge_lo, edge_hi = np.percentile(s[member], [5, 95])
+            row_t.append(float(np.median(t[member])))
+            row_s.append(float((edge_lo+edge_hi)/2))
+        if len(row_t) < 8:
+            raise ValueError('Too few spine cross-sections')
+        row_t, row_s = np.asarray(row_t)-middle, np.asarray(row_s)
+        fit = np.polyfit(row_t, row_s, 1)
+        residual = np.abs(row_s-np.polyval(fit, row_t))
+        good = residual <= max(2., 3*np.median(residual))
+        if good.sum() < 8:
+            raise ValueError('Unstable spine midline')
+        fit = np.polyfit(row_t[good], row_s[good], 1)
+        center = origin + middle*along + fit[1]*across
+        ui, vi = np.rint(center).astype(int)
+        if not (0 <= vi < mask.shape[0] and 0 <= ui < mask.shape[1] and mask[vi, ui]):
+            raise ValueError('Spine center falls outside the mask')
+    else:
+        # GPT already chose the region: compute a representative interior pixel,
+        # without judging elongation, clipping or fitted-midline consensus.
+        center=pixels[np.argmin(np.sum((pixels-np.median(pixels,axis=0))**2,axis=1))]
+        middle=float((center-origin)@along)
+        fit=np.array([0.,float((center-origin)@across)])
     # Sample the inner central patch in the same rotated frame. RGB, depth,
     # K and extrinsics all remain in their ORIGINAL camera coordinates.
     central = ((np.abs(t-middle) <= max(3., .1*length))
@@ -106,15 +113,17 @@ def _spine_center_from_mask(mask, depth, intrinsic):
                 depth_samples=len(samples), depth_p10_p90_mm=[p10*1000, p90*1000],
                 spine_axis_uv=along.tolist(), spine_length_px=float(length), spine_width_px=width,
                 spine_tilt_deg=float(np.degrees(np.arctan2(along[0], along[1]))))
+    result['spine_geometry_policy']='validated_sam' if check_geometry else 'direct_gpt_region'
+    result['spine_depth_consistency_check'] = 'enabled' if check_depth_consistency else 'skipped_gpt'
     try:
-        if center_depth_inconsistent:
+        if check_depth_consistency and center_depth_inconsistent:
             raise DepthConsistencyError('Spine center depth is mixed with background')
         result.update(spine_axis_3d(pixels, t, s, middle, length, width, fit, depth, k))
     except (ValueError, np.linalg.LinAlgError) as error:
         result['spine_3d_status'] = str(error)
         # Keep the original result unless this specific depth failure blocks
         # center validation or an enabled J7 alignment. Other errors never fall back.
-        if isinstance(error, DepthConsistencyError) and (center_depth_inconsistent or load_wrist_config()['enabled']):
+        if check_depth_consistency and isinstance(error, DepthConsistencyError) and (center_depth_inconsistent or load_wrist_config()['enabled']):
             result['spine_full_fit_failure'] = str(error)
             try:
                 recover_stable_spine(result, pixels, origin, along, across, t, s,
@@ -129,6 +138,16 @@ def _spine_center_from_mask(mask, depth, intrinsic):
                 print(f"cart+ 1.2 原深度一致性检测失败，启用稳定区域（长度占比 {result['spine_stable_region_fraction']:.0%}）；"
                       f"使用该区域中心和倾角；仅按中心偏移补偿基座 Z。", flush=True)
     return result
+
+
+def _wrist_config_for_geometry(config, geometry):
+    # Optional head-camera prealignment may be skipped for any detector.
+    # Never manufacture a tilt, or hide a failure of an actual rotation.
+    if geometry.get('spine_3d_status') != 'valid' or geometry.get('j7_skip_reason'):
+        return dict(config, enabled=False)
+    if geometry.get('head_tilt_review'):
+        return dict(config,skip_reviewed_geometry_unavailable=True)
+    return config
 
 
 def _rotate_for_detection(rgb, angle):
@@ -221,15 +240,22 @@ def main(*, task_types=None, config_path=None, wrist_config_path=None):
             latest.clear()
             rotations.clear()
             latest.update(base_tilt(selected, c2w))
+            for key in ('head_tilt_review','j7_skip_reason'):
+                if key in selected:latest[key]=selected[key]
             latest.update(base_z_compensation(selected, c2w))
+            latest['spine_depth_consistency_check'] = selected.get('spine_depth_consistency_check', 'enabled')
             for key in ('book_surface_x_mm', 'whole_book_depth_median_mm',
                         'whole_book_depth_samples', 'whole_book_depth_valid_fraction',
                         'whole_book_base_x_p10_p90_mm'):
                 latest[key] = selected[key]
             try:
-                config = load_wrist_config()
+                config = _wrist_config_for_geometry(load_wrist_config(), latest)
                 latest['wrist_enabled'] = config['enabled']
-                if visualization is not None and visualization.robot is not None:
+                if latest.get('spine_3d_status') != 'valid':
+                    latest['wrist_status'] = 'skipped: no reliable 3D spine tilt'
+                if latest.get('j7_skip_reason'):
+                    latest['wrist_status'] = 'skipped: '+latest['j7_skip_reason']
+                if config['enabled'] and visualization is not None and visualization.robot is not None:
                     latest.update(j7_proposal(latest, visualization.robot.get_current_state(), config,
                         step5.RIGHT_ARM_SOFT_LOWER_DEG[6], step5.RIGHT_ARM_SOFT_UPPER_DEG[6]))
             except Exception as error:
@@ -272,7 +298,11 @@ def main(*, task_types=None, config_path=None, wrist_config_path=None):
             if (task.get('book_grasp_mode') == 'cart+' and task.get('arm') == 'right'
                     and task.get('action') == 'move_above_grasp'):
                 try:
-                    config = load_wrist_config()
+                    config = _wrist_config_for_geometry(load_wrist_config(), latest)
+                    if latest.get('spine_3d_status') != 'valid':
+                        print('书脊无可靠三维倾角：跳过 J7 预对齐，保持当前姿态，继续 Y 对准及后续抓取。', flush=True)
+                    elif latest.get('j7_skip_reason'):
+                        print(latest['j7_skip_reason']+'；保持当前姿态，继续 Y 对准。',flush=True)
                     record = {}
                     rotations[task.get('object')] = record
                     if not align_j7(robot, latest, config, step5.RIGHT_ARM_SOFT_LOWER_DEG[6],

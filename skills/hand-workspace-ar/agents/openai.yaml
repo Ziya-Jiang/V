@@ -1,0 +1,6 @@
+interface:
+  display_name: "手部工作空间 AR"
+  short_description: "实时显示右手高度上的三维可达区域，并根据头部深度图处理遮挡"
+  default_prompt: "使用 $hand-workspace-ar 打开实时手部工作空间 AR，跟随右手末端高度并显示深度遮挡。"
+policy:
+  allow_implicit_invocation: true

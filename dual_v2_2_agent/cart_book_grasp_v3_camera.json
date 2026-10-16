@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "device": "/dev/v4l/by-id/usb-LRCP_G-720P_LRCP_G-720P_SN0001-video-index0",
+  "width": 1280,
+  "height": 720,
+  "warmup_frames": 4,
+  "capture_timeout_seconds": 6.0,
+  "max_pair_gap_seconds": 3.0,
+  "max_joint_drift_deg": 0.5,
+  "min_match_confidence": 0.85,
+  "wrist_min_score": 0.25
+}

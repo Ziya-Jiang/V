@@ -13,3 +13,16 @@
 - `_upload_manifest/files.json`：上传的原始项目文件清单、大小及 SHA-256；符号链接校验其目标字符串。
 
 初始快照包含 48,519 个项目文件，原始总大小约 1.93 GB；另附此说明、忽略规则及清单。文件完整性和凭据检查已完成，未运行机器人程序或项目测试。
+
+
+## 2026-10-16 源码更新：V4.3
+
+在原有目录结构和提交历史上增量更新源码、配置、测试及文档。本次不新增权重、采集数据、运行日志、缓存或编译产物；远端原有历史资料保留。增量清单见 `_upload_manifest/20261016_source_update.json`，旧清单仅对应2026-10-09初始快照。
+
+- 当前客户端：`dual_v2_2_agent/cuart_book_grasp_v4_3.py`
+- 独立规划器：`dual_v2_2_control/cuarm_upper_planner/dual_v2_2_upper_planner_v4_1.py`
+- 使用说明：`dual_v2_2_agent/README_V4_3_RAISE_SERVO.md`
+- 最新内容：抬升视觉伺服、自适应步长、复位前抬升50mm、初始丢点有界恢复与连续3张新帧验证。
+- 研发与实验记录：`dual_v2_2_agent/BOOK_GRASP_RESEARCH_LOG.md`、`BOOK_GRASP_QUESTION_LOG.md`。
+
+模型权重、Python/硬件依赖、密钥及机器人标定需在部署环境单独配置；部分路径仍指向原机器，不能未经配置直接运行实机。最新V4.3跟踪恢复此前通过164项离线回归，未声称实机验证完成。

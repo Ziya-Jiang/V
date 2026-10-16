@@ -1,0 +1,19 @@
+{
+  "target_description": "首次感知时自动选择画面中书脊及真实上沿可见、识别最可靠的一本书，不限定颜色、书名或特定位置；若有参考图，必须保持参考图中已选定的同一本书，不重新换书。识别真实书脊、真实上沿及同一本书的可见区域，排除封面作为书脊、书架、背景和相邻书。",
+  "tcp_to_finger_tool_mm": [0.0, 0.0, -50.0],
+  "distance_config": "cuart_book_grasp_v4_1_distances.json",
+  "close_fingers_after_reset": true,
+  "position_tolerance_mm": 3.0,
+  "head_observation_hold_mm": 3.0,
+  "orientation_tolerance_deg": 1.0,
+  "held_axis_tolerance_mm": 3.0,
+  "max_y_travel_mm": 350.0,
+  "max_raise_mm": 400.0,
+  "max_forward_mm": 400.0,
+  "max_descent_mm": 150.0,
+  "max_path_mm": 1000.0,
+  "max_seconds": 600.0,
+  "geometry_spread_mm": 3.0,
+  "frame_max_age_seconds": 0.3,
+  "image_change_mean_limit": 15.0
+}

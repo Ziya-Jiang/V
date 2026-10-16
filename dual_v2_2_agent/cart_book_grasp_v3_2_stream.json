@@ -1,0 +1,21 @@
+{
+  "update_hz": 10.0,
+  "lookahead_mm": null,
+  "lookahead_roll_deg": 2.0,
+  "feedback_max_age_seconds": 0.25,
+  "frame_max_age_seconds": 0.25,
+  "ack_timeout_seconds": 3.0,
+  "stall_seconds": 8.0,
+  "max_pose_pair_gap_seconds": 0.1,
+  "max_pose_pair_uncertainty_mm": 3.0,
+  "max_pose_pair_uncertainty_deg": 1.0,
+  "gain": 0.6,
+  "max_z_drift_mm": 4.0,
+  "pair_recovery_timeout_seconds": 2.0,
+  "runtime_version": "3.2",
+  "direct_recovery_seconds": 2.0,
+  "direct_recovery_y_mm": 1.0,
+  "direct_recovery_angle_deg": 0.5,
+  "direct_stop_y_mm": 4.0,
+  "direct_stop_angle_deg": 2.0
+}

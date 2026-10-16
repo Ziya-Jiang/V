@@ -52,15 +52,17 @@ def preview_targets(start, rotation, center_mm, parameters, delta_z_mm=0., book_
     forward = forward_targets(compensated, parameters)
     grasp = forward[-1] if forward else compensated
     lift = grasp + [0, 0, parameters['lift_mm']]
-    descent = (lower_targets(lift, parameters) if 'lower_step_mm' in parameters
-               else [lift - [0, 0, parameters['lower_mm']]])
-    lower = descent[-1] if descent else lift
+    advance = parameters.get('post_lift_forward_mm', 0.)
+    place_start = lift + [advance, 0, 0]
+    descent = (lower_targets(place_start, parameters) if 'lower_step_mm' in parameters
+               else [place_start - [0, 0, parameters['lower_mm']]])
+    lower = descent[-1] if descent else place_start
     withdraw = withdraw_targets(lower, aligned[0], parameters['forward_step_mm'])
-    points = [np.asarray(start), aligned, *([compensated] if abs(delta_z_mm) > 1e-8 else []), *forward, lift, *descent, *withdraw]
+    points = [np.asarray(start), aligned, *([compensated] if abs(delta_z_mm) > 1e-8 else []), *forward, lift, *([place_start] if advance else []), *descent, *withdraw]
     lower_labels = ([f'lower {i+1}/{len(descent)}' + (' / release' if i == len(descent)-1 else '')
                      for i in range(len(descent))] if 'lower_step_mm' in parameters else ['lower / release'])
     labels = (['start', 'align spine'] + (['depth fallback Z shift'] if abs(delta_z_mm) > 1e-8 else []) + [f'forward {i+1}/{len(forward)}' for i in range(len(forward))]
-              + ['lift'] + lower_labels + [f'withdraw {i+1}/{len(withdraw)}' for i in range(len(withdraw))])
+              + ['lift'] + (['post-lift forward'] if advance else []) + lower_labels + [f'withdraw {i+1}/{len(withdraw)}' for i in range(len(withdraw))])
     return dict(points_mm=np.asarray(points), labels=labels, grasp_mm=grasp,
                 rotation_deg=np.asarray(rotation), parameters=dict(parameters))
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "通用抓取视觉伺服特征"
+  short_description: "按物体描述选特征并跟踪，接入本机独立 servor 对准程序"
+  default_prompt: "使用 $grasp-servo-features，根据目标物体及描述选取并跟踪同一组特征，使用独立 servor.py 完成指定的视觉对准。"

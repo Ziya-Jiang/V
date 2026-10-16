@@ -53,8 +53,13 @@ def load_config(path=CONFIG_PATH, *, require_reference=True):
         if require_reference:
             raise ServoError('V3 尚未设置实测抓取参考像素。请先按 V3 README 登记 reference；未启动机器人。')
         return c
-    if not isinstance(ref, dict) or set(ref) != {'uv', 'surface_gap_mm', 'tool_euler_deg', 'device', 'width', 'height'}:
+    if not isinstance(ref, dict) or set(ref) != {'uv', 'surface_gap_mm', 'tool_euler_deg', 'device', 'width', 'height',
+                                               'coordinate_system', 'calibration_sha256'}:
         raise ServoError('Invalid reference schema')
+    if (ref['coordinate_system'] != 'undistorted_K' or
+            not isinstance(ref['calibration_sha256'], str) or len(ref['calibration_sha256']) != 64 or
+            any(c not in '0123456789abcdef' for c in ref['calibration_sha256'])):
+        raise ServoError('Invalid reference calibration/coordinate system')
     uv = vector(ref['uv'], 2, 'reference uv')
     vector(ref['tool_euler_deg'], 3, 'reference tool Euler angles')
     if any(type(ref[k]) is not int or ref[k] < 1 for k in ('width', 'height')):
@@ -217,8 +222,8 @@ def point_image_jacobian(uv, intrinsic, depth_m):
     """Robot Academy point interaction matrix, for offline/calibrated use.
 
     Maps CAMERA [vx, vy, vz (m/s), wx, wy, wz (rad/s)] to [du,dv] px/s.
-    The V3 runtime uses the measured BASE-YZ restriction instead, since this
-    camera has no intrinsics/hand-eye calibration yet. Never feed base velocity
+    The V3 runtime uses the measured BASE-YZ restriction instead: intrinsics
+    are available, but the hand-eye transform is not. Never feed base velocity
     directly into this camera-frame matrix.
     https://robotacademy.net.au/lesson/the-image-jacobian/
     """

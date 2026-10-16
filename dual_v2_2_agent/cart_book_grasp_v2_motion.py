@@ -211,6 +211,8 @@ def _install_spine_center(book_geom, visualization=None, on_geometry=None):
                 from cart_book_grasp_v2_target import prepare_instance_target
                 from cart_book_grasp_v2_dual_view import load_config as load_dual_config,stationary_guard
                 dual=load_dual_config();guard=lambda:None
+                if hasattr(_SELECTION_AGENT, 'bind_observation_robot'):
+                    _SELECTION_AGENT.bind_observation_robot(observation_robot)
                 if dual['enabled']:
                     if observation_robot is None:raise ValueError('双视角采集缺少机器人静止状态校验')
                     guard=stationary_guard(observation_robot,dual['max_joint_drift_deg'])
@@ -228,7 +230,7 @@ def _install_spine_center(book_geom, visualization=None, on_geometry=None):
             cache['selected'] = selected
             book_mask = candidate['book_mask']
             book_geom.BOOK_SELECTION_NOTE = (
-                f"GPT 选择 {candidate['id']}；书脊中心 {np.round(selected['uv'],1).tolist()}，"
+                f"选中 {candidate['id']}；书脊中心 {np.round(selected['uv'],1).tolist()}，"
                 f"整书基座 X 中位数 {selected['book_surface_x_mm']:.1f} mm")
             if visualization is not None:
                 visualization.capture(rgb, depth, intrinsic, c2w, selected, book_mask)

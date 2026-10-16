@@ -48,7 +48,7 @@ def _load_cart_plus_parameters():
             raise ValueError("顶层必须只包含 cart_plus")
         values = document["cart_plus"]
         fields = {"fingertip_offset_mm", "grasp_insertion_mm", "forward_step_mm", "lift_mm", "hold_seconds", "lower_mm", "initial_j6_deg", "lower_step_mm"}
-        if not isinstance(values, dict) or set(values) != fields:
+        if not isinstance(values, dict) or set(values) not in (fields, fields | {'post_lift_forward_mm'}):
             raise ValueError("cart_plus 必须包含且只包含 initial_j6_deg、fingertip_offset_mm、grasp_insertion_mm、forward_step_mm、lift_mm、hold_seconds、lower_mm、lower_step_mm")
         parameters = {}
         for name in ("fingertip_offset_mm", "grasp_insertion_mm", "forward_step_mm", "lift_mm", "hold_seconds", "lower_mm", "initial_j6_deg", "lower_step_mm"):
@@ -64,12 +64,16 @@ def _load_cart_plus_parameters():
             if name in {"forward_step_mm", "lower_step_mm"} and value < 1:
                 raise ValueError(f"{name} 必须至少为 1 mm")
             parameters[name] = float(value)
+        value = values.get('post_lift_forward_mm', 0.)
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not np.isfinite(value) or value < 0:
+            raise ValueError('post_lift_forward_mm 必须是非负有限数值（mm）')
+        parameters['post_lift_forward_mm'] = float(value)
     except (OSError, ValueError, TypeError, OverflowError) as error:
         raise ValueError(f"cart+ 配置读取失败 {_CART_PLUS_CONFIG_PATH}：{error}") from error
     print(
         f"cart+ 参数已热加载：初始 J6={parameters['initial_j6_deg']:g}°，按整书深度动态前伸，指尖偏移 {parameters['fingertip_offset_mm']:g} mm，伸入 {parameters['grasp_insertion_mm']:g} mm，"
         f"前伸每段不超过 {parameters['forward_step_mm']:g} mm，抬升 {parameters['lift_mm']:g} mm，停顿 {parameters['hold_seconds']:g} 秒，"
-        f"下降 {parameters['lower_mm']:g} mm，每段不超过 {parameters['lower_step_mm']:g} mm（{_CART_PLUS_CONFIG_PATH.name}）",
+        f"下降前再前伸 {parameters['post_lift_forward_mm']:g} mm，下降 {parameters['lower_mm']:g} mm，每段不超过 {parameters['lower_step_mm']:g} mm（{_CART_PLUS_CONFIG_PATH.name}）",
         flush=True,
     )
     return parameters
@@ -174,12 +178,13 @@ def _spine_center_from_mask(mask, depth, intrinsic):
     }
 
 
-def _install_spine_center(book_geom, visualization=None, on_geometry=None):
+def _install_spine_center(book_geom, visualization=None, on_geometry=None, spine_fallback=None,
+                          spine_fallback_center=None, spine_review=None, selection_review=None):
     """Scope spine segmentation/centering to this entrypoint's cart+ mode."""
     original_fill = book_geom.fill_book_meta
     cache = {"selected": None}
 
-    def segment(rgb, depth, intrinsic, c2w):
+    def segment(rgb, depth, intrinsic, c2w, *, box_detector=None, observation_robot=None):
         cache["selected"] = None
         notes, candidates = [], []
         try:
@@ -196,6 +201,16 @@ def _install_spine_center(book_geom, visualization=None, on_geometry=None):
                     continue
                 result["score"] = float(score)
                 candidates.append(result)
+            fallback_books=[]
+            if not candidates and spine_fallback is not None:
+                print('V3.2 SAM3 未得到可靠书脊，启用 GPT-6 直接区域选择。',flush=True)
+                checkpoint=getattr(observation_robot,'operator_checkpoint',lambda:None)
+                fallback_detections,fallback_books=spine_fallback(rgb,box_detector,checkpoint=checkpoint)
+                for score,mask,_ in fallback_detections:
+                    center_function = spine_fallback_center or _spine_center_from_mask
+                    result=center_function(mask,depth,intrinsic)
+                    result['score']=float(score);result['selection_source']='gpt6_polygon_fallback'
+                    candidates.append(result)
             if not candidates:
                 book_geom.BOOK_SELECTION_NOTE = "未找到可靠书脊：" + ("；".join(notes) or "SAM3 未检出 book spine")
                 if visualization is not None:
@@ -203,17 +218,37 @@ def _install_spine_center(book_geom, visualization=None, on_geometry=None):
                                        'No reliable spine detected. Check the console for details.')
                 return None
             selected = max(candidates, key=lambda item: item["score"])
+            if spine_review is not None:
+                selected,review_books=spine_review(selected,rgb,depth,intrinsic,c2w,box_detector=box_detector,
+                    checkpoint=getattr(observation_robot,'operator_checkpoint',lambda:None),observation_robot=observation_robot)
+                if review_books is not None:fallback_books=review_books
+            # The full-book mask is now control input, even with Rerun disabled.
+            books = fallback_books if selected.get('selection_source') == 'gpt6_polygon_fallback' else book_geom._sam3_raw_books(
+                processor, to_numpy, image_cls.fromarray(np.asarray(rgb)), prompt="book")
+            def selected_book_mask(detections):
+                if selected.get('selection_source')=='gpt6_polygon_fallback':
+                    from cart_book_grasp_v3_2_head_fallback import direct_book_mask
+                    return direct_book_mask(detections,selected['mask'].shape)
+                return match_book_mask(detections,selected['mask'])
+            book_mask = selected_book_mask(books)
+            if book_mask is None and fallback_books:
+                book_mask = selected_book_mask(fallback_books)
+            if book_mask is None and spine_review is not None:
+                # SAM3 spine success must not prevent same-book GPT full-mask recovery.
+                selected,retry_books=spine_review(selected,rgb,depth,intrinsic,c2w,
+                    box_detector=box_detector,checkpoint=getattr(observation_robot,'operator_checkpoint',lambda:None),
+                    observation_robot=observation_robot,force_reason='No full-book mask matched the selected spine')
+                if retry_books is not None:book_mask=selected_book_mask(retry_books)
+            if book_mask is None:
+                raise ValueError('No full-book mask matched to the selected spine; dynamic approach cancelled')
+            selected.update(whole_book_depth(book_mask, depth, intrinsic, c2w))
+            if selection_review is not None:
+                selected,book_mask=selection_review(selected,book_mask,rgb,depth,intrinsic,c2w,
+                    box_detector=box_detector,observation_robot=observation_robot)
             book_geom.BOOK_SELECTION_NOTE = (
                 f"按书脊中心对齐：score={selected['score']:.2f}，"
                 f"中心像素={np.round(selected['uv'], 1).tolist()}，"
                 f"中心深度={selected['depth_m']*1000:.0f} mm")
-            # The full-book mask is now control input, even with Rerun disabled.
-            books = book_geom._sam3_raw_books(
-                processor, to_numpy, image_cls.fromarray(np.asarray(rgb)), prompt="book")
-            book_mask = match_book_mask(books, selected['mask'])
-            if book_mask is None:
-                raise ValueError('No full-book mask matched to the selected spine; dynamic approach cancelled')
-            selected.update(whole_book_depth(book_mask, depth, intrinsic, c2w))
             cache["selected"] = selected
             print(f"整书有效深度中位数（相机 Z）{selected['whole_book_depth_median_mm']:.1f} mm；"
                   f"基座 X 中位数 {selected['book_surface_x_mm']:.1f} mm。", flush=True)
@@ -248,7 +283,8 @@ def _install_spine_center(book_geom, visualization=None, on_geometry=None):
         result["spine_depth_samples"] = selected["depth_samples"]
         result["spine_depth_p10_p90_mm"] = selected["depth_p10_p90_mm"]
         for key in ('spine_center_recovery', 'spine_original_center_uv', 'spine_full_fit_failure',
-                    'spine_stable_region_uv', 'spine_stable_region_fraction', 'spine_center_shift_px'):
+                    'spine_stable_region_uv', 'spine_stable_region_fraction', 'spine_center_shift_px',
+                    'selection_source', 'spine_depth_consistency_check', 'head_tilt_review', 'j7_skip_reason'):
             if key in selected:
                 result[key] = selected[key]
         if on_geometry is not None:
@@ -411,6 +447,21 @@ def _execute_cart_plus_lower(robot, task, task_index, object_id_to_type, step5, 
         print('cart+ 分段下降：读不到有效右臂位姿，取消下降。')
         return task.get('object'), False
     start, euler = current
+    advance = parameters.get('post_lift_forward_mm', 0.)
+    if advance > 0:
+        target = np.asarray(start, dtype=float) + [advance, 0., 0.]
+        waypoint = dict(task, target_position=target.tolist(), target_rotation=euler.tolist(),
+                        book_post_lift_forward=True,
+                        description=f'抬升及停顿完成后沿基座 +X 前伸 {advance:g} mm，保持 Y/Z 和姿态')
+        print(f'cart+ 下降前前伸 {advance:g} mm：目标 {np.round(target, 3).tolist()} mm。', flush=True)
+        result = execute(robot, waypoint, task_index, object_id_to_type, **kwargs)
+        if not result[1]:
+            print('cart+ 抬升后前伸未确认完成，跳过剩余前伸；读取当前位姿，直接竖直下降。', flush=True)
+        current = _right_tool_mm_euler(robot, step5)
+        if current is None:
+            print('cart+ 前伸尝试后缺少有效当前位姿；取消下降。', flush=True)
+            return task.get('object'), False
+        start, euler = current
     targets = lower_targets(start, parameters)
     print(f"cart+ 下降 {parameters['lower_mm']:g} mm 分成 {len(targets)} 段；各点固定起点的 X、Y 和姿态。", flush=True)
     for index, target in enumerate(targets, 1):
@@ -474,7 +525,7 @@ def _keep_cart_plus_grasp_only(tasks):
         if task.get("action") == "lift_object":
             for action, description in (
                 ("wait_after_lift", "抬升完成后保持夹紧并停顿"),
-                ("move_down_to_place", "保持夹紧，原地下降放回"),
+                ("move_down_to_place", "保持夹紧，按配置前伸后竖直下降放回"),
                 ("open_gripper", "下降完成后松开右夹爪"),
                 ("withdraw_after_release", "松手完成后沿 -X 分段抽回前伸起点"),
                 ("first_reset", "抽回完成后右臂回到 first_reset"),
@@ -486,7 +537,7 @@ def _keep_cart_plus_grasp_only(tasks):
                     next_task['book_post_release_reset'] = True
                 kept.append(next_task)
     print(
-        "cart+ 1.3：先沿 Y 对准书脊中心，仅深度回退引起的中心偏移补偿基座 Z，再按整书深度沿 X 前进、合爪、抬升、停顿、分段下降，"
+        "cart+ 1.3：先沿 Y 对准书脊中心，仅深度回退引起的中心偏移补偿基座 Z，再按整书深度沿 X 前进、合爪、抬升、停顿、按配置前伸、竖直分段下降，"
         "下降完成后松爪、分段抽回，最后右臂 first_reset；参数在各自动作前热加载。",
         flush=True,
     )

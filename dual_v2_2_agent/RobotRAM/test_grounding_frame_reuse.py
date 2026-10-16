@@ -80,6 +80,33 @@ class _RankedGrounding(_PreparedGrounding):
 
 
 class GroundingFrameReuseTests(unittest.TestCase):
+    def test_gpt_polygon_books_skip_sam2_preparation(self):
+        import scripts.step1_grounding as step1
+        vgm=_PreparedGrounding();camera=_Camera();robot=object()
+        def segment(rgb,depth,k,c2w,*,box_detector,observation_robot):
+            self.assertIs(rgb,camera.rgb)
+            self.assertIs(observation_robot,robot)
+            return np.ones((3,4),bool),np.array([0,0,4,3])
+        segment.gpt_spine_fallback=True
+        segment.gpt_polygon_fallback=True
+        with patch.object(step1.book_geom,'BOOK_GRASP_MODE','cart+'),patch.object(step1.book_geom,'segment_cart_book_with_sam3',segment),tempfile.TemporaryDirectory() as out:
+            grounding_main('book',out,out,[{'name':'book','category':'book'}],robot=robot,vlm=None,extern_camera=camera,vgm=vgm,logger=None,enable_debug=False)
+        self.assertEqual(vgm.prepare_calls,0)
+        self.assertEqual(vgm.prompt_calls,[])
+
+    def test_v32_head_fallback_receives_same_prepared_frame_and_robot(self):
+        import scripts.step1_grounding as step1
+        vgm=_PreparedGrounding();camera=_Camera();robot=object()
+        def segment(rgb,depth,k,c2w,*,box_detector,observation_robot):
+            self.assertIs(box_detector,vgm)
+            self.assertIs(rgb,vgm.prepared_image)
+            self.assertIs(observation_robot,robot)
+            return np.ones((3,4),bool),np.array([0,0,4,3])
+        segment.gpt_spine_fallback=True
+        with patch.object(step1.book_geom,'BOOK_GRASP_MODE','cart+'),patch.object(step1.book_geom,'segment_cart_book_with_sam3',segment),tempfile.TemporaryDirectory() as out:
+            grounding_main('book',out,out,[{'name':'book','category':'book'}],robot=robot,vlm=None,extern_camera=camera,vgm=vgm,logger=None,enable_debug=False)
+        self.assertEqual(vgm.prepare_calls,1)
+
     def test_v2_instances_skip_dino_and_sam2_preparation(self):
         import scripts.step1_grounding as step1
         vgm=_PreparedGrounding();camera=_Camera()

@@ -78,9 +78,8 @@ def capture_wrist(config,head_captured_at,checkpoint=lambda:None):
             return dict(rgb=rgb,captured_at=stamp,pair_gap_seconds=gap)
         finally:
             if process.poll() is None:
-                process.terminate()
-                try:process.wait(timeout=.5)
-                except subprocess.TimeoutExpired:process.kill();process.wait(timeout=.5)
+                from cart_book_grasp_v3_camera_stream import stop_capture_process
+                stop_capture_process(process)
 
 
 def wrist_candidates(book_geom,rgb,config,checkpoint=lambda:None):

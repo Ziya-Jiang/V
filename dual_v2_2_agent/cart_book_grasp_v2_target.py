@@ -5,7 +5,7 @@ The legacy DINO-box refinement remains available for offline comparisons.
 import numpy as np
 import cv2
 from cart_book_grasp_v2_candidates import load_config as load_candidate_config,overlap
-from cart_book_grasp_v2_agent import SelectionError,load_config,distinct_masks,prepare_selected_geometry
+from cart_book_grasp_v2_agent import SelectionError,load_geometry_config as load_config,distinct_masks,prepare_selected_geometry
 
 
 def prepare_instance_target(candidate,rgb,depth,k,c2w,book_geom,fit_spine,agent_config_path,checkpoint=lambda:None):

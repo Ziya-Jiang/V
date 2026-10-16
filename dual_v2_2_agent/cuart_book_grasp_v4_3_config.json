@@ -1,0 +1,23 @@
+{
+  "target_description": "\u9996\u6b21\u611f\u77e5\u65f6\u81ea\u52a8\u9009\u62e9\u753b\u9762\u4e2d\u4e66\u810a\u53ca\u771f\u5b9e\u4e0a\u6cbf\u53ef\u89c1\u3001\u8bc6\u522b\u6700\u53ef\u9760\u7684\u4e00\u672c\u4e66\uff0c\u4e0d\u9650\u5b9a\u989c\u8272\u3001\u4e66\u540d\u6216\u7279\u5b9a\u4f4d\u7f6e\uff1b\u82e5\u6709\u53c2\u8003\u56fe\uff0c\u5fc5\u987b\u4fdd\u6301\u53c2\u8003\u56fe\u4e2d\u5df2\u9009\u5b9a\u7684\u540c\u4e00\u672c\u4e66\uff0c\u4e0d\u91cd\u65b0\u6362\u4e66\u3002\u8bc6\u522b\u771f\u5b9e\u4e66\u810a\u3001\u771f\u5b9e\u4e0a\u6cbf\u53ca\u540c\u4e00\u672c\u4e66\u7684\u53ef\u89c1\u533a\u57df\uff0c\u6392\u9664\u5c01\u9762\u4f5c\u4e3a\u4e66\u810a\u3001\u4e66\u67b6\u3001\u80cc\u666f\u548c\u76f8\u90bb\u4e66\u3002",
+  "tcp_to_finger_tool_mm": [
+    0.0,
+    0.0,
+    -50.0
+  ],
+  "distance_config": "cuart_book_grasp_v4_3_distances.json",
+  "close_fingers_after_reset": true,
+  "position_tolerance_mm": 3.0,
+  "head_observation_hold_mm": 3.0,
+  "orientation_tolerance_deg": 1.0,
+  "held_axis_tolerance_mm": 3.0,
+  "max_y_travel_mm": 350.0,
+  "max_raise_mm": 400.0,
+  "max_forward_mm": 400.0,
+  "max_descent_mm": 150.0,
+  "max_path_mm": 1000.0,
+  "max_seconds": 600.0,
+  "geometry_spread_mm": 3.0,
+  "frame_max_age_seconds": 0.3,
+  "image_change_mean_limit": 15.0
+}

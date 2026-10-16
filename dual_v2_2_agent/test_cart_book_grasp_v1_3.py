@@ -12,6 +12,45 @@ from cart_book_grasp_v1_3_visualization import preview_targets
 
 
 class DepthApproachTests(unittest.TestCase):
+    def test_post_lift_forward_then_vertical_descent(self):
+        position=np.array([600.,-200.,190.]);commands=[]
+        robot=types.SimpleNamespace(get_current_state=lambda:{'right_arm':{'position':position/1000}})
+        step5=types.SimpleNamespace(current_tool_orientation_as_euler=lambda *_:[-90.,0.,90.])
+        params=dict(self.params,post_lift_forward_mm=40.,lower_mm=150.)
+        def execute(robot,task,*args,**kwargs):
+            commands.append(dict(task));position[:]=task['target_position'];return 'b',True
+        task=dict(object='b',arm='right',book_grasp_mode='cart+',action='move_down_to_place')
+        with patch.object(motion,'_load_cart_plus_parameters',return_value=params):
+            self.assertTrue(motion._execute_cart_plus_lower(robot,task,0,{},step5,execute)[1])
+        np.testing.assert_allclose([t['target_position'] for t in commands],
+                                  [[640,-200,190],[640,-200,140],[640,-200,90],[640,-200,40]])
+        self.assertTrue(commands[0]['book_post_lift_forward'])
+        self.assertTrue(all(t['target_rotation']==[-90.,0.,90.] for t in commands))
+        plan=preview_targets([300,-100,100],[-90,0,90],[600,-200,0],params,book_surface_x_mm=600)
+        i=plan['labels'].index('post-lift forward')
+        np.testing.assert_allclose(plan['points_mm'][i]-plan['points_mm'][i-1],[40,0,0])
+
+    def test_failed_post_lift_forward_descends_from_actual_pose(self):
+        position=np.array([600.,-200.,190.]);commands=[]
+        robot=types.SimpleNamespace(get_current_state=lambda:{'right_arm':{'position':position/1000}})
+        step5=types.SimpleNamespace(current_tool_orientation_as_euler=lambda *_:[-90.,0.,90.])
+        def execute(robot,task,*args,**kwargs):
+            commands.append(dict(task))
+            if len(commands)==1:
+                position[:]=[612.,-201.,189.]  # Forward motion only partially completed.
+                return 'b',False
+            position[:]=task['target_position'];return 'b',True
+        with patch.object(motion,'_load_cart_plus_parameters',return_value=dict(self.params,post_lift_forward_mm=40.,lower_mm=150.)):
+            self.assertTrue(motion._execute_cart_plus_lower(robot,dict(object='b',action='move_down_to_place'),0,{},step5,execute)[1])
+        np.testing.assert_allclose([t['target_position'] for t in commands],
+                                  [[640,-200,190],[612,-201,139],[612,-201,89],[612,-201,39]])
+
+    def test_failed_forward_without_pose_still_stops(self):
+        execute=Mock(return_value=('b',False))
+        with patch.object(motion,'_load_cart_plus_parameters',return_value=dict(self.params,post_lift_forward_mm=40.)),patch.object(motion,'_right_tool_mm_euler',side_effect=[(np.array([600.,-200.,190.]),np.array([-90.,0.,90.])),None]):
+            self.assertFalse(motion._execute_cart_plus_lower(Mock(),dict(object='b'),0,{},Mock(),execute)[1])
+        execute.assert_called_once()
+
     def setUp(self):
         self.mask = np.zeros((40, 40), bool);self.mask[5:35, 5:35] = True
         self.depth = np.full((40, 40), 800.)

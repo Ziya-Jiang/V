@@ -1,0 +1,9 @@
+{
+  "hover_above_top_mm": 110.0,
+  "forward_insertion_mm": 100.0,
+  "final_z_offset_from_top_mm": null,
+  "lower_offset_mm": -50.0,
+  "coarse_step_mm": 50.0,
+  "descent_step_mm": 10.0,
+  "withdraw_mm": 70.0
+}

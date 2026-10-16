@@ -1,0 +1,14 @@
+{
+  "yolo26l.pt": {
+    "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26l.pt",
+    "sha256": "9fe3c544f2b19bebad7ea41e76d7ad3d88b7c2f10d11d24430c5311f6b32db26",
+    "bytes": 53211173,
+    "family": "standard YOLO26 detection"
+  },
+  "yolo26x.pt": {
+    "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26x.pt",
+    "sha256": "9fdd44a31c504547ffb81d2c6d9e6dac3493c8eaa8b0398d3f43bae6c7003e92",
+    "bytes": 118667365,
+    "family": "standard YOLO26 detection"
+  }
+}

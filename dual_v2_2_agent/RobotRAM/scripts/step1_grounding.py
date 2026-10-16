@@ -70,7 +70,8 @@ def grounding_main(prompt, output_dir, debug_dir, related_objects, robot, vlm, e
     book_box_first = (book_geom.BOOK_GRASP_MODE == 'cart+'
                       and getattr(book_geom.segment_cart_book_with_sam3, 'box_first', False))
     instance_books_only = (book_geom.BOOK_GRASP_MODE == 'cart+'
-        and getattr(book_geom.segment_cart_book_with_sam3, 'instance_first', False)
+        and (getattr(book_geom.segment_cart_book_with_sam3, 'instance_first', False)
+             or getattr(book_geom.segment_cart_book_with_sam3, 'gpt_polygon_fallback', False))
         and all(str(obj.get('category','')).lower()=='book' for i,obj in enumerate(related_objects)
                 if selected_object_ids is None or i in selected_object_ids))
     prepare_image = getattr(vgm, "prepare_boxes_image" if book_box_first else "prepare_image", None)
@@ -116,6 +117,8 @@ def grounding_main(prompt, output_dir, debug_dir, related_objects, robot, vlm, e
                 getattr(extern_camera, "K", None),
                 getattr(extern_camera, "c2w", None),
                 **({'box_detector': vgm} if book_box_first else {}),
+                **({'box_detector':vgm,'observation_robot':robot}
+                   if getattr(book_geom.segment_cart_book_with_sam3,'gpt_spine_fallback',False) else {}),
                 **({'head_captured_at':head_captured_at,'observation_robot':robot}
                    if getattr(book_geom.segment_cart_book_with_sam3,'instance_first',False) else {}),
             )

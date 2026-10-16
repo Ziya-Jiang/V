@@ -89,6 +89,10 @@ def quaternion_matrix(wxyz):
                      [2*(x*z-y*w), 2*(y*z+x*w), 1-2*(x*x+y*y)]])
 
 
+class J7GeometryUnavailable(ValueError):
+    """A measured spine cannot be aligned by the optional J7-only rotation."""
+
+
 def j7_proposal(geometry, state, config, lower_deg, upper_deg):
     if geometry.get('spine_3d_status') != 'valid':
         raise ValueError('Reliable 3D spine tilt required for J7 alignment')
@@ -100,13 +104,14 @@ def j7_proposal(geometry, state, config, lower_deg, upper_deg):
     roll_axis, reference = rotation[:, 2], rotation[:, 1]
     projected = axis-roll_axis*np.dot(axis, roll_axis)
     norm = np.linalg.norm(projected)
-    if not np.isfinite(norm) or norm < .5:
-        raise ValueError('Spine is too parallel to the finger approach axis for J7-only alignment')
+    if not np.isfinite(norm):raise ValueError('Non-finite spine projection for J7 alignment')
+    if norm < .5:
+        raise J7GeometryUnavailable('Spine is too parallel to the finger approach axis for J7-only alignment')
     projected /= norm
     delta = np.degrees(np.arctan2(np.dot(roll_axis, np.cross(reference, projected)), np.dot(reference, projected)))
     delta = float((delta+90) % 180-90)  # Spine is an unoriented line.
     if abs(delta) > config['max_delta_deg']:
-        raise ValueError(f'Required J7 delta {delta:.1f} deg exceeds configured maximum')
+        raise J7GeometryUnavailable(f'Required J7 delta {delta:.1f} deg exceeds configured maximum')
     target = np.rad2deg(joints[1]).copy()
     target[6] += delta
     if not lower_deg+config['limit_margin_deg'] <= target[6] <= upper_deg-config['limit_margin_deg']:
@@ -126,7 +131,14 @@ def align_j7(robot, geometry, config, lower_deg, upper_deg, rotation_record=None
             rotation_record['complete'] = True
         return True
     state = robot.get_current_state()
-    proposal = j7_proposal(geometry, state, config, lower_deg, upper_deg)
+    try:
+        proposal = j7_proposal(geometry, state, config, lower_deg, upper_deg)
+    except J7GeometryUnavailable as error:
+        if not config.get('skip_reviewed_geometry_unavailable',False):raise
+        if rotation_record is not None:
+            rotation_record.update(complete=True,delta_deg=0.,skip_reason=str(error))
+        print(f'GPT 复核后 J7 单轴预对齐仍不可用：{error}；跳过预旋转，保持当前姿态。',flush=True)
+        return True
     measured = np.rad2deg(np.asarray(state['joint_state']).reshape(2, 7)[1])
     saved = np.asarray(robot.right_safe_joint_deg, dtype=float).copy()
     if np.max(np.abs(measured[:6]-saved[:6])) > 3.:

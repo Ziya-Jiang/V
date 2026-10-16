@@ -557,48 +557,9 @@ class OrbbecRgbdCamera(OrbbecCamera):
 
 
 def start_calibrated_orbbec(calibration, warmup_frames=5):
-    camera = None
-    last_error = None
-    for attempt in range(3):
-        camera = OrbbecRgbdCamera(
-            is_warmup=False,
-            preset_name=ORBBEC_PRESET,
-        )
-        apply_orbbec_calibration(camera, calibration)
-        try:
-            camera._initialize_camera()
-            break
-        except Exception as error:
-            last_error = error
-            camera.close()
-            camera = None
-            if attempt < 2:
-                logging.warning(
-                    "Orbbec device open failed (%d/3); retrying...",
-                    attempt + 1,
-                )
-                time.sleep(1.0)
-    if camera is None:
-        raise RuntimeError(
-            "Unable to open Orbbec RGB-D after three attempts."
-        ) from last_error
-    valid_frames = 0
-    for _ in range(max(20, warmup_frames)):
-        rgb, depth_mm = camera.capture_image()
-        if (
-            rgb is not None
-            and depth_mm is not None
-            and np.any(np.asarray(depth_mm) > 0)
-        ):
-            valid_frames += 1
-            if valid_frames >= warmup_frames:
-                break
-    if valid_frames < warmup_frames:
-        camera.close()
-        raise RuntimeError(
-            "Orbbec RGB-D warm-up did not produce enough valid frames."
-        )
-    return camera
+    """Subscribe to the single local head RGB-D owner; never open USB here."""
+    from head_rgbd.client import CalibratedCamera
+    return CalibratedCamera(calibration, warmup_frames=warmup_frames)
 
 
 class ColoredFormatter(logging.Formatter):
@@ -1192,18 +1153,9 @@ def main():
             'category': item['category']
         }
         
-    # RAM consumes the RGB/depth captured by grounding. Reuse the same remote
-    # adapter so it never opens a second USB pipeline on vlmdemo.
-    if args.remote_rgbd:
-        extern_camera_class = extern_camera
-    else:
-        # extern_camera_class = ZEDCamera(is_warmup=False)
-        extern_camera_class = OrbbecRgbdCamera(
-            is_warmup=False,
-            preset_name=ORBBEC_PRESET,
-        )
-        atexit.unregister(extern_camera_class.close)
-        apply_orbbec_calibration(extern_camera_class, orbbec_calibration)
+    # RAM consumes the same RGB/depth captured by grounding. Geometry changes
+    # remain local to this subscriber; neither path opens another USB pipeline.
+    extern_camera_class = extern_camera
 
     head_camera_correction_report = (
         Path(output_dir) / "head_camera_correction.json"

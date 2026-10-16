@@ -1,0 +1,9 @@
+{
+  "name": "relaxed_single_frame_book_match",
+  "scope": "offline_candidate_identity_only",
+  "min_inliers": 6,
+  "min_inlier_ratio": 0.65,
+  "max_rms_px": 1.5,
+  "min_source_hull_mask_fraction": 0.03,
+  "min_inlier_margin": 3
+}

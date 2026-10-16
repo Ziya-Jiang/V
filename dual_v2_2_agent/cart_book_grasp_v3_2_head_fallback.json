@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "model": "gpt-6-astra",
+  "timeout_seconds": 60.0,
+  "min_confidence": 0.7,
+  "tilt_review_threshold_deg": 45.0,
+  "api_key_file": "/mnt/ssd/user/V/cart_book_grasp_openai_key.txt"
+}

@@ -18,9 +18,10 @@ from cart_book_grasp_v1_3_pause import PauseRequested, operator_robot, open_and_
 
 
 class AutoCartLoop:
-    def __init__(self, delay_seconds=5., stop_event=None):
+    def __init__(self, delay_seconds=5., stop_event=None, *, wait_for_enter_after_success=False):
         self.stop = stop_event if stop_event is not None else threading.Event()
         self.delay_seconds = delay_seconds
+        self.wait_for_enter_after_success = wait_for_enter_after_success
         self.pause = threading.Event()
         self.robot = None
         self.armed = False
@@ -78,11 +79,15 @@ class AutoCartLoop:
         self.last_success = False
         print(f'本轮发生异常：{type(error).__name__}: {error}', flush=True)
 
-    def wait_for_retry(self):
+    def wait_for_retry(self, *, completed=False):
         with self._retry_condition:
             self._retry_requested = False
-            print('本轮感知或执行未完成，已暂停；保持夹爪当前指令，不自动松手或复位。\n'
-                  '请检查现场，按回车从新一轮开始（会先执行 first_reset，再重新感知）；按 s 退出。', flush=True)
+            if completed:
+                print('本轮动作已完成；保持闭指和当前位置，不自动松手或复位。\n'
+                      '按回车开始下一轮（先 first_reset，再重新感知）；p 复位，s 退出。', flush=True)
+            else:
+                print('本轮感知或执行未完成，已暂停；保持夹爪当前指令，不自动松手或复位。\n'
+                      '请检查现场，按回车从新一轮开始（会先执行 first_reset，再重新感知）；按 s 退出。', flush=True)
             self.waiting_for_retry.set()
             try:
                 while not self.stop.is_set() and not self._retry_requested:
@@ -102,6 +107,9 @@ class AutoCartLoop:
         if self.cycles or self.last_success is False:
             if self.last_success is not True:
                 if not self.wait_for_retry():
+                    return None
+            elif self.wait_for_enter_after_success:
+                if not self.wait_for_retry(completed=True):
                     return None
             else:
                 print(f'第 {self.cycles} 轮完成；等待 {self.delay_seconds:g} 秒。p 复位暂停，s 停止。', flush=True)
@@ -190,8 +198,8 @@ def automatic_cart_mode(agent, loop):
         agent.execute_main = execute
 
 
-def main(*, book_entry=None, config_path=None, wrist_config_path=None):
-    loop = AutoCartLoop(delay_seconds=5.)
+def main(*, book_entry=None, config_path=None, wrist_config_path=None, wait_for_enter_after_success=False):
+    loop = AutoCartLoop(delay_seconds=5., wait_for_enter_after_success=wait_for_enter_after_success)
     # Set up a usable stop key before any robot or camera initialization.
     with stop_key_listener(loop):
         import dual_v2_2_agent_pcl as agent
@@ -200,7 +208,8 @@ def main(*, book_entry=None, config_path=None, wrist_config_path=None):
 
         if loop.stop.is_set():
             return
-        print('自动 cart+：成功后等 5 秒再运行；失败或 p 复位后等待回车重试；p 中断当前动作，终端按 s（无需回车）停止后续循环。', flush=True)
+        success_policy='成功后保持等回车' if wait_for_enter_after_success else '成功后等 5 秒再运行'
+        print(f'自动 cart+：{success_policy}；失败或 p 复位后等待回车重试；p 中断当前动作，终端按 s（无需回车）停止后续循环。', flush=True)
         try:
             with operator_robot(agent, loop), automatic_cart_mode(agent, loop):
                 run_book(task_types=['cart+'],

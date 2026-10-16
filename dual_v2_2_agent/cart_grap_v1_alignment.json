@@ -1,0 +1,15 @@
+{
+  "gain": 0.35,
+  "update_hz": 10.0,
+  "max_y_step_mm": 4.0,
+  "max_roll_step_deg": 1.0,
+  "max_servo_y_mm": 50.0,
+  "max_roll_deg": 15.0,
+  "max_coarse_y_mm": null,
+  "max_path_mm": 200.0,
+  "max_seconds": 120.0,
+  "tolerance_px": 3.0,
+  "tolerance_angle_deg": 1.5,
+  "fixed_xz_mm": 3.0,
+  "loss_timeout_seconds": 2.0
+}

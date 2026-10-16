@@ -1,0 +1,29 @@
+{
+  "method": "Exact inverse of recorded patches, 2026-10-14T09:45 through 10:01 UTC; no hardware",
+  "files": {
+    "dual_v2_2_control/cuarm_upper_planner/scripts/curobo_planner_v3_1.py": {
+      "before_sha256": "f6d1100231c8c10c37daa587fd72edd0abf7c4b0b424198a500e1058365d2033",
+      "restored_sha256": "d799e01b668420457336ff47309c9bad6bb5fdafd61a89a670f082a53b15bba3"
+    },
+    "dual_v2_2_control/cuarm_upper_planner/scripts/curobo_ik_solver.py": {
+      "before_sha256": "8bd0c172a124a859146fc0e727ffe982d26ce97d4eee7c884f8df5076b39c47a",
+      "restored_sha256": "0c27a22724eae65cd3f71e2735fbca832fa4f3d18e072df5754a295a1cedf9a2"
+    },
+    "dual_v2_2_control/cuarm_upper_planner/scripts/v3_1_direct_servo.py": {
+      "before_sha256": "3f3d3b21a576f1775cfd2c7915c66b53abe236ef5d6b86b552c3fbc45e4b0ac4",
+      "restored_sha256": "10f58b86dd2d1ba524c54fcccbf98a589ab10f8ca94d1c0ef9e005c8245b0290"
+    },
+    "dual_v2_2_control/cuarm_upper_planner/scripts/v3_1_readiness.py": {
+      "before_sha256": "40bcbd9d99edba185f3593f98ecb3266fac53c7e3f05c868767b0d2289fb13ea",
+      "restored_sha256": "940cf8f083fc3a4ea09d44c864e5b175aebb3d0e2818ed6816e6665fd8a09e71"
+    },
+    "dual_v2_2_control/cuarm_upper_planner/scripts/v3_1_panel_transport.py": {
+      "before_sha256": "ff961e472d4d262871b00782f45db14803ff6dc7d24a6f00b6e7b55a8a70fa46",
+      "restored_sha256": "8b8d2e89f4b7cec1dc73644dffb6d113629483bbbd6ac4a6bb601f0691beb060"
+    },
+    "dual_v2_2_agent/test_v3_1_stream.py": {
+      "before_sha256": "2f8f15623b4b49deea78fbb70ae9391aaeae43c46b337b70a87ce0688fbe95f9",
+      "restored_sha256": "c3b38a6308d8a47c6126aab20cd1e335dff5084c8ab87477654ac87a14541cc7"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "dictionary": "DICT_4X4_50",
+  "markers": [
+    {
+      "dictionary": "DICT_4X4_50",
+      "marker_id": 1,
+      "black_square_mm": 20.0,
+      "white_margin_mm": 4.0,
+      "print_page_mm": 28.0,
+      "print_instruction": "Print SVG at 100%, measure BLACK outer square. Keep white margin. Mount flat and rigid; do not wrap around a round handle.",
+      "role": "left_handle",
+      "label_zh": "左车把",
+      "svg": "output/cart_grap_v1_three_markers_20mm_swapped/1_left_handle/marker.svg"
+    },
+    {
+      "dictionary": "DICT_4X4_50",
+      "marker_id": 0,
+      "black_square_mm": 20.0,
+      "white_margin_mm": 4.0,
+      "print_page_mm": 28.0,
+      "print_instruction": "Print SVG at 100%, measure BLACK outer square. Keep white margin. Mount flat and rigid; do not wrap around a round handle.",
+      "role": "right_handle",
+      "label_zh": "右车把",
+      "svg": "output/cart_grap_v1_three_markers_20mm_swapped/0_right_handle/marker.svg"
+    },
+    {
+      "dictionary": "DICT_4X4_50",
+      "marker_id": 2,
+      "black_square_mm": 20.0,
+      "white_margin_mm": 4.0,
+      "print_page_mm": 28.0,
+      "print_instruction": "Print SVG at 100%, measure BLACK outer square. Keep white margin. Mount flat and rigid; do not wrap around a round handle.",
+      "role": "chassis_bottom",
+      "label_zh": "底盘最下方",
+      "svg": "output/cart_grap_v1_three_markers_20mm_swapped/2_chassis_bottom/marker.svg"
+    }
+  ],
+  "supersedes": "/mnt/ssd/user/V/dual_v2_2_agent/output/cart_grap_v1_three_markers_20mm/marker_roles.json"
+}

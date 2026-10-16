@@ -1,0 +1,18 @@
+{
+  "model": "gpt-6-astra",
+  "api_key_file": "/mnt/ssd/user/V/cart_book_grasp_openai_key.txt",
+  "gpt_timeout_seconds": 60.0,
+  "gpt_depth_review_enabled": true,
+  "min_confidence": 0.8,
+  "fingertip_offset_mm": 50.0,
+  "grasp_insertion_mm": 100.0,
+  "alignment_raise_mm": 30.0,
+  "coarse_forward_fraction": 0.4,
+  "coarse_forward_max_mm": 100.0,
+  "hold_seconds": 3.0,
+  "withdraw_mm": 100.0,
+  "gripper_timeout_seconds": 5.0,
+  "open_threshold": 0.05,
+  "alignment_config": "cart_grap_v1_alignment.json",
+  "approach_config": "cart_grasp_approach.json"
+}

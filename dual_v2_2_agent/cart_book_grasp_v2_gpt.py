@@ -1,4 +1,4 @@
-"""OpenAI Responses image selection. API key is read only from the environment.
+"""OpenAI Responses image selection. Credentials come from the environment or an explicit local file.
 
 Docs: https://developers.openai.com/api/docs/guides/images-vision
       https://developers.openai.com/api/docs/guides/structured-outputs
@@ -97,15 +97,33 @@ def build_payload(instruction, rgb, annotated, candidates, scene_id, config):
 
 
 class GPTBookClient:
+    def __init__(self, *, api_key_file=None):
+        self.api_key_file=api_key_file
+
+    def _api_key(self):
+        key=os.environ.get('OPENAI_API_KEY','').strip()
+        if not key and self.api_key_file is not None:
+            from pathlib import Path
+            try:
+                path=Path(self.api_key_file)
+                if path.stat().st_size>8192:raise ValueError('oversized')
+                key=path.read_text(encoding='utf-8-sig').strip()
+            except (OSError,UnicodeError,ValueError):
+                raise GPTSelectionError('无法读取配置的 OpenAI 密钥文件。') from None
+        if not key:
+            raise GPTSelectionError('未配置 OpenAI API Key：请设置 OPENAI_API_KEY 或提供密钥文件。')
+        if any(c.isspace() for c in key) or not key.isascii():
+            raise GPTSelectionError('OpenAI 密钥格式无效：文件应只包含一行 API Key。')
+        return key
+
     def check_ready(self):
-        if not os.environ.get('OPENAI_API_KEY','').strip():
-            raise GPTSelectionError('未设置 OPENAI_API_KEY。请在启动程序的终端设置 Key 后重试；不要写入代码或配置。')
+        self._api_key()
 
     def _request(self,payload,timeout):
         self.check_ready()
         request=urllib.request.Request('https://api.openai.com/v1/responses',
             data=json.dumps(payload,ensure_ascii=False,allow_nan=False).encode('utf-8'),
-            headers={'Authorization':'Bearer '+os.environ['OPENAI_API_KEY'],'Content-Type':'application/json'},method='POST')
+            headers={'Authorization':'Bearer '+self._api_key(),'Content-Type':'application/json'},method='POST')
         # Do not follow redirects with a credential-bearing request.
         class NoRedirect(urllib.request.HTTPRedirectHandler):
             def redirect_request(self,*args,**kwargs): return None

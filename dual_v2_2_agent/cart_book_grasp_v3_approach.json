@@ -1,0 +1,81 @@
+{
+  "mode": "stage2_xyz",
+  "target_selection": "wrist_center",
+  "reference": {
+    "image": "RobotRAM/output/v3_reference_current_20261009.png",
+    "image_sha256": "3f620f5f12f6b4c3d329261938b9f6aa579ca7ef6c198fbfa15fa215f595ed32",
+    "metadata": {
+      "device": "/dev/v4l/by-id/usb-LRCP_G-720P_LRCP_G-720P_SN0001-video-index0",
+      "width": 1280,
+      "height": 720,
+      "coordinate_system": "undistorted_K",
+      "calibration_sha256": "446c4ba465aacd8bdf0f83fce816dba7354ba3c00f282eeff09f7e6488d47831"
+    },
+    "role": "final_grasp_before_close",
+    "roi": [
+      300,
+      20,
+      740,
+      690
+    ],
+    "points": [
+      [
+        480,
+        290
+      ],
+      [
+        590,
+        290
+      ],
+      [
+        630,
+        440
+      ],
+      [
+        510,
+        440
+      ]
+    ],
+    "mask_polygon": [
+      [
+        360,
+        40
+      ],
+      [
+        690,
+        40
+      ],
+      [
+        725,
+        650
+      ],
+      [
+        500,
+        650
+      ]
+    ]
+  },
+  "probe_mm": 2.0,
+  "max_step_mm": 2.0,
+  "max_forward_mm": 150.0,
+  "max_backtrack_mm": 5.0,
+  "max_lateral_mm": 20.0,
+  "max_path_mm": 250.0,
+  "tolerance_px": 3.0,
+  "stable_frames": 3,
+  "gain": 0.4,
+  "damping_px_per_mm": 0.15,
+  "max_condition": 40.0,
+  "min_response_px_per_mm": 0.05,
+  "max_fit_error_px": 2.0,
+  "max_model_error_px": 3.0,
+  "max_iterations": 120,
+  "max_seconds": 600.0,
+  "max_frame_age_seconds": 2.0,
+  "coarse_pose_error_mm": 8.0,
+  "coarse_settle_seconds": 0.3,
+  "coarse_feedback_timeout_seconds": 2.0,
+  "max_pose_error_mm": 1.0,
+  "max_orientation_error_deg": 1.0,
+  "settle_seconds": 0.15
+}

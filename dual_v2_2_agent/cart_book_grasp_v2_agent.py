@@ -25,6 +25,19 @@ class SelectionError(ValueError):
     """No unique, valid target; the current grasp must not execute."""
 
 
+def load_geometry_config(path):
+    """Geometry thresholds shared by GPT V2 and local V2.1 selectors."""
+    value=json.loads(Path(path).read_text())
+    fields={'min_detection_score','duplicate_iou','min_book_spine_coverage','max_other_spine_coverage'}
+    if not isinstance(value,dict) or not fields<=value.keys():
+        raise ValueError('Missing book geometry configuration')
+    for name in fields:
+        number=value[name]
+        if type(number) not in (int,float) or not np.isfinite(number) or not 0<number<=1:
+            raise ValueError(f'Invalid geometry threshold: {name}')
+    return {key:value[key] for key in fields}
+
+
 def load_config(path):
     value = json.loads(Path(path).read_text())
     expected = {'backend', 'min_detection_score', 'duplicate_iou', 'min_book_spine_coverage',
@@ -192,7 +205,7 @@ def prepare_selected_geometry(candidate,spines,depth,intrinsic,c2w,fit_spine,con
         candidate.update(mask=mask,book_mask=book_mask,geometry=geometry,geometry_status='ready',error='')
     except (ValueError,np.linalg.LinAlgError) as error:
         candidate.update(error=str(error),geometry_status='failed')
-        raise SelectionError(f"GPT 选中 {candidate['id']}，但该书不能可靠抓取：{error}；不更换目标。") from error
+        raise SelectionError(f"选中 {candidate['id']}，但该书不能可靠抓取：{error}；不更换目标。") from error
     return candidate
 
 

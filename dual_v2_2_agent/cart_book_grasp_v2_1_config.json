@@ -1,0 +1,74 @@
+{
+  "backend": "local",
+  "expected_books": null,
+  "order_direction": "auto",
+  "min_detection_score": 0.1,
+  "duplicate_iou": 0.65,
+  "min_book_spine_coverage": 0.7,
+  "max_other_spine_coverage": 0.25,
+  "book_min_score": 0.25,
+  "bookend_filter": {
+    "enabled": true,
+    "prompts": ["bookend"],
+    "min_score": 0.25,
+    "crop_padding_fraction": 0.25,
+    "min_book_coverage": 0.75,
+    "min_bookend_coverage": 0.75,
+    "max_other_book_coverage": 0.2
+  },
+  "min_area_fraction": 0.003,
+  "max_overlap_fraction": 0.35,
+  "min_mask_fill": 0.35,
+  "head_roi": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "wrist_roi": [
+    0,
+    0,
+    1,
+    1
+  ],
+  "head_base_bounds_mm": [
+    [
+      400,
+      1200
+    ],
+    [
+      -350,
+      350
+    ],
+    [
+      -350,
+      250
+    ]
+  ],
+  "min_wrist_gap_fraction": 0.025,
+  "max_row_residual_fraction": 0.08,
+  "min_head_y_gap_mm": 15,
+  "max_head_x_span_mm": 180,
+  "pose_tolerance_deg": 1,
+  "max_observation_age_seconds": 30,
+  "color_min_fraction": 0.4,
+  "color_margin": 0.15,
+  "color_match_min": 0.7,
+  "pair_margin": 0.03,
+  "assignment_margin": 0.06,
+  "texture_min_inliers": 8,
+  "texture_min_inlier_ratio": 0.5,
+  "texture_min_coverage": 0.03,
+  "reference_path": null,
+  "semantic_model_path": "/home/vlmdemo/.cache/huggingface/hub/models--google--siglip-base-patch16-224",
+  "semantic_device": "auto",
+  "semantic_batch_size": 8,
+  "semantic_book_margin": 0.5,
+  "semantic_identity_min": 0.8,
+  "semantic_query_margin": 1.0,
+  "semantic_query_min_logit": -12.0,
+  "max_candidates": 20,
+  "min_color_fused_fraction": 0.2,
+  "semantic_category_floor": -2.0,
+  "semantic_category_transfer_min": 0.83
+}

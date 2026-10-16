@@ -185,7 +185,7 @@ class InstructionCartLoop(AutoCartLoop):
             self.selector.set_instruction(instruction)
             self.previous_instruction=instruction
             self.cycles+=1;self.last_success=None
-            print(f'第 {self.cycles} 轮 GPT 选书：{instruction}',flush=True)
+            print(f'第 {self.cycles} 轮 {getattr(self.selector, "label", "GPT")} 选书：{instruction}',flush=True)
             return 'cart+'
         return None
 
@@ -248,12 +248,12 @@ def automatic_cart_mode(agent, loop):
         agent.execute_main = execute
 
 
-def main(*, book_entry=None, config_path=None, wrist_config_path=None):
+def main(*, book_entry=None, config_path=None, wrist_config_path=None, selector=None, loop_factory=None):
     from cart_book_grasp_v2_agent import BookSelectionAgent
-    selector=BookSelectionAgent()
+    selector=BookSelectionAgent() if selector is None else selector
     selector.check_ready()  # Missing key/config fails before robot initialization.
-    loop=InstructionCartLoop(selector)
-    selector.checkpoint=loop.check_pause
+    loop=(InstructionCartLoop if loop_factory is None else loop_factory)(selector)
+    selector.checkpoint=getattr(loop, 'check_selection_checkpoint', loop.check_pause)
     # Set up a usable stop key before any robot or camera initialization.
     with stop_key_listener(loop):
         import dual_v2_2_agent_pcl as agent
@@ -262,7 +262,8 @@ def main(*, book_entry=None, config_path=None, wrist_config_path=None):
 
         if loop.stop.is_set():
             return
-        print('GPT 多书抓取：每条文字指令选择一本，完成后等待下一条；不自动连续抓取。',flush=True)
+        print(getattr(loop,'startup_message',
+            f'{getattr(selector, "label", "GPT")} 多书抓取：每条文字指令选择一本，完成后等待下一条；不自动连续抓取。'),flush=True)
         import cart_book_grasp_v2_motion as motion
         saved_selector=motion._SELECTION_AGENT
         motion._SELECTION_AGENT=selector

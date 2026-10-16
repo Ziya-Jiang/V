@@ -1,4 +1,4 @@
-"""Offline servo, coordinate convention, target lock, and V2 handoff tests."""
+"""Offline servo, coordinate convention, target lock, and V1_3 handoff tests."""
 import copy
 import json
 from pathlib import Path
@@ -14,13 +14,14 @@ import numpy as np
 import cart_book_grasp_v3_servo as servo
 import cart_book_grasp_v3_motion as runtime
 from cart_book_grasp_v3_tracking import LockedBookTracker
-from cart_book_grasp_v2_pause import PauseRequested
+from cart_book_grasp_v1_3_pause import PauseRequested
 
 
 def config():
     c = servo.load_config(require_reference=False)
     c['reference'] = dict(uv=[300., 240.], surface_gap_mm=200., tool_euler_deg=[0., 0., 0.],
-                          device='/dev/test', width=640, height=480)
+                          device='/dev/test', width=640, height=480,
+                          coordinate_system='undistorted_K', calibration_sha256='0'*64)
     return c
 
 
@@ -136,23 +137,23 @@ class ServoTests(unittest.TestCase):
 
     def test_reference_missing_rejects_before_robot_import(self):
         import cart_book_grasp_v3 as entry
-        with patch('cart_book_grasp_v2.main') as main:
+        with patch('cart_book_grasp_v1_3.main') as main:
             with self.assertRaisesRegex(servo.ServoError, '尚未设置'):
                 entry.main(['--check-config'])
             main.assert_not_called()
 
     def test_reference_registration_and_validation(self):
         import cart_book_grasp_v3 as entry
+        metadata = {k: v for k, v in config()['reference'].items()
+                    if k not in ('uv', 'surface_gap_mm', 'tool_euler_deg')}
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory)/'servo.json'
             path.write_text(json.dumps(servo.load_config(require_reference=False)))
-            entry.main(['--servo-config', str(path), '--set-reference', '300', '240',
-                        '--surface-gap-mm', '200', '--tool-euler-deg', '0', '0', '0'])
+            entry.save_reference(path, [300, 240], 200, [0, 0, 0], metadata)
             self.assertEqual(servo.load_config(path)['reference']['uv'], [300, 240])
             before = path.read_bytes()
             with self.assertRaises(servo.ServoError):
-                entry.main(['--servo-config', str(path), '--set-reference', '-1', '240',
-                            '--surface-gap-mm', '200', '--tool-euler-deg', '0', '0', '0'])
+                entry.save_reference(path, [-1, 240], 200, [0, 0, 0], metadata)
             self.assertEqual(path.read_bytes(), before)
 
 
@@ -163,9 +164,9 @@ class IntegrationTests(unittest.TestCase):
             joint_state=np.zeros(14), right_arm=dict(position=np.r_[400., p.q]/1000)),
             operator_checkpoint=lambda: None, operator_sleep=lambda _: None)
         step5 = SimpleNamespace(current_tool_orientation_as_euler=lambda *a: [0., 0., 0.])
-        tracker = SimpleNamespace(observe=lambda rgb: dict(uv=np.array([300., 240.])+p.error+p.j@p.q,
+        tracker = SimpleNamespace(center=np.array([300., 240.]), observe=lambda rgb: dict(uv=np.array([300., 240.])+p.error+p.j@p.q,
             polygon=np.float32([[200, 100], [400, 100], [400, 380], [200, 380]])))
-        selector = SimpleNamespace(last_decision={'selected_id': 'book_2'})
+        head_frame = dict(selected=dict(uv=[300., 240.]))
         camera = dict(device='/dev/test', width=640, height=480, enabled=True, max_joint_drift_deg=.5)
         calls = []
         def execute(robot, task, index, objects, **kwargs):
@@ -177,12 +178,12 @@ class IntegrationTests(unittest.TestCase):
             return 'object_0', True
         def capture(*args):
             return dict(rgb=np.zeros((480, 640, 3), np.uint8), captured_at=time.monotonic())
+        camera_object = SimpleNamespace(config=camera, check_reference=lambda r: None, capture=capture)
         with tempfile.TemporaryDirectory() as directory, \
-                patch('cart_book_grasp_v2_dual_view.load_config', return_value=camera), \
-                patch('cart_book_grasp_v2_dual_view.capture_wrist', side_effect=capture), \
-                patch.object(runtime, 'selected_tracker', return_value=tracker):
+                patch.object(runtime, 'acquire_selected_spine', return_value=tracker):
             result = runtime.execute_servo(robot, dict(object='object_0', arm='right', book_grasp_mode='cart+',
-                book_surface_x_mm=600), 0, {}, step5, execute, selector, c, output_root=directory)
+                book_surface_x_mm=600), 0, {}, step5, execute, head_frame, c,
+                output_root=directory, camera=camera_object)
             self.assertLessEqual(result['error_px'], 3)
             self.assertGreater(len(calls), 8)
             self.assertTrue(list(Path(directory).glob('*/events.jsonl')))
@@ -197,23 +198,25 @@ class IntegrationTests(unittest.TestCase):
         for args in cases:
             with self.assertRaises(servo.ServoError): runtime.check_reference(c, *args)
 
-    def test_cross_view_uses_matched_id_not_position_or_id_equality(self):
-        image = np.zeros((10, 10, 3), np.uint8)
-        mask1, mask2 = np.zeros((10, 10), bool), np.ones((10, 10), bool)
-        selector = SimpleNamespace(last_decision=dict(status='selected', selected_id='book_1',
-            cross_view_matches=[dict(head_id='book_1', wrist_id='wrist_2', status='matched', confidence=.99)]),
-            last_wrist_view=dict(rgb=image, min_match_confidence=.85, candidates=[
-                dict(id='wrist_1', book_mask=mask1, verified_book=True),
-                dict(id='wrist_2', book_mask=mask2, verified_book=True)]))
-        with patch.object(runtime, 'LockedBookTracker') as tracker:
-            runtime.selected_tracker(selector)
-            self.assertIs(tracker.call_args.args[1], mask2)
-            selector.last_decision['cross_view_matches'][0]['confidence'] = .3
-            with self.assertRaises(servo.ServoError): runtime.selected_tracker(selector)
-            self.assertEqual(tracker.call_count, 1)
+    def test_acquisition_transports_selected_point_across_resolutions(self):
+        from cart_book_grasp_v3_tracking import acquire_selected_spine
+        rng = np.random.default_rng(7)
+        head = np.zeros((480, 640, 3), np.uint8)
+        head[90:390, 210:390] = rng.integers(0, 256, (300, 180, 3), dtype=np.uint8)
+        mask = np.zeros(head.shape[:2], np.uint8); mask[90:390, 210:390] = 1
+        transform = np.float32([[1.2, 0, 200], [0, 1.2, 30]])
+        wrist = cv2.warpAffine(head, transform, (1280, 720))
+        point = np.array([280., 210.])  # deliberately not the mask center
+        tracker = acquire_selected_spine(dict(rgb=head, selected=dict(mask=mask, uv=point)), wrist)
+        expected = transform @ np.r_[point, 1]
+        np.testing.assert_allclose(tracker.center, expected, atol=.7)
+        moved = cv2.warpAffine(wrist, np.float32([[1, 0, -8], [0, 1, 5]]), (1280, 720))
+        np.testing.assert_allclose(tracker.observe(moved)['uv'], expected+[-8, 5], atol=.7)
+        with self.assertRaises(servo.ServoError):
+            acquire_selected_spine(dict(rgb=head, selected=dict(mask=mask, uv=point)), np.zeros_like(wrist))
 
-    def test_v2_forward_runs_only_after_servo_success_and_hooks_restore(self):
-        import cart_book_grasp_v2_motion as v2
+    def test_v13_forward_runs_only_after_servo_success_and_hooks_restore(self):
+        import cart_book_grasp_v1_3_motion as v2
         original_forward, original_spine = v2._execute_cart_plus_forward, v2._install_spine_center
         task = dict(object='object_0', book_surface_x_mm=600)
         context = {}; execute = Mock(); order = []
@@ -243,6 +246,111 @@ class IntegrationTests(unittest.TestCase):
         observation = tracker.observe(moved)
         np.testing.assert_allclose(observation['uv'], tracker.center+[12, -8], atol=.5)
         with self.assertRaises(servo.ServoError): tracker.observe(np.zeros_like(image))
+
+
+class CalibrationAndEntryTests(unittest.TestCase):
+    def test_rectification_uses_K_and_reference_rejects_changed_calibration(self):
+        from cart_book_grasp_v3_camera import WristCamera
+        import io, tarfile, yaml
+        c = dict(device='/dev/test', width=640, height=480)
+        k = np.array([[400., 0, 310.], [0, 410., 250.], [0, 0, 1.]])
+        d = np.array([-.28, .06, -.003, .002, 0.])
+        doc = dict(image_width=640, image_height=480, distortion_model='plumb_bob',
+                   camera_matrix=dict(data=k.ravel().tolist()),
+                   distortion_coefficients=dict(data=d.tolist()))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/'calibration.tar.gz'
+            raw = yaml.safe_dump(doc).encode()
+            with tarfile.open(path, 'w:gz') as archive:
+                info = tarfile.TarInfo('ost.yaml'); info.size = len(raw)
+                archive.addfile(info, io.BytesIO(raw))
+            camera = WristCamera(c, path)
+            # A rectified pixel must sample its forward-distorted raw location.
+            pixel = np.array([440, 300])
+            ray = np.linalg.solve(k, [*pixel, 1.])
+            projected, _ = cv2.projectPoints(ray.reshape(1, 3), np.zeros(3), np.zeros(3), k, d)
+            np.testing.assert_allclose([camera.mapx[pixel[1], pixel[0]], camera.mapy[pixel[1], pixel[0]]],
+                                       projected.ravel(), atol=1e-4)
+            ref = dict(config()['reference'], calibration_sha256=camera.calibration_hash)
+            camera.check_reference(ref)
+            with self.assertRaises(servo.ServoError):
+                camera.check_reference(dict(ref, calibration_sha256='f'*64))
+            with self.assertRaises(servo.ServoError):
+                camera.check_reference(dict(ref, coordinate_system='raw'))
+            with self.assertRaises(servo.ServoError):
+                WristCamera(dict(c, width=1280), path)
+
+    def test_entry_dispatches_v13_with_own_config_and_restores_argv(self):
+        import cart_book_grasp_v3 as entry
+        import sys
+        original = sys.argv
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/'servo.json'; path.write_text(json.dumps(config()))
+            with patch('cart_book_grasp_v3_camera.WristCamera') as camera, \
+                 patch('cart_book_grasp_v1_3.main') as v13, \
+                 patch('cart_book_grasp_v3_motion.installed') as installed:
+                def run(**kwargs):
+                    self.assertIn('--assume-head-camera-calibrated', sys.argv)
+                    self.assertEqual(kwargs['config_path'].name, 'cart_book_grasp_v3_config.json')
+                    self.assertEqual(kwargs['wrist_config_path'].name, 'cart_book_grasp_v3_wrist_config.json')
+                v13.side_effect = run
+                entry.main(['--servo-config', str(path), '--assume-head-camera-calibrated'])
+                v13.assert_called_once()
+                installed.assert_called_once_with(path)
+                camera.return_value.capture.assert_not_called()
+        self.assertIs(sys.argv, original)
+
+    def test_missing_reference_rejects_before_camera_or_robot(self):
+        import cart_book_grasp_v3 as entry
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/'servo.json'; path.write_text(json.dumps(dict(config(), reference=None)))
+            with patch('cart_book_grasp_v3_camera.WristCamera') as camera, \
+                 patch('cart_book_grasp_v1_3.main') as v13:
+                with self.assertRaises(servo.ServoError):
+                    entry.main(['--servo-config', str(path)])
+                camera.assert_not_called(); v13.assert_not_called()
+
+    def test_capture_hook_uses_current_v13_frame_and_clears_failed_cycle(self):
+        import cart_book_grasp_v1_3_motion as motion
+        geometry = SimpleNamespace()
+        head = np.zeros((100, 100, 3), np.uint8)
+        selected = dict(uv=[50., 40.], mask=np.ones((100, 100), bool))
+        enabled = [True]
+        def install(geometry, visualization=None, **kwargs):
+            def segment(*args):
+                if enabled[0]:
+                    visualization.capture(head, None, None, None, selected, None)
+                    return selected['mask'], [0, 0, 100, 100]
+                return None
+            geometry.segment_cart_book_with_sam3 = segment
+        with patch.object(motion, '_install_spine_center', side_effect=install), \
+             patch.object(motion, '_execute_cart_plus_forward', return_value=('book', True)), \
+             patch.object(runtime, 'load_config', return_value=config()), \
+             patch.object(runtime, 'execute_servo') as run:
+            with runtime.installed('unused'):
+                motion._install_spine_center(geometry)
+                geometry.segment_cart_book_with_sam3()
+                motion._execute_cart_plus_forward(None, {}, 0, {}, None, None)
+                frame = run.call_args.args[6]
+                np.testing.assert_array_equal(frame['rgb'], head)
+                self.assertEqual(frame['selected']['uv'], selected['uv'])
+                enabled[0] = False
+                geometry.segment_cart_book_with_sam3()
+                motion._execute_cart_plus_forward(None, {}, 0, {}, None, None)
+                self.assertIsNone(run.call_args.args[6])
+
+    def test_timeout_and_tracking_failure_send_no_motion(self):
+        p = Plant()
+        def lost(): raise servo.ServoError('lost target')
+        with self.assertRaises(servo.ServoError):
+            servo.run_servo(lost, p.move, config(), clock=lambda: p.t)
+        self.assertEqual(p.moves, [])
+        def slow():
+            p.t += 200
+            return p.read()
+        with self.assertRaisesRegex(servo.ServoError, 'time budget'):
+            servo.run_servo(slow, p.move, config(), clock=lambda: p.t)
+        self.assertEqual(p.moves, [])
 
 
 if __name__ == '__main__':

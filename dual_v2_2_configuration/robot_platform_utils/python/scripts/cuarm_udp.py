@@ -558,6 +558,15 @@ class CuarmUdpThread:
             if self._last_receive_time is None:
                 return None
             return time.monotonic() - self._last_receive_time
+
+    def receive_with_timestamp(self):
+        """Return one cached packet and its actual local receipt time atomically.
+
+        Re-reading a packet preserves its timestamp; this does not change the
+        wire protocol or claim to provide the hardware's measurement timestamp.
+        """
+        with self._data_lock:
+            return self._data, self._last_receive_time
     
     def send(self, data: Any):
         if self._closed or self._pack_message_func is None:
